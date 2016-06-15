@@ -9,6 +9,7 @@ namespace DoddleNow.API
     {
         public static void Register(HttpConfiguration config)
         {
+            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             // Web API configuration and services
 
             // Web API routes

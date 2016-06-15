@@ -22,7 +22,7 @@ namespace DataAccessLayer
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DoddleNow")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Doddle")]
 	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
 	{
 		
@@ -33,7 +33,7 @@ namespace DataAccessLayer
     #endregion
 		
 		public DataClasses1DataContext() : 
-				base(global::DataAccessLayer.Properties.Settings.Default.DoddleNowConnectionString2, mappingSource)
+				base(global::DataAccessLayer.Properties.Settings.Default.DoddleConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -60,6 +60,64 @@ namespace DataAccessLayer
 				base(connection, mappingSource)
 		{
 			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateUser")]
+		public int usp_UpdateUser([global::System.Data.Linq.Mapping.ParameterAttribute(Name="RoleID", DbType="Int")] System.Nullable<int> roleID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserName", DbType="NVarChar(256)")] string userName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FirstName", DbType="NVarChar(100)")] string firstName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LastName", DbType="NVarChar(100)")] string lastName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Phone", DbType="NVarChar(MAX)")] string phone, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Title", DbType="NVarChar(50)")] string title, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Department", DbType="NVarChar(50)")] string department)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), roleID, userName, firstName, lastName, phone, title, department);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetRoles")]
+		public ISingleResult<usp_GetRolesResult> usp_GetRoles([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
+			return ((ISingleResult<usp_GetRolesResult>)(result.ReturnValue));
+		}
+	}
+	
+	public partial class usp_GetRolesResult
+	{
+		
+		private string _RoleID;
+		
+		private string _RoleName;
+		
+		public usp_GetRolesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoleID", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string RoleID
+		{
+			get
+			{
+				return this._RoleID;
+			}
+			set
+			{
+				if ((this._RoleID != value))
+				{
+					this._RoleID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoleName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string RoleName
+		{
+			get
+			{
+				return this._RoleName;
+			}
+			set
+			{
+				if ((this._RoleName != value))
+				{
+					this._RoleName = value;
+				}
+			}
 		}
 	}
 }

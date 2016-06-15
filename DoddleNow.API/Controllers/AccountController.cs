@@ -38,6 +38,12 @@ namespace DoddleNow.API.Controllers
             {
                 return errorResult;
             }
+            else
+            {
+                //add additional user info to database
+                DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
+                da.UpdateUser(userModel.RoleID, userModel.EMail, userModel.FirstName, userModel.LastName, userModel.Phone, userModel.Title, userModel.Department);
+            }
 
             return Ok();
         }

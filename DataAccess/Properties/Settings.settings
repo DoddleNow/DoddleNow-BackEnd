@@ -26,5 +26,21 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=appidentity.c6qpaqe4bu02.us-west-2.rds.amazonaws.com,1433;Initial Catalog=DoddleNow;Integrated Security=False;User ID=DoddleApplication;Password=[$C7N!6jK;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False</Value>
     </Setting>
+    <Setting Name="AuthContext" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=WIN-PHC4OQMUN4N\JOHNDEV2012;Initial Catalog=Doddle;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=WIN-PHC4OQMUN4N\JOHNDEV2012;Initial Catalog=Doddle;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="DoddleConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com,1433;Initial Catalog=Doddle;Integrated Security=False;User ID=doddleapplication;Password=%*Z8UtWsUDec8xNk;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com,1433;Initial Catalog=Doddle;Integrated Security=False;User ID=doddleapplication;Password=%*Z8UtWsUDec8xNk;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

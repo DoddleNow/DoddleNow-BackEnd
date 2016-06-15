@@ -1,5 +1,7 @@
-﻿using DoddleNow.API.Providers;
+﻿using DoddleNow.API.Infrastructure;
+using DoddleNow.API.Providers;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Cors;
 using System.Web.Http;
 
 namespace DoddleNow.API
@@ -18,9 +21,25 @@ namespace DoddleNow.API
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);
-
+            
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
+            //app.UseCors(new CorsOptions
+            //{
+            //    PolicyProvider = new CorsPolicyProvider
+            //    {
+            //        PolicyResolver = context => Task.FromResult(new CorsPolicy
+            //        {
+            //            AllowAnyHeader = true,
+            //            AllowAnyMethod = true,
+            //            AllowAnyOrigin = true,
+            //            SupportsCredentials = false,
+            //            PreflightMaxAge = Int32.MaxValue // << ---- THIS
+            //        })
+            //    }
+            //});
+
             app.UseWebApi(config);
         }
 
@@ -38,6 +57,10 @@ namespace DoddleNow.API
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
+            //app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
         }
+
+        
     }
 }

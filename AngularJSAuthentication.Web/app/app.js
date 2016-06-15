@@ -42,7 +42,9 @@ app.config(function ($routeProvider) {
 
 });
 
-
+//dev
+//var serviceBase = 'http://doddlenowapi-test.us-west-2.elasticbeanstalk.com/';
+//local dev
 var serviceBase = 'http://localhost:18987/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase,

@@ -32,11 +32,11 @@ namespace DoddleNow.API.Controllers
         {
             List<Order> OrderList = new List<Order>
             {
-                new Order {OrderID = 10248, CustomerName = "Taiseer Joudeh", ShipperCity = "Amman", IsShipped = true },
-                new Order {OrderID = 10249, CustomerName = "Ahmad Hasan", ShipperCity = "Dubai", IsShipped = false},
-                new Order {OrderID = 10250,CustomerName = "Tamer Yaser", ShipperCity = "Jeddah", IsShipped = false },
-                new Order {OrderID = 10251,CustomerName = "Lina Majed", ShipperCity = "Abu Dhabi", IsShipped = false},
-                new Order {OrderID = 10252,CustomerName = "Yasmeen Rami", ShipperCity = "Kuwait", IsShipped = true}
+                new Order {OrderID = 10248, CustomerName = "John Morris", ShipperCity = "San Diego", IsShipped = true },
+                new Order {OrderID = 10249, CustomerName = "Bojan Cincur", ShipperCity = "Budva", IsShipped = false},
+                new Order {OrderID = 10250,CustomerName = "Aron Grummet", ShipperCity = "New York City", IsShipped = false },
+                new Order {OrderID = 10251,CustomerName = "Boris Maksimoic", ShipperCity = "Herceg Novi", IsShipped = false},
+                new Order {OrderID = 10252,CustomerName = "Craig Giangregorio", ShipperCity = "Mexico City", IsShipped = true}
             };
 
             return OrderList;

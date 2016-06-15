@@ -14,8 +14,17 @@ namespace DataAccessLayer
         
         DataClasses1DataContext context = new DataClasses1DataContext(ConfigurationManager.ConnectionStrings["AuthContext"].ToString());
 
-        
+
+        public void UpdateUser(int roleId, string userName, string firstName, string lastName, string phone, string title, string department)
+        {
+            context.usp_UpdateUser(roleId, userName, firstName, lastName, phone, title, department);
+        }
+
+        public List<usp_GetRolesResult> GetRoles(string UserId)
+        {
+            return context.usp_GetRoles(UserId).ToList();
+        }
     }
 
-
+    
 }

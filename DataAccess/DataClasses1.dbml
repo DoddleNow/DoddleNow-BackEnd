@@ -1,3 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DoddleNow" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=appidentity.c6qpaqe4bu02.us-west-2.rds.amazonaws.com,1433;Initial Catalog=DoddleNow;Integrated Security=False;User ID=DoddleApplication;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="DoddleNowConnectionString2" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Doddle" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com,1433;Initial Catalog=Doddle;Integrated Security=False;User ID=doddleapplication;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="DoddleConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.usp_UpdateUser" Method="usp_UpdateUser">
+    <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="NVarChar(256)" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Department" Parameter="department" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetRoles" Method="usp_GetRoles">
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetRolesResult">
+      <Column Name="RoleID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

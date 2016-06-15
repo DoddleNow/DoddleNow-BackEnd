@@ -58,5 +58,28 @@ namespace DataAccessLayer.Properties {
                 return ((string)(this["DoddleNowConnectionString2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=WIN-PHC4OQMUN4N\\JOHNDEV2012;Initial Catalog=Doddle;Integrated Securit" +
+            "y=True")]
+        public string AuthContext {
+            get {
+                return ((string)(this["AuthContext"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com,1433;Initial Catal" +
+            "og=Doddle;Integrated Security=False;User ID=doddleapplication;Password=%*Z8UtWsU" +
+            "Dec8xNk;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")]
+        public string DoddleConnectionString {
+            get {
+                return ((string)(this["DoddleConnectionString"]));
+            }
+        }
     }
 }
