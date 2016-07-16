@@ -15,14 +15,176 @@ namespace DataAccessLayer
         DataClasses1DataContext context = new DataClasses1DataContext(ConfigurationManager.ConnectionStrings["AuthContext"].ToString());
 
 
-        public void UpdateUser(int roleId, string userName, string firstName, string lastName, string phone, string title, string department)
+        public void UpdateUser(Guid userId, int roleId, string userName, string firstName, string lastName, string phone, string title, string department, Guid clientGUID)
         {
-            context.usp_UpdateUser(roleId, userName, firstName, lastName, phone, title, department);
+            context.usp_UpdateUser(userId.ToString(), roleId, userName, firstName, lastName, phone, title, department, clientGUID);
         }
+
+        public List<usp_GetSpecialtiesResult> GetSpecialties(int? specialtyId)
+        {
+            return context.usp_GetSpecialties(specialtyId).ToList();
+        }
+
+        public int AddSpecialty(string name, string description)
+        {
+            return context.usp_AddSpecialty(name, description).FirstOrDefault().ID.Value;
+        }
+
+        public void UpdateSpecialty(int specialtyId, string name, string description)
+        {
+            context.usp_UpdateSpecialty(specialtyId, name, description);
+        }
+
+        public void DeleteSpecialty(int specialtyId)
+        {
+            context.usp_DeleteSpecialty(specialtyId);
+        }
+
+        public void UpdateQuestion(Guid surveyId, Guid skillsChecklistQuestionId, string text, int questionTypeId, bool required, int? position)
+        {
+            context.usp_UpdateQuestion(surveyId, skillsChecklistQuestionId, text, questionTypeId, required, position);
+        }
+
+        public void DeleteQuestions(Guid skillsChecklistId, Guid? skillsChecklistQuestionId)
+        {
+            context.usp_DeleteQuestion(skillsChecklistId, skillsChecklistQuestionId);
+        }
+
+        public List<usp_GetSkillsChecklistsResult> GetSkillsChecklists(Guid? skillsChecklistId)
+        {
+            return context.usp_GetSkillsChecklists(skillsChecklistId).ToList();
+        }
+
+        public List<usp_GetQuestionTypesResult> GetQuestionTypes()
+        {
+            return context.usp_GetQuestionTypes().ToList();
+        }
+
+        public Guid AddSkillsChecklist(string title, string description, bool template)
+        {
+            return context.usp_AddSkillsChecklist(title, description, template).FirstOrDefault().GUID;
+        }
+
+        public void UpdateSkillsChecklist(Guid skillsChecklistId, string title, string description, bool template)
+        {
+            context.usp_UpdateSkillsChecklist(skillsChecklistId, title, description, template);
+        }
+
+        public void DeleteSkillsChecklist(Guid skillsChecklistId)
+        {
+            context.usp_DeleteSkillsChecklist(skillsChecklistId);
+        }
+
+        public List<usp_GetQuestionsResult> GetSkillsChecklistQuestions(Guid surveyGUID)
+        {
+            return context.usp_GetQuestions(surveyGUID, null).ToList();
+        }
+
+        public usp_AddQuestionResult AddQuestion(Guid surveyGuid, string text, int questionTypeId, bool required)
+        {
+            return context.usp_AddQuestion(surveyGuid, text, questionTypeId, required).FirstOrDefault();
+        }
+
+        public List<usp_GetJobSpecialtiesResult> GetJobSpecialties(Guid jobID, int? specialtyId)
+        {
+            return context.usp_GetJobSpecialties(jobID, specialtyId).ToList();
+        }
+
+        public int AddJobSpecialty(Guid jobId, int specialtyId)
+        {
+            return context.usp_AddJobSpecialty(jobId, specialtyId);
+        }
+
+        public void DeleteJobSpecialty(Guid jobId, int? specialtyId)
+        {
+            context.usp_DeleteJobSpecialty(jobId, specialtyId);
+        }
+
+        public List<usp_GetJobSkillsChecklistResult> GetJobSkillsChecklist(Guid jobID, Guid? skillsChecklistId)
+        {
+            return context.usp_GetJobSkillsChecklist(jobID, skillsChecklistId).ToList();
+        }
+
+        public int AddJobSkillsChecklist(Guid jobId, Guid skillsChecklistId)
+        {
+            return context.usp_AddJobSkillsChecklist(jobId, skillsChecklistId);
+        }
+
+        public void DeleteJobSkillsChecklist(Guid jobId, Guid skillsChecklistId)
+        {
+            context.usp_DeleteJobSkillsChecklist(jobId, skillsChecklistId);
+        }
+
+
 
         public List<usp_GetRolesResult> GetRoles(string UserId)
         {
             return context.usp_GetRoles(UserId).ToList();
+        }
+
+        public List<usp_GetJobsResult> GetJobs(Guid? clientId, Guid? jobId)
+        {
+            return context.usp_GetJobs(clientId, jobId).ToList();
+        }
+
+        public void UpdateJob(Guid jobId, Guid clientId, string name, string description, DateTime? startDate, DateTime? endDate)
+        {
+            context.usp_UpdateJob(jobId, clientId, name, description, startDate, endDate);
+        }
+
+        public void DeleteJob(Guid jobId)
+        {
+            context.usp_DeleteJob(jobId);
+        }
+
+        public Guid? AddJob(Guid clientId, string name, string description, DateTime? startDate, DateTime? endDate)
+        {
+            return context.usp_AddJob(clientId, name, description, startDate, endDate).FirstOrDefault().ID;
+        }
+
+        public Guid? AddClient(string name, string description, string address1, string address2, string city, string state, string zip, Guid parentGUID)
+        {
+            return context.usp_AddClient(name, address1, address2, city, state, zip, description, parentGUID).FirstOrDefault().CLIENT_GUID.Value;
+        }
+
+        public void UpdateClient(Guid clientGuid, string name, string description, string address1, string address2, string city, string state, string zip, Guid parentGUID)
+        {
+            context.usp_UpdateClient(null, clientGuid, name, address1, address2, city, state, zip, description, parentGUID);
+        }
+
+        public List<usp_GetClientsResult> GetClients()
+        {
+            return context.usp_GetClients(null).ToList();
+        }
+
+        public List<usp_GetSubClientsResult> GetSubClients(Guid clientId)
+        {
+            return context.usp_GetSubClients(clientId).ToList();
+        }
+
+        public usp_GetClientsResult GetClient(Guid clientGuid)
+        {
+            return context.usp_GetClients(clientGuid).FirstOrDefault();
+        }
+
+        public List<usp_GetUsersResult> GetUsers(int? roleId, Guid? clientGUID)
+        {
+            return context.usp_GetUsers(roleId, clientGUID).ToList();
+        }
+
+        public usp_GetUserResult GetUser(Guid userId)
+        {
+            return context.usp_GetUser(userId.ToString()).FirstOrDefault();
+        }
+
+        public void DeleteClient(Guid clientGuid)
+        {
+            context.usp_DeleteClient(clientGuid);
+        }
+
+        public void DeleteUser(string userId)
+        {
+            context.usp_DeleteUser(userId);
         }
     }
 

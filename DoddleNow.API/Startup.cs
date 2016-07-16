@@ -1,4 +1,5 @@
-﻿using DoddleNow.API.Infrastructure;
+﻿using DoddleNow.API.App_Start;
+using DoddleNow.API.Infrastructure;
 using DoddleNow.API.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -18,28 +19,38 @@ namespace DoddleNow.API
     {
         public void Configuration(IAppBuilder app)
         {
+            //HttpConfiguration config = new HttpConfiguration();
+
+            //ConfigureOAuth(app);
+
+            //WebApiConfig.AddUser(config);
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
+            ////app.UseCors(new CorsOptions
+            ////{
+            ////    PolicyProvider = new CorsPolicyProvider
+            ////    {
+            ////        PolicyResolver = context => Task.FromResult(new CorsPolicy
+            ////        {
+            ////            AllowAnyHeader = true,
+            ////            AllowAnyMethod = true,
+            ////            AllowAnyOrigin = true,
+            ////            SupportsCredentials = false,
+            ////            PreflightMaxAge = Int32.MaxValue // << ---- THIS
+            ////        })
+            ////    }
+            ////});
+
+            // app.UseWebApi(config);
+            //SecurityConfig.Configure(app);
+            // This must happen FIRST otherwise CORS will not work.
+            app.UseCors(CorsOptions.AllowAll);
+
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);
-            
-            WebApiConfig.Register(config);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
-            //app.UseCors(new CorsOptions
-            //{
-            //    PolicyProvider = new CorsPolicyProvider
-            //    {
-            //        PolicyResolver = context => Task.FromResult(new CorsPolicy
-            //        {
-            //            AllowAnyHeader = true,
-            //            AllowAnyMethod = true,
-            //            AllowAnyOrigin = true,
-            //            SupportsCredentials = false,
-            //            PreflightMaxAge = Int32.MaxValue // << ---- THIS
-            //        })
-            //    }
-            //});
-
+            // webapi is registered in the global.asax
             app.UseWebApi(config);
         }
 

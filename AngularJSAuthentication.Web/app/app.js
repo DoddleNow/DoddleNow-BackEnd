@@ -19,7 +19,7 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/orders", {
-        controller: "ordersController",
+        controller: "testController",
         templateUrl: "/app/views/orders.html"
     });
 

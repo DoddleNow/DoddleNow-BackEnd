@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('ordersController', ['$scope', 'ordersService', function ($scope, ordersService) {
+app.controller('testController', ['$scope', 'ordersService', function ($scope, ordersService) {
 
     $scope.orders = [];
 

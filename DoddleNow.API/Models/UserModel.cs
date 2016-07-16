@@ -26,37 +26,83 @@ namespace DoddleNow.API.Models
     //}
     public class UserModel
     {
+        ///<summary>
+        ///ID
+        ///</summary>
+        [Display(Name = "ID")]
+        public Guid ID { get; set; }
+
+        ///<summary>
+        ///User first name
+        ///</summary>
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        ///<summary>
+        ///User last name
+        ///</summary>
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        ///<summary>
+        ///Role ID of user
+        /// Id	Name
+        /// 1	DoddleNow Super Admin
+        /// 2	DoddleNow Support
+        /// 3	Hospital Super Admin
+        /// 4	HR Admin
+        /// 5	Manager
+        /// 6	Healthcare Professional
+        ///</summary>
         [Required]
         [Display(Name = "RoleID")]
         public int RoleID { get; set; }
 
+        ///<summary>
+        ///ClientGUID if user is associated to a client. Required if RoleID is 3, 4, or 5
+        ///</summary>
+        [Display(Name = "ClientGUID")]
+        public Guid ClientGUID { get; set; }
+
+        ///<summary>
+        ///User title
+        ///</summary>
         [Display(Name = "Title")]
         public string Title { get; set; }
 
+        ///<summary>
+        ///User department
+        ///</summary>
         [Display(Name = "Department")]
         public string Department { get; set; }
 
+        ///<summary>
+        ///User phone
+        ///</summary>
         [Display(Name = "Phone")]
         public string Phone { get; set; }
-        
+
+        ///<summary>
+        ///User primary email
+        ///</summary>
         [Required]
         [Display(Name = "EMail")]
         public string EMail { get; set; }
-        
+
+        ///<summary>
+        ///User password
+        ///</summary>
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        ///<summary>
+        ///Confirmation of user password
+        ///</summary>
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

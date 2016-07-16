@@ -24,13 +24,13 @@ namespace DoddleNow.API.Providers
 
             if (allowedOrigin == null) allowedOrigin = "*";
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
             string userId = string.Empty;
             string userRoles = string.Empty;
-
+            IdentityUser user;
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -50,7 +50,13 @@ namespace DoddleNow.API.Providers
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            if (user.Roles != null)
+            {
+                foreach (IdentityUserRole role in user.Roles)
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role.RoleId));
+                }
+            }
             identity.AddClaim(new Claim("sub", context.UserName));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>

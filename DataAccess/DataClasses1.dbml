@@ -1,6 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Doddle" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com,1433;Initial Catalog=Doddle;Integrated Security=False;User ID=doddleapplication;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="DoddleConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.usp_GetRoles" Method="usp_GetRoles">
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetRolesResult">
+      <Column Name="RoleID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddClient" Method="usp_AddClient">
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ADDRESS_1" Parameter="aDDRESS_1" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ADDRESS_2" Parameter="aDDRESS_2" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="CITY" Parameter="cITY" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="STATE" Parameter="sTATE" Type="System.String" DbType="VarChar(2)" />
+    <Parameter Name="ZIP" Parameter="zIP" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="DESCR" Parameter="dESCR" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="PARENT_GUID" Parameter="pARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_AddClientResult">
+      <Column Name="CLIENT_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateClient" Method="usp_UpdateClient">
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ADDRESS_1" Parameter="aDDRESS_1" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ADDRESS_2" Parameter="aDDRESS_2" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="CITY" Parameter="cITY" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="STATE" Parameter="sTATE" Type="System.String" DbType="VarChar(2)" />
+    <Parameter Name="ZIP" Parameter="zIP" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="DESCR" Parameter="dESCR" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="PARENT_GUID" Parameter="pARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetClients" Method="usp_GetClients">
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DT_CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_DeleteClient" Method="usp_DeleteClient">
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteUser" Method="usp_DeleteUser">
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetSubClients" Method="usp_GetSubClients">
+    <Parameter Name="SUBCLIENT_GUID" Parameter="sUBCLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetSubClientsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DT_CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUsers" Method="usp_GetUsers">
+    <Parameter Name="ROLE_ID" Parameter="rOLE_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetUsersResult">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserResult">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.usp_UpdateUser" Method="usp_UpdateUser">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
     <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
     <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="NVarChar(256)" />
     <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
@@ -8,13 +100,187 @@
     <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="NVarChar(MAX)" />
     <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Department" Parameter="department" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="ClientGUID" Parameter="clientGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.usp_GetRoles" Method="usp_GetRoles">
-    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetRolesResult">
-      <Column Name="RoleID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+  <Function Name="dbo.usp_UpdateJob" Method="usp_UpdateJob">
+    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="START_DT" Parameter="sTART_DT" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="END_DT" Parameter="eND_DT" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteJob" Method="usp_DeleteJob">
+    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddJob" Method="usp_AddJob">
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="START_DT" Parameter="sTART_DT" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="END_DT" Parameter="eND_DT" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="usp_AddJobResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_DeleteSpecialty" Method="usp_DeleteSpecialty">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetSpecialties" Method="usp_GetSpecialties">
+    <Parameter Name="SPECIALTY_ID" Parameter="sPECIALTY_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetSpecialtiesResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateSpecialty" Method="usp_UpdateSpecialty">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddSkillsChecklist" Method="usp_AddSkillsChecklist">
+    <Parameter Name="TITLE" Parameter="tITLE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="TEMPLATE" Parameter="tEMPLATE" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="usp_AddSkillsChecklistResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_DeleteSkillsChecklist" Method="usp_DeleteSkillsChecklist">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetSkillsChecklists" Method="usp_GetSkillsChecklists">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetSkillsChecklistsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateSkillsChecklist" Method="usp_UpdateSkillsChecklist">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="TITLE" Parameter="tITLE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="TEMPLATE" Parameter="tEMPLATE" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddQuestion" Method="usp_AddQuestion">
+    <Parameter Name="SurveyGUID" Parameter="surveyGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="QuestionTypeID" Parameter="questionTypeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Required" Parameter="required" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="usp_AddQuestionResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TEXT" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="QUESTION_TYPE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_DeleteQuestion" Method="usp_DeleteQuestion">
+    <Parameter Name="SurveyGUID" Parameter="surveyGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyQuestionGUID" Parameter="surveyQuestionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdateQuestion" Method="usp_UpdateQuestion">
+    <Parameter Name="SurveyGUID" Parameter="surveyGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="QuestionTypeID" Parameter="questionTypeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Required" Parameter="required" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Position" Parameter="position" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UpdateQuestionResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TEXT" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="QUESTION_TYPE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddJobSpecialty" Method="usp_AddJobSpecialty">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetJobSpecialties" Method="usp_GetJobSpecialties">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetJobSpecialtiesResult">
+      <Column Name="SPECIALTY_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_DeleteJobSpecialty" Method="usp_DeleteJobSpecialty">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteJobSkillsChecklist" Method="usp_DeleteJobSkillsChecklist">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyID" Parameter="surveyID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddJobSkillsChecklist" Method="usp_AddJobSkillsChecklist">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyID" Parameter="surveyID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddSpecialty" Method="usp_AddSpecialty">
+    <Parameter Name="NAME" Parameter="nAME" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="DESCRIPTION" Parameter="dESCRIPTION" Type="System.String" DbType="VarChar(MAX)" />
+    <ElementType Name="usp_AddSpecialtyResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetJobs" Method="usp_GetJobs">
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetJobsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="START_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="END_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="APPLICANT_COUNT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetJobSkillsChecklist" Method="usp_GetJobSkillsChecklist">
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyID" Parameter="surveyID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetJobSkillsChecklistResult">
+      <Column Name="SkillsChecklistID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SkillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestionTypes" Method="usp_GetQuestionTypes">
+    <ElementType Name="usp_GetQuestionTypesResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

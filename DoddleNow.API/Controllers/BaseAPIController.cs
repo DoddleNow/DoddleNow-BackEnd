@@ -9,11 +9,17 @@ using System.Web.Http;
 
 namespace DoddleNow.API.Controllers
 {
+    ///<summary>
+    ///
+    ///</summary>
     public class BaseApiController : ApiController
     {
         //Code removed from brevity
         private ApplicationRoleManager _AppRoleManager = null;
 
+        ///<summary>
+        ///
+        ///</summary>
         protected ApplicationRoleManager AppRoleManager
         {
             get
