@@ -44,14 +44,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddSpecialty(SpecialtyModel specialtyModel)
+        public async Task<IHttpActionResult> AddSpecialty(Specialty specialty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Specialties.AddSpecialty(specialtyModel);
+            Specialties.AddSpecialty(specialty);
             return Ok();
         }
 
@@ -61,14 +61,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("{specialtyId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSpecialty(SpecialtyModel specialtyModel)
+        public async Task<IHttpActionResult> UpdateSpecialty(Specialty specialty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Specialties.UpdateSpecialty(specialtyModel);
+            Specialties.UpdateSpecialty(specialty);
 
             return Ok();
         }
@@ -117,23 +117,23 @@ namespace DoddleNow.API.Controllers
         /// <summary>
         /// Adds Specialty
         /// </summary>
-        /// <param name="specialtyModel"></param>
+        /// <param name="specialty"></param>
         /// <returns></returns>
-        public static int AddSpecialty(SpecialtyModel specialtyModel)
+        public static int AddSpecialty(Specialty specialty)
         {
             DataAccess da = new DataAccess();
-            return da.AddSpecialty(specialtyModel.Name, specialtyModel.Description);
+            return da.AddSpecialty(specialty.Name, specialty.Description);
         }
 
         /// <summary>
         /// Update Specialty
         /// </summary>
-        /// <param name="specialtyModel"></param>
+        /// <param name="specialty"></param>
         /// <returns></returns>
-        public static void UpdateSpecialty(SpecialtyModel specialtyModel)
+        public static void UpdateSpecialty(Specialty specialty)
         {
             DataAccess da = new DataAccess();
-            da.UpdateSpecialty(specialtyModel.ID, specialtyModel.Name, specialtyModel.Description);
+            da.UpdateSpecialty(specialty.ID, specialty.Name, specialty.Description);
         }
 
         /// <summary>

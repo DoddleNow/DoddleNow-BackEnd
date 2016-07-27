@@ -43,14 +43,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2,3,4,5")]
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddJob(JobModel jobModel)
+        public async Task<IHttpActionResult> AddJob(Job job)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Jobs.AddJob(jobModel);
+            Jobs.AddJob(job);
 
             return Ok();
         }
@@ -61,15 +61,15 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2,3,4,5")]
         [Route("{jobId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateJob(Guid jobId, JobModel jobModel)
+        public async Task<IHttpActionResult> UpdateJob(Guid jobId, Job job)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            jobModel.ID = jobId;
+            job.ID = jobId;
 
-            Jobs.UpdateJob(jobModel);
+            Jobs.UpdateJob(job);
 
             return Ok();
         }
@@ -103,9 +103,9 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/specialties")]
         [HttpPost]
-        public IHttpActionResult AddSpecialty(Guid jobId, SpecialtyModel specialtyModel)
+        public IHttpActionResult AddSpecialty(Guid jobId, Specialty specialty)
         {
-            int id = Specialties.AddSpecialty(specialtyModel);
+            int id = Specialties.AddSpecialty(specialty);
             Jobs.AddJobSpecialty(jobId, id);
             
             return Ok();
@@ -148,12 +148,12 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/specialties/{specialtyId}")]
         [HttpPost]
-        public IHttpActionResult UpdateSpecialty(Guid jobId, int specialtyId, SpecialtyModel specialtyModel)
+        public IHttpActionResult UpdateSpecialty(Guid jobId, int specialtyId, Specialty specialty)
         {
             if (Jobs.GetJobSpecialties(jobId).Where(v => v.ID == specialtyId).Count() > 0)
             {
-                specialtyModel.ID = specialtyId;
-                Specialties.UpdateSpecialty(specialtyModel);
+                specialty.ID = specialtyId;
+                Specialties.UpdateSpecialty(specialty);
             }
 
             return Ok();
@@ -196,9 +196,9 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/scl")]
         [HttpPost]
-        public IHttpActionResult AddSkillsChecklists(Guid jobId, SkillsChecklistModel skillsChecklistModel)
+        public IHttpActionResult AddSkillsChecklists(Guid jobId, SkillsChecklist skillsChecklist)
         {
-            Guid id = SkillsChecklists.AddSkillsChecklist(skillsChecklistModel);
+            Guid id = SkillsChecklists.AddSkillsChecklist(skillsChecklist);
             Jobs.AddJobSkillsChecklist(jobId, id);
 
             return Ok();
@@ -228,12 +228,12 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/scl/{skillsChecklistId}")]
         [HttpPost]
-        public IHttpActionResult UpdateSkillsChecklist(Guid jobId, Guid skillsChecklistId, SkillsChecklistModel skillsChecklistModel)
+        public IHttpActionResult UpdateSkillsChecklist(Guid jobId, Guid skillsChecklistId, SkillsChecklist skillsChecklist)
         {
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
             {
-                skillsChecklistModel.SkillsChecklistGUID = skillsChecklistId;
-                SkillsChecklists.UpdateSkillsChecklist(skillsChecklistModel);
+                skillsChecklist.SkillsChecklistGUID = skillsChecklistId;
+                SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
             }
 
             return Ok();
@@ -281,11 +281,11 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/scl/{skillsChecklistId}/questions")]
         [HttpPost]
-        public IHttpActionResult AddSkillsChecklistQuestion(Guid jobId, Guid skillsChecklistId, QuestionModel questionModel)
+        public IHttpActionResult AddSkillsChecklistQuestion(Guid jobId, Guid skillsChecklistId, Question question)
         {
             if(Jobs.GetJobSkillsChecklists(jobId).Where(v=>v.GUID == skillsChecklistId).Count() > 0)
             {
-                int id = SkillsChecklists.AddQuestion(skillsChecklistId, questionModel);
+                int id = SkillsChecklists.AddQuestion(skillsChecklistId, question);
             }
             
             return Ok();
@@ -331,11 +331,11 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{jobId}/scl/{skillsChecklistId}/questions/{skillsChecklistQuestionId}")]
         [HttpPost]
-        public IHttpActionResult UpdateSkillsChecklistQuestion(Guid jobId, Guid skillsChecklistId, Guid skillsChecklistQuestionId, QuestionModel questionModel)
+        public IHttpActionResult UpdateSkillsChecklistQuestion(Guid jobId, Guid skillsChecklistId, Guid skillsChecklistQuestionId, Question question)
         {
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
             {
-                SkillsChecklists.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, questionModel);
+                SkillsChecklists.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question);
             }
 
             return Ok();
@@ -427,12 +427,12 @@ namespace DoddleNow.API.Controllers
         /// <summary>
         /// Adds JOb
         /// </summary>
-        /// <param name="jobModel"></param>
+        /// <param name="job"></param>
         /// <returns></returns>
-        public static Guid AddJob(JobModel jobModel)
+        public static Guid AddJob(Job job)
         {
             DataAccess da = new DataAccess();
-            return da.AddJob(jobModel.ClientGUID, jobModel.Name, jobModel.Description, jobModel.StartDate, jobModel.EndDate).Value;
+            return da.AddJob(job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate).Value;
         }
 
         /// <summary>
@@ -462,12 +462,12 @@ namespace DoddleNow.API.Controllers
         /// <summary>
         /// Update Job
         /// </summary>
-        /// <param name="jobModel"></param>
+        /// <param name="job"></param>
         /// <returns></returns>
-        public static void UpdateJob(JobModel jobModel)
+        public static void UpdateJob(Job job)
         {
             DataAccess da = new DataAccess();
-            da.UpdateJob(jobModel.ID, jobModel.ClientGUID, jobModel.Name, jobModel.Description, jobModel.StartDate, jobModel.EndDate);
+            da.UpdateJob(job.ID, job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate);
         }
 
         /// <summary>

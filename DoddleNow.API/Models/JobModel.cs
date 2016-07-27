@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DoddleNow.API.Models
 {
-    //public class JobModel
+    //public class Job
     //{
     //    [Required]
     //    [Display(Name = "User name")]
@@ -24,7 +24,7 @@ namespace DoddleNow.API.Models
     //    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     //    public string ConfirmPassword { get; set; }
     //}
-    public class JobModel
+    public class Job
     {
         ///<summary>
         ///ID

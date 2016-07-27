@@ -55,14 +55,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddSkillsChecklist(SkillsChecklistModel skillsChecklistModel)
+        public async Task<IHttpActionResult> AddSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            SkillsChecklists.AddSkillsChecklist(skillsChecklistModel);
+            SkillsChecklists.AddSkillsChecklist(skillsChecklist);
             return Ok();
         }
 
@@ -72,14 +72,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("{skillsChecklistId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSkillsChecklist(Guid skillsChecklistId, SkillsChecklistModel skillsChecklistModel)
+        public async Task<IHttpActionResult> UpdateSkillsChecklist(Guid skillsChecklistId, SkillsChecklist skillsChecklist)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            skillsChecklistModel.SkillsChecklistGUID = skillsChecklistId;
-            SkillsChecklists.UpdateSkillsChecklist(skillsChecklistModel);
+            skillsChecklist.SkillsChecklistGUID = skillsChecklistId;
+            SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
 
             return Ok();
         }
@@ -126,14 +126,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("{skillsChecklistId}/questions")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddSkillsChecklistQuestion(Guid skillsChecklistId, QuestionModel questionModel)
+        public async Task<IHttpActionResult> AddSkillsChecklistQuestion(Guid skillsChecklistId, Question question)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-           SkillsChecklists.AddQuestion(skillsChecklistId, questionModel);
+           SkillsChecklists.AddQuestion(skillsChecklistId, question);
             
 
             return Ok();
@@ -146,14 +146,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("{skillsChecklistId}/questions/{skillsChecklistQuestionId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, QuestionModel questionModel)
+        public async Task<IHttpActionResult> UpdateSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, Question question)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            SkillsChecklists.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, questionModel);
+            SkillsChecklists.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question);
 
             return Ok();
         }
@@ -237,24 +237,24 @@ namespace DoddleNow.API.Controllers
         /// <summary>
         /// Adds SkillsChecklist
         /// </summary>
-        /// <param name="skillsChecklistModel"></param>
+        /// <param name="skillsChecklist"></param>
         /// <returns></returns>
-        public static Guid AddSkillsChecklist(SkillsChecklistModel skillsChecklistModel)
+        public static Guid AddSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             DataAccess da = new DataAccess();
-            return da.AddSkillsChecklist(skillsChecklistModel.Title, skillsChecklistModel.Description, skillsChecklistModel.Template);
+            return da.AddSkillsChecklist(skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
         }
 
         /// <summary>
         /// Adds Question
         /// </summary>
         /// <param name="skillsChecklistId"></param>
-        /// <param name="questionModel"></param>
+        /// <param name="question"></param>
         /// <returns></returns>
-        public static int AddQuestion(Guid skillsChecklistId, QuestionModel questionModel)
+        public static int AddQuestion(Guid skillsChecklistId, Question question)
         {
             DataAccess da = new DataAccess();
-            return da.AddQuestion(skillsChecklistId, questionModel.Text, questionModel.QuestionTypeID, questionModel.Required).ID;
+            return da.AddQuestion(skillsChecklistId, question.Text, question.QuestionTypeID, question.Required).ID;
         }
 
         /// <summary>
@@ -262,12 +262,12 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="skillsChecklistId"></param>
         /// <param name="skillsChecklistQuestionId"></param>
-        /// <param name="questionModel"></param>
+        /// <param name="question"></param>
         /// <returns></returns>
-        public static void UpdateQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, QuestionModel questionModel)
+        public static void UpdateQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, Question question)
         {
             DataAccess da = new DataAccess();
-            da.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, questionModel.Text, questionModel.QuestionTypeID, questionModel.Required, questionModel.Position);
+            da.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question.Text, question.QuestionTypeID, question.Required, question.Position);
         }
 
         /// <summary>
@@ -285,12 +285,12 @@ namespace DoddleNow.API.Controllers
         /// <summary>
         /// Update SkillsChecklist
         /// </summary>
-        /// <param name="skillsChecklistModel"></param>
+        /// <param name="skillsChecklist"></param>
         /// <returns></returns>
-        public static void UpdateSkillsChecklist(SkillsChecklistModel skillsChecklistModel)
+        public static void UpdateSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             DataAccess da = new DataAccess();
-            da.UpdateSkillsChecklist(skillsChecklistModel.SkillsChecklistGUID, skillsChecklistModel.Title, skillsChecklistModel.Description, skillsChecklistModel.Template);
+            da.UpdateSkillsChecklist(skillsChecklist.SkillsChecklistGUID, skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
         }
 
         /// <summary>

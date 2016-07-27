@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DoddleNow.API.Models
 {
    
-    public class QuestionModel
+    public class Question
     {
         ///<summary>
         ///ID

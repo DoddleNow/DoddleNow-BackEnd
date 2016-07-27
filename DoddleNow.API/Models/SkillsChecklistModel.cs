@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DoddleNow.API.Models
 {
    
-    public class SkillsChecklistModel
+    public class SkillsChecklist
     {
         ///<summary>
         ///ID

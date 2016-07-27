@@ -48,14 +48,14 @@ namespace DoddleNow.API.Controllers
         [AllowAnonymous]
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddUser(UserModel userModel)
+        public async Task<IHttpActionResult> AddUser(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            IdentityResult result = await _repo.RegisterUser(user);
            
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -67,7 +67,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(userModel.ID, userModel.RoleID, userModel.EMail, userModel.FirstName, userModel.LastName, userModel.Phone, userModel.Title, userModel.Department, userModel.ClientGUID);
+                da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
             }
 
             return Ok();
@@ -90,18 +90,18 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{userId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateUser(Guid userId, UserModel userModel)
+        public async Task<IHttpActionResult> UpdateUser(Guid userId, User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            userModel.ID = userId;
+            user.ID = userId;
 
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateUser(userModel.ID, userModel.RoleID, userModel.EMail, userModel.FirstName, userModel.LastName, userModel.Phone, userModel.Title, userModel.Department, userModel.ClientGUID);
+            da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
             
             return Ok();
         }

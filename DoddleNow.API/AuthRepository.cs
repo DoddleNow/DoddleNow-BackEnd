@@ -21,14 +21,14 @@ namespace DoddleNow.API
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
         }
 
-        public async Task<IdentityResult> RegisterUser(UserModel userModel)
+        public async Task<IdentityResult> RegisterUser(User user)
         {
-            IdentityUser user = new IdentityUser
+            IdentityUser iuser = new IdentityUser
             {
-                UserName = userModel.EMail
+                UserName = user.EMail
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await _userManager.CreateAsync(iuser, user.Password);
 
             return result;
         }

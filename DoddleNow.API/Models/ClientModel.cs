@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DoddleNow.API.Models
 {
-    public class ClientModel
+    public class Client
     {
 
         ///<summary>
