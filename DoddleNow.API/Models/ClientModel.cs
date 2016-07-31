@@ -13,8 +13,8 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///Client GUID - Only used if updating object
         ///</summary>
-        [Display(Name = "Client GUID")]
-        public Guid ClientGUID { get; set; }
+        [Display(Name = "ID")]
+        public Guid ID { get; set; }
 
         ///<summary>
         ///Client Name
