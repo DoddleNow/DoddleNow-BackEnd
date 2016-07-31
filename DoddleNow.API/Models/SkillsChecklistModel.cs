@@ -10,17 +10,12 @@ namespace DoddleNow.API.Models
    
     public class SkillsChecklist
     {
+       
         ///<summary>
         ///ID
         ///</summary>
         [Display(Name = "ID")]
-        public Int32 ID { get; set; }
-
-        ///<summary>
-        ///SkillsChecklistGUID
-        ///</summary>
-        [Display(Name = "SkillsChecklistGUID")]
-        public Guid SkillsChecklistGUID { get; set; }
+        public Guid ID { get; set; }
 
         ///<summary>
         ///Skills Checklist Name
