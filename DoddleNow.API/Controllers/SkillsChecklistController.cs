@@ -78,7 +78,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            skillsChecklist.SkillsChecklistGUID = skillsChecklistId;
+            skillsChecklist.ID = skillsChecklistId;
             SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
 
             return Ok();
@@ -290,7 +290,7 @@ namespace DoddleNow.API.Controllers
         public static void UpdateSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             DataAccess da = new DataAccess();
-            da.UpdateSkillsChecklist(skillsChecklist.SkillsChecklistGUID, skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
+            da.UpdateSkillsChecklist(skillsChecklist.ID, skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
         }
 
         /// <summary>

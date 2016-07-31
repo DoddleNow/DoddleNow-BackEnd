@@ -232,7 +232,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
             {
-                skillsChecklist.SkillsChecklistGUID = skillsChecklistId;
+                skillsChecklist.ID = skillsChecklistId;
                 SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
             }
 

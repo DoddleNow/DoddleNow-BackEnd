@@ -82,7 +82,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            client.ClientGUID = clientId;
+            client.ID = clientId;
 
             Clients.UpdateClient(client);
 
@@ -504,7 +504,7 @@ namespace DoddleNow.API.Controllers
             {
                 if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
                 {
-                    skillsChecklist.SkillsChecklistGUID = skillsChecklistId;
+                    skillsChecklist.ID = skillsChecklistId;
                     SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
                 }
             }
@@ -680,7 +680,7 @@ namespace DoddleNow.API.Controllers
         {
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.UpdateClient(client.ClientGUID, client.Name, client.Description, client.Address1, client.Address2, client.City,
+            da.UpdateClient(client.ID, client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentGUID);
         }
 
