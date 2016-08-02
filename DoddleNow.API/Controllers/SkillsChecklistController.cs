@@ -42,11 +42,11 @@ namespace DoddleNow.API.Controllers
         ///Get SkillsChecklist with id = id 
         ///</summary>
         [Authorize(Roles = "1,2,3,4,5,6")]
-        [Route("{SkillsChecklistId}")]
+        [Route("{sclId}")]
         [HttpGet]
-        public IHttpActionResult GetSkillsChecklist(Guid skillsChecklistId)
+        public IHttpActionResult GetSkillsChecklist(Guid sclId)
         {
-            return Ok(SkillsChecklists.GetSkillsChecklist(skillsChecklistId));
+            return Ok(SkillsChecklists.GetSkillsChecklist(sclId));
         }
 
         ///<summary>
@@ -55,14 +55,14 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddSkillsChecklist(SkillsChecklist skillsChecklist)
+        public async Task<IHttpActionResult> AddSkillsChecklist(SkillsChecklist scl)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            SkillsChecklists.AddSkillsChecklist(skillsChecklist);
+            SkillsChecklists.AddSkillsChecklist(scl);
             return Ok();
         }
 
@@ -70,16 +70,16 @@ namespace DoddleNow.API.Controllers
         ///Update SkillsChecklist with id = id
         ///</summary>
         [Authorize(Roles = "1")]
-        [Route("{skillsChecklistId}")]
+        [Route("{sclId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSkillsChecklist(Guid skillsChecklistId, SkillsChecklist skillsChecklist)
+        public async Task<IHttpActionResult> UpdateSkillsChecklist(Guid sclId, SkillsChecklist scl)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            skillsChecklist.ID = skillsChecklistId;
-            SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
+            scl.ID = sclId;
+            SkillsChecklists.UpdateSkillsChecklist(scl);
 
             return Ok();
         }
@@ -88,11 +88,11 @@ namespace DoddleNow.API.Controllers
         ///Delete SkillsChecklist
         ///</summary>
         [Authorize(Roles = "1")]
-        [Route("{skillsChecklistId}")]
+        [Route("{sclId}")]
         [HttpDelete]
-        public IHttpActionResult DeleteSkillsChecklist(Guid skillsChecklistId)
+        public IHttpActionResult DeleteSkillsChecklist(Guid sclId)
         {
-            SkillsChecklists.DeleteSkillsChecklist(skillsChecklistId);
+            SkillsChecklists.DeleteSkillsChecklist(sclId);
             return Ok();
         }
 
@@ -102,38 +102,39 @@ namespace DoddleNow.API.Controllers
         ///Get all questions for Skill check list with id = id
         ///</summary>
         [Authorize(Roles = "1,2,3,4,5,6")]
-        [Route("{skillsChecklistId}/questions")]
+        [Route("{sclId}/questions")]
         [HttpGet]
-        public IHttpActionResult GetSkillsChecklistQuestions(Guid skillsChecklistId)
+        public IHttpActionResult GetSkillsChecklistQuestions(Guid sclId)
         {
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestions(skillsChecklistId));
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestions(sclId));
         }
 
         ///<summary>
         ///Get question for Skill check list with id = id, question id
         ///</summary>
         [Authorize(Roles = "1,2,3,4,5,6")]
-        [Route("{skillsChecklistId}/questions/{skillsChecklistQuestionId}")]
+        [Route("{sclId}/questions/{questionId}")]
         [HttpGet]
-        public IHttpActionResult GetSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId)
+        public IHttpActionResult GetSkillsChecklistQuestion(Guid sclId, Guid questionId)
         {
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestion(skillsChecklistId, skillsChecklistQuestionId));
+            //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId));
         }
 
         ///<summary>
         ///Create new questions for Skill check list with id = id
         ///</summary>
         [Authorize(Roles = "1")]
-        [Route("{skillsChecklistId}/questions")]
+        [Route("{sclId}/questions")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddSkillsChecklistQuestion(Guid skillsChecklistId, Question question)
+        public async Task<IHttpActionResult> AddSkillsChecklistQuestion(Guid sclId, Question question)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-           SkillsChecklists.AddQuestion(skillsChecklistId, question);
+           SkillsChecklists.AddQuestion(sclId, question);
             
 
             return Ok();
@@ -144,29 +145,30 @@ namespace DoddleNow.API.Controllers
         ///Update SkillsChecklist with id = id
         ///</summary>
         [Authorize(Roles = "1")]
-        [Route("{skillsChecklistId}/questions/{skillsChecklistQuestionId}")]
+        [Route("{sclId}/questions/{questionId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, Question question)
+        public async Task<IHttpActionResult> UpdateSkillsChecklistQuestion(Guid sclId, Guid questionId, Question question)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
-            SkillsChecklists.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question);
+            //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
+            SkillsChecklists.UpdateQuestion(sclId, questionId, question);
 
             return Ok();
         }
 
         ///<summary>
-        ///Delete SkillsChecklist
+        ///Delete SkillsChecklist Question
         ///</summary>
         [Authorize(Roles = "1")]
-        [Route("{skillsChecklistId}/questions/{skillsChecklistQuestionId}")]
+        [Route("{sclId}/questions/{questionId}")]
         [HttpDelete]
-        public IHttpActionResult DeleteSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId)
+        public IHttpActionResult DeleteSkillsChecklistQuestion(Guid sclId, Guid questionId)
         {
-            SkillsChecklists.DeleteSkillsChecklistQuestions(skillsChecklistId, skillsChecklistQuestionId);
+            //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
+            SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, questionId);
             return Ok();
         }
 

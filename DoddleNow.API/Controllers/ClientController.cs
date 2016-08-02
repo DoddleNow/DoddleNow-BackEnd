@@ -459,11 +459,11 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1,2")]
         [Route("{clientId}/jobs/{jobId}/scl")]
         [HttpPost]
-        public IHttpActionResult AddSkillsChecklists(Guid clientId, Guid jobId, SkillsChecklist skillsChecklist)
+        public IHttpActionResult AddSkillsChecklists(Guid clientId, Guid jobId, SkillsChecklist scl)
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                Guid id = SkillsChecklists.AddSkillsChecklist(skillsChecklist);
+                Guid id = SkillsChecklists.AddSkillsChecklist(scl);
                 Jobs.AddJobSkillsChecklist(jobId, id);
             }   
 
@@ -475,16 +475,16 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get Skill check list id for job id , client id
         ///</summary>
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpGet]
-        public IHttpActionResult GetJobSkillsChecklists(Guid clientId, Guid jobId, Guid skillsChecklistId)
+        public IHttpActionResult GetJobSkillsChecklists(Guid clientId, Guid jobId, Guid sclId)
         {
             usp_GetSkillsChecklistsResult spec = new usp_GetSkillsChecklistsResult();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    spec = SkillsChecklists.GetSkillsChecklist(skillsChecklistId);
+                    spec = SkillsChecklists.GetSkillsChecklist(sclId);
                 }
             }
                 
@@ -496,16 +496,16 @@ namespace DoddleNow.API.Controllers
         ///Update Get Skill check list id for job id , client id
         ///</summary>
         [Authorize(Roles = "1,2")]
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpPost]
-        public IHttpActionResult UpdateSkillsChecklist(Guid clientId, Guid jobId, Guid skillsChecklistId, SkillsChecklist skillsChecklist)
+        public IHttpActionResult UpdateSkillsChecklist(Guid clientId, Guid jobId, Guid sclId, SkillsChecklist scl)
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    skillsChecklist.ID = skillsChecklistId;
-                    SkillsChecklists.UpdateSkillsChecklist(skillsChecklist);
+                    scl.ID = sclId;
+                    SkillsChecklists.UpdateSkillsChecklist(scl);
                 }
             }
             return Ok();
@@ -516,15 +516,15 @@ namespace DoddleNow.API.Controllers
         ///Delete Get Skill check list id for job id , client id
         ///</summary>
         [Authorize(Roles = "1,2")]
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpDelete]
-        public IHttpActionResult DeleteSkillsChecklist(Guid clientId, Guid jobId, Guid skillsChecklistId)
+        public IHttpActionResult DeleteSkillsChecklist(Guid clientId, Guid jobId, Guid sclId)
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    SkillsChecklists.DeleteSkillsChecklist(skillsChecklistId);
+                    SkillsChecklists.DeleteSkillsChecklist(sclId);
                 }
             }   
 
@@ -536,16 +536,16 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all questions for scl id, job id , client id
         ///</summary>
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}/questions")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}/questions")]
         [HttpGet]
-        public IHttpActionResult GetJobSkillsChecklistQuestions(Guid clientId, Guid jobId, Guid skillsChecklistId)
+        public IHttpActionResult GetJobSkillsChecklistQuestions(Guid clientId, Guid jobId, Guid sclId)
         {
             List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    questions = SkillsChecklists.GetSkillsChecklistQuestions(skillsChecklistId);
+                    questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
                 }
             }
                 return Ok(questions);
@@ -556,15 +556,15 @@ namespace DoddleNow.API.Controllers
         ///Create new question for scl id, job id , client id
         ///</summary>
         [Authorize(Roles = "1,2")]
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}/questions")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}/questions")]
         [HttpPost]
-        public IHttpActionResult AddSkillsChecklistQuestion(Guid clientId, Guid jobId, Guid skillsChecklistId, Question question)
+        public IHttpActionResult AddSkillsChecklistQuestion(Guid clientId, Guid jobId, Guid sclId, Question question)
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    int id = SkillsChecklists.AddQuestion(skillsChecklistId, question);
+                    int id = SkillsChecklists.AddQuestion(sclId, question);
                 }
             }
             return Ok();
@@ -574,15 +574,15 @@ namespace DoddleNow.API.Controllers
         ///Delete all questions for scl with id = id, job with id = id
         ///</summary>
         [Authorize(Roles = "1,2")]
-        [Route("{clientId}/jobs/{jobId}/scl/{skillsChecklistId}/questions")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}/questions")]
         [HttpDelete]
-        public IHttpActionResult DeleteSkillsChecklistQuestion(Guid clientId, Guid jobId, Guid skillsChecklistId)
+        public IHttpActionResult DeleteSkillsChecklistQuestion(Guid clientId, Guid jobId, Guid sclId)
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == skillsChecklistId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
                 {
-                    SkillsChecklists.DeleteSkillsChecklistQuestions(skillsChecklistId, null);
+                    SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, null);
                 }
             }
             return Ok();
