@@ -147,7 +147,7 @@ namespace DataAccessLayer
             return context.usp_AddClient(name, address1, address2, city, state, zip, description, parentGUID).FirstOrDefault().CLIENT_GUID.Value;
         }
 
-        public void UpdateClient(Guid clientGuid, string name, string description, string address1, string address2, string city, string state, string zip, Guid parentGUID)
+        public void UpdateClient(Guid clientGuid, string name, string description, string address1, string address2, string city, string state, string zip, Guid? parentGUID)
         {
             context.usp_UpdateClient(null, clientGuid, name, address1, address2, city, state, zip, description, parentGUID);
         }

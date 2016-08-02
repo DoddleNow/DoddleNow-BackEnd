@@ -62,8 +62,8 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            SkillsChecklists.AddSkillsChecklist(scl);
-            return Ok();
+            Guid gid = SkillsChecklists.AddSkillsChecklist(scl);
+            return Ok(gid);
         }
 
         ///<summary>

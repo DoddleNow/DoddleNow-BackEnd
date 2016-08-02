@@ -126,7 +126,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            client.ParentGUID = clientId;
+            client.ParentID = clientId;
 
             Guid newVal = Clients.AddClient(client).Value;
             return Ok(newVal);
@@ -235,7 +235,13 @@ namespace DoddleNow.API.Controllers
             user.ID = userId;
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+
+            //make sure user exists
+            usp_GetUserResult usr = da.GetUser(userId);
+            if (usr != null)
+                da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+            else
+                return Ok("User does not exist");
 
             return Ok();
         }
@@ -681,7 +687,7 @@ namespace DoddleNow.API.Controllers
             //add additional user info to database
             DataAccess da = new DataAccess();
             da.UpdateClient(client.ID, client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentGUID);
+                    client.State, client.ZIP, client.ParentID);
         }
 
         /// <summary>
@@ -693,7 +699,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             return da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentGUID).Value;
+                    client.State, client.ZIP, client.ParentID.Value).Value;
         }
 
         /// <summary>
