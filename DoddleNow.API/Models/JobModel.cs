@@ -27,15 +27,15 @@ namespace DoddleNow.API.Models
     public class Job
     {
         ///<summary>
-        ///ID
+        ///Id
         ///</summary>
-        [Display(Name = "ID")]
+        [Display(Name = "Id")]
         public Guid ID { get; set; }
 
         ///<summary>
-        ///ClientGUID for job to client association
+        ///ClientID for job to client association
         ///</summary>
-        [Display(Name = "ClientGUID")]
+        [Display(Name = "ClientID")]
         public Guid ClientGUID { get; set; }
 
         ///<summary>

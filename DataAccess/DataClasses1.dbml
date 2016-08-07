@@ -40,33 +40,6 @@
       <Column Name="PARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetUsers" Method="usp_GetUsers">
-    <Parameter Name="ROLE_ID" Parameter="rOLE_ID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetUsersResult">
-      <Column Name="ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetUserResult">
-      <Column Name="ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_UpdateUser" Method="usp_UpdateUser">
     <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
     <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
@@ -133,17 +106,6 @@
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.usp_GetSkillsChecklists" Method="usp_GetSkillsChecklists">
-    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetSkillsChecklistsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_UpdateSkillsChecklist" Method="usp_UpdateSkillsChecklist">
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="TITLE" Parameter="tITLE" Type="System.String" DbType="VarChar(50)" />
@@ -179,18 +141,6 @@
     <Parameter Name="Position" Parameter="position" Type="System.Int32" DbType="Int" />
     <ElementType Name="usp_UpdateQuestionResult">
       <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
-    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="TEXT" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="QUESTION_TYPE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.usp_AddJobSpecialty" Method="usp_AddJobSpecialty">
@@ -281,5 +231,59 @@
     <Parameter Name="DESCR" Parameter="dESCR" Type="System.String" DbType="NVarChar(MAX)" />
     <Parameter Name="PARENT_GUID" Parameter="pARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetSkillsChecklists" Method="usp_GetSkillsChecklists">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetSkillsChecklistsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TEXT" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="QUESTION_TYPE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserResult">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUsers" Method="usp_GetUsers">
+    <Parameter Name="ROLE_ID" Parameter="rOLE_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetUsersResult">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </ElementType>
   </Function>
 </Database>

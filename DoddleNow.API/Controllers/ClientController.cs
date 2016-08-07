@@ -156,7 +156,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            user.ClientGUID = clientId;
+            user.ClientID = clientId;
 
             IdentityResult result = await _repo.RegisterUser(user);
 
@@ -170,7 +170,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             }
 
             return Ok();
@@ -213,7 +213,7 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetClientUsers(Guid clientId, Guid userId)
         {
-            var users = Users.GetAllUsers(null, clientId).Where(v => v.ID == userId.ToString()).FirstOrDefault();
+            var users = Users.GetAllUsers(null, clientId).Where(v => v.Id == userId.ToString()).FirstOrDefault();
             return Ok(users);
         }
 
@@ -231,15 +231,15 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            user.ClientGUID = clientId;
-            user.ID = userId;
+            user.ClientID = clientId;
+            user.Id = userId;
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
 
             //make sure user exists
             usp_GetUserResult usr = da.GetUser(userId);
             if (usr != null)
-                da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             else
                 return Ok("User does not exist");
 
@@ -488,7 +488,7 @@ namespace DoddleNow.API.Controllers
             usp_GetSkillsChecklistsResult spec = new usp_GetSkillsChecklistsResult();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     spec = SkillsChecklists.GetSkillsChecklist(sclId);
                 }
@@ -508,7 +508,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     scl.ID = sclId;
                     SkillsChecklists.UpdateSkillsChecklist(scl);
@@ -528,7 +528,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     SkillsChecklists.DeleteSkillsChecklist(sclId);
                 }
@@ -549,7 +549,7 @@ namespace DoddleNow.API.Controllers
             List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
                 }
@@ -568,7 +568,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     int id = SkillsChecklists.AddQuestion(sclId, question);
                 }
@@ -586,7 +586,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
                     SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, null);
                 }

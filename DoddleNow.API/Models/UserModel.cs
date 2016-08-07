@@ -27,10 +27,10 @@ namespace DoddleNow.API.Models
     public class User
     {
         ///<summary>
-        ///ID
+        ///Id
         ///</summary>
-        [Display(Name = "ID")]
-        public Guid ID { get; set; }
+        [Display(Name = "Id")]
+        public Guid Id { get; set; }
 
         ///<summary>
         ///User first name
@@ -47,7 +47,7 @@ namespace DoddleNow.API.Models
         public string LastName { get; set; }
 
         ///<summary>
-        ///Role ID of user
+        ///Role Id of user
         /// Id	Name
         /// 1	DoddleNow Super Admin
         /// 2	DoddleNow Support
@@ -60,11 +60,12 @@ namespace DoddleNow.API.Models
         [Display(Name = "RoleID")]
         public int RoleID { get; set; }
 
+        
         ///<summary>
-        ///ClientGUID if user is associated to a client. Required if RoleID is 3, 4, or 5
+        ///ClientID if user is associated to a client. Required if RoleID is 3, 4, or 5
         ///</summary>
-        [Display(Name = "ClientGUID")]
-        public Guid ClientGUID { get; set; }
+        [Display(Name = "ClientID")]
+        public Guid ClientID { get; set; }
 
         ///<summary>
         ///User title
@@ -94,7 +95,6 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///User password
         ///</summary>
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

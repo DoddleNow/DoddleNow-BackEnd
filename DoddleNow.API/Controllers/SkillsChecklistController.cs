@@ -213,7 +213,7 @@ namespace DoddleNow.API.Controllers
         public static usp_GetQuestionsResult GetSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklistQuestions(skillsChecklistId).Where(v=>v.GUID == skillsChecklistQuestionId).FirstOrDefault();
+            return da.GetSkillsChecklistQuestions(skillsChecklistId).Where(v=>v.ID == skillsChecklistQuestionId).FirstOrDefault();
         }
 
         ///<summary>

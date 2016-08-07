@@ -11,9 +11,9 @@ namespace DoddleNow.API.Models
     public class Specialty
     {
         ///<summary>
-        ///ID
+        ///Id
         ///</summary>
-        [Display(Name = "ID")]
+        [Display(Name = "Id")]
         public Int32 ID { get; set; }
 
         ///<summary>

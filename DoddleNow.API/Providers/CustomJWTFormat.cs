@@ -14,7 +14,7 @@ namespace DoddleNow.API.Providers
     public class CustomJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
         private readonly string _issuer = string.Empty;
-
+        private readonly string Base64Secret = "IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw";
         public CustomJwtFormat(string issuer)
         {
             _issuer = issuer;
@@ -23,13 +23,9 @@ namespace DoddleNow.API.Providers
         public string Protect(AuthenticationTicket data)
         {
             if (data == null)
-            {
                 throw new ArgumentNullException("data");
-            }
 
-            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
-
-            string symmetricKeyAsBase64 = ConfigurationManager.AppSettings["as:AudienceSecret"];
+            string symmetricKeyAsBase64 = Base64Secret;
 
             var keyByteArray = TextEncodings.Base64Url.Decode(symmetricKeyAsBase64);
 
@@ -39,8 +35,7 @@ namespace DoddleNow.API.Providers
 
             var expires = data.Properties.ExpiresUtc;
 
-            var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims,
-            issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingKey);
+            var token = new JwtSecurityToken(_issuer, null, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingKey);
 
             var handler = new JwtSecurityTokenHandler();
 

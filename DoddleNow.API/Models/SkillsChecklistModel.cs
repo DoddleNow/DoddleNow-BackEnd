@@ -12,9 +12,9 @@ namespace DoddleNow.API.Models
     {
        
         ///<summary>
-        ///ID
+        ///Id
         ///</summary>
-        [Display(Name = "ID")]
+        [Display(Name = "Id")]
         public Guid ID { get; set; }
 
         ///<summary>

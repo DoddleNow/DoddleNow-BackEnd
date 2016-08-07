@@ -214,7 +214,7 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult GetJobSkillsChecklists(Guid jobId, Guid sclId)
         {
             usp_GetSkillsChecklistsResult spec = new usp_GetSkillsChecklistsResult();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 spec = SkillsChecklists.GetSkillsChecklist(sclId);
             }
@@ -230,7 +230,7 @@ namespace DoddleNow.API.Controllers
         [HttpPost]
         public IHttpActionResult UpdateSkillsChecklist(Guid jobId, Guid sclId, SkillsChecklist scl)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 scl.ID = sclId;
                 SkillsChecklists.UpdateSkillsChecklist(scl);
@@ -248,7 +248,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklist(Guid jobId, Guid sclId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklist(sclId);
             }
@@ -266,7 +266,7 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult GetJobSkillsChecklistQuestions(Guid jobId, Guid sclId)
         {
             List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
             }
@@ -283,7 +283,7 @@ namespace DoddleNow.API.Controllers
         [HttpPost]
         public IHttpActionResult AddSkillsChecklistQuestion(Guid jobId, Guid sclId, Question question)
         {
-            if(Jobs.GetJobSkillsChecklists(jobId).Where(v=>v.GUID == sclId).Count() > 0)
+            if(Jobs.GetJobSkillsChecklists(jobId).Where(v=>v.ID == sclId).Count() > 0)
             {
                 int id = SkillsChecklists.AddQuestion(sclId, question);
             }
@@ -299,7 +299,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklistQuestion(Guid jobId, Guid sclId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, null);
             }
@@ -319,7 +319,7 @@ namespace DoddleNow.API.Controllers
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
 
             usp_GetQuestionsResult spec = new usp_GetQuestionsResult();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 spec = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);
             }
@@ -336,7 +336,7 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult UpdateSkillsChecklistQuestion(Guid jobId, Guid sclId, Guid questionId, Question question)
         {
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 SkillsChecklists.UpdateQuestion(sclId, questionId, question);
             }
@@ -353,7 +353,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklistQuestion(Guid jobId, Guid sclId, Guid questionId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.GUID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, questionId);
             }

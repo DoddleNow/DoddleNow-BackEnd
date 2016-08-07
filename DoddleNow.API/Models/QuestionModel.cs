@@ -11,16 +11,24 @@ namespace DoddleNow.API.Models
     public class Question
     {
         ///<summary>
-        ///ID
+        ///Id
         ///</summary>
-        [Display(Name = "ID")]
+        [Display(Name = "Id")]
         public int ID { get; set; }
 
         ///<summary>
         ///QuestionTypeID
         ///</summary>
+        [Required]
         [Display(Name = "QuestionTypeID")]
         public int QuestionTypeID { get; set; }
+
+        ///<summary>
+        ///Question Type
+        ///</summary>
+        [Display(Name = "Text")]
+        public string QuestionType { get; set; }
+
 
         ///<summary>
         ///Question Text

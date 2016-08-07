@@ -54,6 +54,10 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            else if (user.Password == null)
+            {
+                return BadRequest("Password is required on POST.");
+            }
 
             IdentityResult result = await _repo.RegisterUser(user);
            
@@ -67,7 +71,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             }
 
             return Ok();
@@ -97,11 +101,11 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            user.ID = userId;
+            user.Id = userId;
 
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateUser(user.ID, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientGUID);
+            da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             
             return Ok();
         }
