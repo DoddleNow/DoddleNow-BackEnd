@@ -82,7 +82,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            client.ID = clientId;
+            client.Id = clientId;
 
             Clients.UpdateClient(client);
 
@@ -126,7 +126,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            client.ParentID = clientId;
+            client.ParentId = clientId;
 
             Guid newVal = Clients.AddClient(client).Value;
             return Ok(newVal);
@@ -281,7 +281,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            job.ClientGUID = clientId;
+            job.ClientId = clientId;
 
             Guid newVal = Clients.AddJob(job).Value;
             return Ok(newVal);
@@ -300,11 +300,11 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            job.ClientGUID = clientId;
-            job.ID = jobId;
+            job.ClientId = clientId;
+            job.Id = jobId;
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateJob(job.ID, job.ClientGUID, job.Name, job.Description, job.StartDate.HasValue ? job.StartDate : null, job.EndDate.HasValue ? job.EndDate : null);
+            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate.HasValue ? job.StartDate : null, job.EndDate.HasValue ? job.EndDate : null);
 
             return Ok();
         }
@@ -413,7 +413,7 @@ namespace DoddleNow.API.Controllers
                 //check that specialty exists for job
                 if (Clients.GetSpecialtiesByClientJob(clientId, jobId).Where(v => v.ID == specialtyId).Count() > 0)
                 {
-                    specialty.ID = specialtyId;
+                    specialty.Id = specialtyId;
                     //allow specialty update
                     Specialties.UpdateSpecialty(specialty);
                 }
@@ -510,7 +510,7 @@ namespace DoddleNow.API.Controllers
             {
                 if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
                 {
-                    scl.ID = sclId;
+                    scl.Id = sclId;
                     SkillsChecklists.UpdateSkillsChecklist(scl);
                 }
             }
@@ -686,8 +686,8 @@ namespace DoddleNow.API.Controllers
         {
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.UpdateClient(client.ID, client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentID);
+            da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
+                    client.State, client.ZIP, client.ParentId);
         }
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             return da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentID.Value).Value;
+                    client.State, client.ZIP, client.ParentId.Value).Value;
         }
 
         /// <summary>
@@ -710,7 +710,7 @@ namespace DoddleNow.API.Controllers
         public static Guid? AddJob(Job job)
         {
             DataAccess da = new DataAccess();
-            return da.AddJob(job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate).Value;
+            return da.AddJob(job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate).Value;
         }
 
         /// <summary>
@@ -754,7 +754,7 @@ namespace DoddleNow.API.Controllers
         {
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.UpdateJob(job.ID, job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate);
+            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate);
         }
     }
     #endregion

@@ -179,20 +179,6 @@
       <Column Name="ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetJobs" Method="usp_GetJobs">
-    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetJobsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="CLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="START_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="END_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="APPLICANT_COUNT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetJobSkillsChecklist" Method="usp_GetJobSkillsChecklist">
     <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="SurveyID" Parameter="surveyID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -207,16 +193,6 @@
     <ElementType Name="usp_GetQuestionTypesResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetClients" Method="usp_GetClients">
-    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetClientsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="DT_CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="PARENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.usp_UpdateClient" Method="usp_UpdateClient">
@@ -240,17 +216,6 @@
       <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
-    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="TEXT" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="QUESTION_TYPE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
@@ -284,6 +249,47 @@
       <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetJobs" Method="usp_GetJobs">
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetJobsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicantCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetClients" Method="usp_GetClients">
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Address1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Address2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CITY" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="STATE" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="ZIP" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

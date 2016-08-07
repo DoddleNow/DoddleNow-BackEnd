@@ -24,13 +24,6 @@ namespace DoddleNow.API.Models
         public int QuestionTypeID { get; set; }
 
         ///<summary>
-        ///Question Type
-        ///</summary>
-        [Display(Name = "Text")]
-        public string QuestionType { get; set; }
-
-
-        ///<summary>
         ///Question Text
         ///</summary>
         [Required]

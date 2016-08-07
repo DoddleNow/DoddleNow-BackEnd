@@ -14,7 +14,7 @@ namespace DoddleNow.API.Models
         ///Client GUID - Only used if updating object
         ///</summary>
         [Display(Name = "Id")]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         ///<summary>
         ///Client Name
@@ -32,8 +32,8 @@ namespace DoddleNow.API.Models
         /// <summary>
         /// If part of a network, may have a parent hospital/client
         /// </summary>
-        [Display(Name = "Parent GUID")]
-        public Guid? ParentID { get; set; }
+        [Display(Name = "Parent ID")]
+        public Guid? ParentId { get; set; }
 
         ///<summary>
         ///Primary Address

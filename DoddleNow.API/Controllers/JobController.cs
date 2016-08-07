@@ -67,7 +67,7 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            job.ID = jobId;
+            job.Id = jobId;
 
             Jobs.UpdateJob(job);
 
@@ -152,7 +152,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Jobs.GetJobSpecialties(jobId).Where(v => v.ID == specialtyId).Count() > 0)
             {
-                specialty.ID = specialtyId;
+                specialty.Id = specialtyId;
                 Specialties.UpdateSpecialty(specialty);
             }
 
@@ -232,7 +232,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
             {
-                scl.ID = sclId;
+                scl.Id = sclId;
                 SkillsChecklists.UpdateSkillsChecklist(scl);
             }
 
@@ -435,7 +435,7 @@ namespace DoddleNow.API.Controllers
         public static Guid AddJob(Job job)
         {
             DataAccess da = new DataAccess();
-            return da.AddJob(job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate).Value;
+            return da.AddJob(job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate).Value;
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace DoddleNow.API.Controllers
         public static void UpdateJob(Job job)
         {
             DataAccess da = new DataAccess();
-            da.UpdateJob(job.ID, job.ClientGUID, job.Name, job.Description, job.StartDate, job.EndDate);
+            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate);
         }
 
         /// <summary>

@@ -133,7 +133,7 @@ namespace DoddleNow.API.Controllers
         public static void UpdateSpecialty(Specialty specialty)
         {
             DataAccess da = new DataAccess();
-            da.UpdateSpecialty(specialty.ID, specialty.Name, specialty.Description);
+            da.UpdateSpecialty(specialty.Id, specialty.Name, specialty.Description);
         }
 
         /// <summary>

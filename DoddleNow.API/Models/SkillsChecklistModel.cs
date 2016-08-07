@@ -15,7 +15,7 @@ namespace DoddleNow.API.Models
         ///Id
         ///</summary>
         [Display(Name = "Id")]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         ///<summary>
         ///Skills Checklist Name
