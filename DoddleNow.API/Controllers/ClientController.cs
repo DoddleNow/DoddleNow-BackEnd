@@ -699,7 +699,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             return da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentId.Value).Value;
+                    client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid()).Value;
         }
 
         /// <summary>
