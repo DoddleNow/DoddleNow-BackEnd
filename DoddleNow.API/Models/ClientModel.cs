@@ -32,7 +32,7 @@ namespace DoddleNow.API.Models
         /// <summary>
         /// If part of a network, may have a parent hospital/client
         /// </summary>
-        [Display(Name = "Parent ID")]
+        [Display(Name = "Parent Id")]
         public Guid? ParentId { get; set; }
 
         ///<summary>
