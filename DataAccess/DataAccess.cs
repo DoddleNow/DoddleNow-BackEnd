@@ -142,14 +142,14 @@ namespace DataAccessLayer
             return context.usp_AddJob(clientId, name, description, startDate, endDate).FirstOrDefault().ID;
         }
 
-        public Guid? AddClient(string name, string description, string address1, string address2, string city, string state, string zip, Guid parentGUID)
+        public Guid? AddClient(string name, string description, string address1, string address2, string city, string state, string zip, Guid parentGUID, string supplementalDescr, string urlRoute, int profileTemplateId)
         {
-            return context.usp_AddClient(name, address1, address2, city, state, zip, description, parentGUID).FirstOrDefault().CLIENT_GUID.Value;
+            return context.usp_AddClient(name, address1, address2, city, state, zip, description, parentGUID, supplementalDescr, urlRoute, profileTemplateId).FirstOrDefault().CLIENT_GUID.Value;
         }
 
-        public void UpdateClient(Guid clientGuid, string name, string description, string address1, string address2, string city, string state, string zip, Guid? parentGUID)
+        public void UpdateClient(Guid clientGuid, string name, string description, string address1, string address2, string city, string state, string zip, Guid? parentGUID, string supplementalDescr, string urlRoute, int profileTemplateId)
         {
-            context.usp_UpdateClient(null, clientGuid, name, address1, address2, city, state, zip, description, parentGUID);
+            context.usp_UpdateClient(null, clientGuid, name, address1, address2, city, state, zip, description, parentGUID, supplementalDescr, urlRoute, profileTemplateId);
         }
 
         public List<usp_GetClientsResult> GetClients()

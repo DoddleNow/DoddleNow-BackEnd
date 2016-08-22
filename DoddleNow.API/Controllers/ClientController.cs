@@ -687,7 +687,7 @@ namespace DoddleNow.API.Controllers
             //add additional user info to database
             DataAccess da = new DataAccess();
             da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentId);
+                    client.State, client.ZIP, client.ParentId, client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId);
         }
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             return da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
-                    client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid()).Value;
+                    client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid(), client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId).Value;
         }
 
         /// <summary>

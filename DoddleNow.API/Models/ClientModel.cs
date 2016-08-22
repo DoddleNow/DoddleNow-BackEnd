@@ -68,6 +68,24 @@ namespace DoddleNow.API.Models
         [Required]
         [Display(Name = "ZIP Code")]
         public string ZIP { get; set; }
-        
+
+        ///<summary>
+        ///Supplemental description
+        ///</summary>
+        [Display(Name = "Supplemental Description")]
+        public string SupplementalDescription { get; set; }
+
+        ///<summary>
+        ///Custom URL Route
+        ///</summary>
+        [Display(Name = "URL Route")]
+        public string URLRoute { get; set; }
+
+        ///<summary>
+        ///Profile Template ID
+        ///</summary>
+        [Display(Name = "Profile Template ID")]
+        public int ProfileTemplateId { get; set; }
+
     }
 }
