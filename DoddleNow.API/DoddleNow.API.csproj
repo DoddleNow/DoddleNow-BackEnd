@@ -196,6 +196,7 @@
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\MarketingBulletModel.cs" />
     <Compile Include="Models\SkillsChecklistModel.cs" />
     <Compile Include="Models\SpecialtyModel.cs" />
     <Compile Include="Models\JobModel.cs" />

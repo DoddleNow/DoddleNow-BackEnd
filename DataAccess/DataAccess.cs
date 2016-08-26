@@ -137,6 +137,21 @@ namespace DataAccessLayer
             context.usp_DeleteJob(jobId);
         }
 
+        public List<usp_GetMarketingBulletsResult> GetMarketingBullets(Guid clientId)
+        {
+            return context.usp_GetMarketingBullets(clientId).ToList();
+        }
+
+        public void DeleteMarketingBullets(Guid clientId)
+        {
+            context.usp_DeleteMarketingBullets(clientId);
+        }
+
+        public void AddMarketingBullet(Guid clientId, string bulletPoint)
+        {
+            context.usp_AddMarketingBullet(clientId, bulletPoint);
+        }
+
         public Guid? AddJob(Guid clientId, string name, string description, DateTime? startDate, DateTime? endDate)
         {
             return context.usp_AddJob(clientId, name, description, startDate, endDate).FirstOrDefault().ID;

@@ -471,7 +471,7 @@ namespace DoddleNow.API.Controllers
             {
                 Guid id = SkillsChecklists.AddSkillsChecklist(scl);
                 Jobs.AddJobSkillsChecklist(jobId, id);
-            }   
+            }
 
             return Ok();
         }
@@ -493,7 +493,7 @@ namespace DoddleNow.API.Controllers
                     spec = SkillsChecklists.GetSkillsChecklist(sclId);
                 }
             }
-                
+
             return Ok(spec);
         }
 
@@ -532,7 +532,7 @@ namespace DoddleNow.API.Controllers
                 {
                     SkillsChecklists.DeleteSkillsChecklist(sclId);
                 }
-            }   
+            }
 
             return Ok();
         }
@@ -554,7 +554,7 @@ namespace DoddleNow.API.Controllers
                     questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
                 }
             }
-                return Ok(questions);
+            return Ok(questions);
         }
 
 
@@ -609,10 +609,30 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all clients across DoddleNow
         ///</summary>
-        public static List<usp_GetClientsResult> GetAllClients()
+        public static List<Client> GetAllClients()
         {
             DataAccess da = new DataAccess();
-            return da.GetClients().ToList();
+            List<Client> clients = new List<Client>();
+            List<usp_GetClientsResult> clientsBase = da.GetClients().ToList();
+            foreach (usp_GetClientsResult c in clientsBase)
+            {
+                clients.Add(new Client { Address1 = c.Address1, Address2 = c.Address2, City = c.CITY,
+                    Description = c.DESCRIPTION, Id = c.ID, Name = c.NAME, ParentId = c.ParentId, State = c.STATE, ZIP = c.ZIP,
+                 MarketingBullets = GetMarketingBullets(c.ID)});
+            }
+            return clients;
+        }
+
+        private static List<MarketingBullet> GetMarketingBullets(Guid clientId)
+        {
+            DataAccess da = new DataAccess();
+            List<MarketingBullet> bullets = new List<MarketingBullet>();
+            List<usp_GetMarketingBulletsResult> items = da.GetMarketingBullets(clientId);
+            foreach (usp_GetMarketingBulletsResult mb in items)
+            {
+                bullets.Add(new MarketingBullet { Bullet = mb.BULLET });
+            }
+            return bullets;
         }
 
         ///<summary>
@@ -629,11 +649,28 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="clientGuid"></param>
         /// <returns></returns>
-        public static List<usp_GetSubClientsResult> GetSubClients(Guid clientGuid)
+        public static List<Client> GetSubClients(Guid clientGuid)
         {
             DataAccess da = new DataAccess();
-            return da.GetSubClients(clientGuid).ToList();
-
+            List<usp_GetSubClientsResult> clientsBase = da.GetSubClients(clientGuid).ToList();
+            List<Client> clients = new List<Client>();
+            foreach (usp_GetSubClientsResult c in clientsBase)
+            {
+                clients.Add(new Client
+                {
+                    Address1 = c.Address1,
+                    Address2 = c.Address2,
+                    City = c.CITY,
+                    Description = c.DESCRIPTION,
+                    Id = c.ID,
+                    Name = c.NAME,
+                    ParentId = c.ParentId,
+                    State = c.STATE,
+                    ZIP = c.ZIP,
+                    MarketingBullets = GetMarketingBullets(c.ID)
+                });
+            }
+            return clients;
         }
 
 
@@ -661,10 +698,23 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get client
         ///</summary>
-        public static usp_GetClientsResult GetClient(Guid clientGuid)
+        public static Client GetClient(Guid clientGuid)
         {
             DataAccess da = new DataAccess();
-            usp_GetClientsResult client = da.GetClient(clientGuid);
+            usp_GetClientsResult c = da.GetClient(clientGuid);
+            Client client = new Client
+            {
+                Address1 = c.Address1,
+                Address2 = c.Address2,
+                City = c.CITY,
+                Description = c.DESCRIPTION,
+                Id = c.ID,
+                Name = c.NAME,
+                ParentId = c.ParentId,
+                State = c.STATE,
+                ZIP = c.ZIP,
+                MarketingBullets = GetMarketingBullets(c.ID)
+            };
 
             return client;
         }
@@ -688,6 +738,14 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
             da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId, client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId);
+            if (client.MarketingBullets.Count > 0)
+            {
+                da.DeleteMarketingBullets(client.Id);
+                foreach(MarketingBullet mb in client.MarketingBullets)
+                {
+                    da.AddMarketingBullet(client.Id, mb.Bullet);
+                }
+            }
         }
 
         /// <summary>
@@ -698,8 +756,15 @@ namespace DoddleNow.API.Controllers
         public static Guid? AddClient(Client client)
         {
             DataAccess da = new DataAccess();
-            return da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
+            Guid clientId = da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid(), client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId).Value;
+
+            foreach (MarketingBullet b in client.MarketingBullets)
+            {
+                da.AddMarketingBullet(clientId, b.Bullet);
+            }
+
+            return clientId;
         }
 
         /// <summary>

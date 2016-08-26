@@ -306,4 +306,20 @@
     <Parameter Name="PROFILE_TEMPLATE_ID" Parameter="pROFILE_TEMPLATE_ID" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_AddMarketingBullet" Method="usp_AddMarketingBullet">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="BulletPoint" Parameter="bulletPoint" Type="System.String" DbType="NVarChar(140)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteMarketingBullets" Method="usp_DeleteMarketingBullets">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetMarketingBullets" Method="usp_GetMarketingBullets">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetMarketingBulletsResult">
+      <Column Name="CLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="BULLET" Type="System.String" DbType="NVarChar(140) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

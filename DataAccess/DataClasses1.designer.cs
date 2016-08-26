@@ -292,6 +292,27 @@ namespace DataAccessLayer
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_ID, cLIENT_GUID, nAME, aDDRESS_1, aDDRESS_2, cITY, sTATE, zIP, dESCR, pARENT_GUID, sUPPLEMENTAL_DESCR, uRL_ROUTE, pROFILE_TEMPLATE_ID);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddMarketingBullet")]
+		public int usp_AddMarketingBullet([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BulletPoint", DbType="NVarChar(140)")] string bulletPoint)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, bulletPoint);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteMarketingBullets")]
+		public int usp_DeleteMarketingBullets([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetMarketingBullets")]
+		public ISingleResult<usp_GetMarketingBulletsResult> usp_GetMarketingBullets([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
+			return ((ISingleResult<usp_GetMarketingBulletsResult>)(result.ReturnValue));
+		}
 	}
 	
 	public partial class usp_GetRolesResult
@@ -2089,6 +2110,50 @@ namespace DataAccessLayer
 				if ((this._ProfileTemplateId != value))
 				{
 					this._ProfileTemplateId = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetMarketingBulletsResult
+	{
+		
+		private System.Guid _CLIENT_ID;
+		
+		private string _BULLET;
+		
+		public usp_GetMarketingBulletsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CLIENT_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CLIENT_ID
+		{
+			get
+			{
+				return this._CLIENT_ID;
+			}
+			set
+			{
+				if ((this._CLIENT_ID != value))
+				{
+					this._CLIENT_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BULLET", DbType="NVarChar(140) NOT NULL", CanBeNull=false)]
+		public string BULLET
+		{
+			get
+			{
+				return this._BULLET;
+			}
+			set
+			{
+				if ((this._BULLET != value))
+				{
+					this._BULLET = value;
 				}
 			}
 		}
