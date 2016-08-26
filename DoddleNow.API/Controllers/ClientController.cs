@@ -623,7 +623,7 @@ namespace DoddleNow.API.Controllers
             return clients;
         }
 
-        private static List<MarketingBullet> GetMarketingBullets(Guid clientId)
+        private static string[] GetMarketingBullets(Guid clientId)
         {
             DataAccess da = new DataAccess();
             List<MarketingBullet> bullets = new List<MarketingBullet>();
@@ -632,7 +632,7 @@ namespace DoddleNow.API.Controllers
             {
                 bullets.Add(new MarketingBullet { Bullet = mb.BULLET });
             }
-            return bullets;
+            return bullets.Select(v=>v.Bullet).ToArray();
         }
 
         ///<summary>
@@ -738,12 +738,12 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
             da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId, client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId);
-            if (client.MarketingBullets.Count > 0)
+            if (client.MarketingBullets.Length > 0)
             {
                 da.DeleteMarketingBullets(client.Id);
-                foreach(MarketingBullet mb in client.MarketingBullets)
+                foreach(string mb in client.MarketingBullets)
                 {
-                    da.AddMarketingBullet(client.Id, mb.Bullet);
+                    da.AddMarketingBullet(client.Id, mb);
                 }
             }
         }
@@ -759,9 +759,9 @@ namespace DoddleNow.API.Controllers
             Guid clientId = da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid(), client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId).Value;
 
-            foreach (MarketingBullet b in client.MarketingBullets)
+            foreach (string b in client.MarketingBullets)
             {
-                da.AddMarketingBullet(clientId, b.Bullet);
+                da.AddMarketingBullet(clientId, b);
             }
 
             return clientId;

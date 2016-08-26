@@ -91,7 +91,7 @@ namespace DoddleNow.API.Models
         /// One or many 140 character marketing bullets about the client to be displayed on client profile
         /// </summary>
         [Display(Name = "Marketing Bullets")]
-        public List<MarketingBullet> MarketingBullets { get; set; }
+        public string[] MarketingBullets { get; set; }
 
     }
 }
