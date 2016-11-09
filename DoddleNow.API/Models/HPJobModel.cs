@@ -1,0 +1,110 @@
+﻿using DoddleNow.API.Infrastructure;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DoddleNow.API.Models
+{
+    public class HPJob
+    {
+
+        /// <summary>
+        /// JobId
+        /// </summary>
+        [Display(Name = "JobId")]
+        public Guid JobId { get; set; }
+
+        /// <summary>
+        /// JobName
+        /// </summary>
+        [Display(Name = "JobName")]
+        public string JobName { get; set; }
+
+        /// <summary>
+        /// JobDescription
+        /// </summary>
+        [Display(Name = "JobDescription")]
+        public string JobDescription { get; set; }
+
+        /// <summary>
+        /// ClientName
+        /// </summary>
+        [Display(Name = "ClientName")]
+        public string ClientName { get; set; }
+
+        /// <summary>
+        /// ClientAddress
+        /// </summary>
+        [Display(Name = "ClientAddress")]
+        public string ClientAddress { get; set; }
+
+        /// <summary>
+        ///ClientAddress2
+        /// </summary>
+        [Display(Name = "ClientAddress2")]
+        public string ClientAddress2 { get; set; }
+
+        /// <summary>
+        /// ClientCity
+        /// </summary>
+        [Display(Name = "ClientCity")]
+        public string ClientCity { get; set; }
+
+        /// <summary>
+        /// ClientState
+        /// </summary>
+        [Display(Name = "ClientState")]
+        public string  ClientState { get; set; }
+
+        /// <summary>
+        /// ClientZip
+        /// </summary>
+        [Display(Name = "ClientZip")]
+        public string ClientZip { get; set; }
+
+        /// <summary>
+        /// Comma delimited list of specialties
+        /// </summary>
+        [Display(Name = "Specialities")]
+        public string Specialities { get; set; }
+
+        /// <summary>
+        /// HP Starred the job with interest
+        /// </summary>
+        [Display(Name = "Starred")]
+        public bool Starred { get; set; }
+
+        /// <summary>
+        /// Client Interested in HP
+        /// </summary>
+        [Display(Name = "ClientInterested")]
+        public bool ClientInterested { get; set; }
+
+        ///<summary>
+        ///ClientID for job to client association
+        ///</summary>
+        [Display(Name = "ClientID")]
+        public Guid ClientId { get; set; }
+
+        ///<summary>
+        ///Job Start Date
+        ///</summary
+        [JsonConverter(typeof(ShortDateConverter))]
+        [Display(Name = "StartDate")]
+        public DateTime? StartDate { get; set; }
+
+        ///<summary>
+        ///Job End Date
+        ///</summary>
+        [JsonConverter(typeof(ShortDateConverter))]
+        [Display(Name = "EndDate")]
+        public DateTime? EndDate { get; set; }
+
+
+    }
+    
+}

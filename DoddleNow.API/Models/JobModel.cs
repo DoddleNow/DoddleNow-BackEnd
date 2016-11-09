@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DoddleNow.API.Infrastructure;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -50,20 +52,23 @@ namespace DoddleNow.API.Models
         ///</summary>        
         [Display(Name = "Description")]
         public string Description { get; set; }
-        
+
 
         ///<summary>
         ///Job Start Date
-        ///</summary>
+        ///</summary
+        [JsonConverter(typeof(ShortDateConverter))]
         [Display(Name = "StartDate")]
         public DateTime? StartDate{ get; set; }
 
         ///<summary>
         ///Job End Date
         ///</summary>
+        [JsonConverter(typeof(ShortDateConverter))]
         [Display(Name = "EndDate")]
         public DateTime? EndDate { get; set; }
 
        
+
     }
 }

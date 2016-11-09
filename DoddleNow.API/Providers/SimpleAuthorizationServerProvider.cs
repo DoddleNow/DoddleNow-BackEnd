@@ -58,6 +58,7 @@ namespace DoddleNow.API.Providers
                 }
             }
             identity.AddClaim(new Claim("sub", context.UserName));
+            identity.AddClaim(new Claim("userId", userId == null ? string.Empty : userId));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {

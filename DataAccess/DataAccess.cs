@@ -20,6 +20,131 @@ namespace DataAccessLayer
             context.usp_UpdateUser(userId.ToString(), roleId, userName, firstName, lastName, phone, title, department, clientGUID);
         }
 
+        public List<usp_GetLocationsResult> GetLocations(Guid userId)
+        {
+            return context.usp_GetLocations(userId.ToString()).ToList();
+        }
+
+        public List<usp_GetUserLanguagesResult> GetUserLanguages(string userId)
+        {
+            return context.usp_GetUserLanguages(userId).ToList();
+        }
+
+        public List<usp_GetHPJobsResult> GetHPJobs(string userId)
+        {
+            return context.usp_GetHPJobs(userId, null).ToList();
+        }
+
+        public List<usp_GetHPJobsResult> GetHPJobs(string userId, Guid jobId)
+        {
+            return context.usp_GetHPJobs(userId, jobId).ToList();
+        }
+
+        public void DeleteUserLanguage(Guid id)
+        {
+            context.usp_DeleteUserLanguage(id);
+        }
+
+        public void AddUserLanguage(string userId, string description)
+        {
+            context.usp_AddUserLanguage(userId, description);
+        }
+
+        public void AddLocation(Guid userId, int addressTypeId, string address1, string address2, string city, string state, string zip)
+        {
+            context.usp_AddAddress(userId.ToString(), addressTypeId, address1, address2, city, state, zip);
+        }
+
+        public void UpdateLocation(Guid locationId, int addressTypeId, string address1, string address2, string city, string state, string zip)
+        {
+            context.usp_UpdateAddress(locationId, addressTypeId, address1, address2, city, state, zip);
+        }
+
+        public void DeleteLocation(Guid locationId)
+        {
+            context.usp_DeleteAddres(locationId);
+        }
+
+        public List<usp_GetEducationsResult> GetEducations(Guid userId)
+        {
+            return context.usp_GetEducations(userId.ToString()).ToList();
+        }
+
+        public void AddEducation(Guid userId, string institutionName, string major, DateTime? startDate, DateTime? endDate, int highestDegreeEarnedId, string otherDegree, bool? graduated, DateTime? graduationDate)
+        {
+            context.usp_AddEducation(userId.ToString(), institutionName, major, startDate, endDate, highestDegreeEarnedId, otherDegree, graduated, graduationDate);
+        }
+
+        public void UpdateEducation(Guid educationId, string institutionName, string major, DateTime? startDate, DateTime? endDate, int highestDegreeEarnedId, string otherDegree, bool? graduated, DateTime? graduationDate)
+        {
+            context.usp_UpdateEducation(educationId, institutionName, major, startDate, endDate, highestDegreeEarnedId, otherDegree, graduated, graduationDate);
+        }
+
+        public void DeleteEducation(Guid educationId)
+        {
+            context.usp_DeleteEducation(educationId);
+        }
+
+        public List<usp_GetCertificationsResult> GetCertifications(Guid userId)
+        {
+            return context.usp_GetCertifications(userId.ToString()).ToList();
+        }
+
+        public void AddCertification(Guid userId, string certificationName, string issuingBody, DateTime? issuanceDate, DateTime? expirationDate)
+        {
+            context.usp_AddCertification(userId.ToString(), certificationName, issuingBody, issuanceDate, expirationDate);
+        }
+
+        public void UpdateCertification(Guid certificationId, string certificationName, string issuingBody, DateTime? issuanceDate, DateTime? expirationDate)
+        {
+            context.usp_UpdateCertification(certificationId, certificationName, issuingBody, issuanceDate, expirationDate);
+        }
+
+        public void DeleteCertification(Guid certificationId)
+        {
+            context.usp_DeleteCertification(certificationId);
+        }
+
+        public List<usp_GetWorkHistoriesResult> GetWorkHistories(Guid userId)
+        {
+            return context.usp_GetWorkHistories(userId.ToString()).ToList();
+        }
+
+        public void AddWorkHistory(Guid userId, string companyName, string companyCity, string companyState, string jobTitle, string jobResponsibilities, DateTime? startDate, DateTime? endDate)
+        {
+            context.usp_AddWorkHistory(userId.ToString(), companyName, companyCity, companyState, jobTitle, jobResponsibilities, startDate, endDate);
+        }
+
+        public void UpdateWorkHistory(Guid workHistoryId, string companyName, string companyCity, string companyState, string jobTitle, string jobResponsibilities, DateTime? startDate, DateTime? endDate)
+        {
+            context.usp_UpdateWorkHistory(workHistoryId, companyName, companyCity, companyState, jobTitle, jobResponsibilities, startDate, endDate);
+        }
+
+        public void DeleteWorkHistory(Guid workHistoryId)
+        {
+            context.usp_DeleteWorkHistory(workHistoryId);
+        }
+        
+        public List<usp_GetReferencesResult> GetReferences(Guid userId)
+        {
+            return context.usp_GetReferences(userId.ToString()).ToList();
+        }
+
+        public void AddReference(Guid userId, string name, string title, bool directSupervisor, string contactPhone)
+        {
+            context.usp_AddReference(userId.ToString(), name, title, directSupervisor, contactPhone);
+        }
+
+        public void UpdateReference(Guid referenceId, string name, string title, bool directSupervisor, string contactPhone)
+        {
+            context.usp_UpdateReference(referenceId, name, title, directSupervisor, contactPhone);
+        }
+
+        public void DeleteReference(Guid referenceId)
+        {
+            context.usp_DeleteReference(referenceId);
+        }
+
         public List<usp_GetSpecialtiesResult> GetSpecialties(int? specialtyId)
         {
             return context.usp_GetSpecialties(specialtyId).ToList();
@@ -38,6 +163,11 @@ namespace DataAccessLayer
         public void DeleteSpecialty(int specialtyId)
         {
             context.usp_DeleteSpecialty(specialtyId);
+        }
+
+        public void UpdateUserDetails(Guid userId, string secondaryEmail, string cellPhone, string personalSummary, string personalInterests, bool disableNotifications, string imageUrl, string videoUrl, int availabilityInDays)
+        {
+            context.usp_UpdateUserDetails(userId.ToString(), secondaryEmail, cellPhone, personalSummary, personalInterests, disableNotifications, availabilityInDays, imageUrl, videoUrl);
         }
 
         public void UpdateQuestion(Guid surveyId, Guid skillsChecklistQuestionId, string text, int questionTypeId, bool required, int? position)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace DoddleNow.API
@@ -11,7 +12,7 @@ namespace DoddleNow.API
         {
             GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             // Web API configuration and services
-
+            config.Formatters.Add(new BsonMediaTypeFormatter());
             // Web API routes
             config.MapHttpAttributeRoutes();
 
