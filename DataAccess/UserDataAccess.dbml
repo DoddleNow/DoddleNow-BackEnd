@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ICMS_USERS" Class="UserDataAccessDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-PHC4OQMUN4N\JOHNDEV;Initial Catalog=ICMS_USERS;Integrated Security=True" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="ICMS_USERSConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.UserProfile" Member="UserProfiles">
+    <Type Name="UserProfile">
+      <Column Name="UserProfileId" AutoSync="Never" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="EncryptedPassword" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApplicantId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ApplicantGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="CompanyId" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="BirthDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
