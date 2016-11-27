@@ -104,6 +104,23 @@ namespace DoddleNow.API.Models
         [Display(Name = "EndDate")]
         public DateTime? EndDate { get; set; }
 
+        /// <summary>
+        /// HP applied to job
+        /// </summary>
+        [Display(Name = "Applied")]
+        public bool Applied { get; set; }
+
+        /// <summary>
+        /// Percentage SCL Match as a whole number
+        /// </summary>
+        [Display(Name ="SCLMatch")]
+        public int SCLMatch { get; set; }
+
+        ///<summary>
+        ///Job Shift(s) - comma delimited
+        ///</summary>        
+        [Display(Name = "Shifts")]
+        public string Shifts { get; set; }
 
     }
     

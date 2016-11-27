@@ -258,25 +258,11 @@ namespace DataAccessLayer
 			return ((ISingleResult<usp_GetSubClientsResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetJobs")]
-		public ISingleResult<usp_GetJobsResult> usp_GetJobs([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CLIENT_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> cLIENT_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_ID, jOB_ID);
-			return ((ISingleResult<usp_GetJobsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddClient")]
 		public ISingleResult<usp_AddClientResult> usp_AddClient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="NAME", DbType="VarChar(50)")] string nAME, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ADDRESS_1", DbType="VarChar(50)")] string aDDRESS_1, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ADDRESS_2", DbType="VarChar(50)")] string aDDRESS_2, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CITY", DbType="VarChar(50)")] string cITY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="STATE", DbType="VarChar(2)")] string sTATE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ZIP", DbType="VarChar(16)")] string zIP, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DESCR", DbType="NVarChar(MAX)")] string dESCR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PARENT_GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> pARENT_GUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SUPPLEMENTAL_DESCR", DbType="NVarChar(MAX)")] string sUPPLEMENTAL_DESCR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="URL_ROUTE", DbType="VarChar(50)")] string uRL_ROUTE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PROFILE_TEMPLATE_ID", DbType="Int")] System.Nullable<int> pROFILE_TEMPLATE_ID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), nAME, aDDRESS_1, aDDRESS_2, cITY, sTATE, zIP, dESCR, pARENT_GUID, sUPPLEMENTAL_DESCR, uRL_ROUTE, pROFILE_TEMPLATE_ID);
 			return ((ISingleResult<usp_AddClientResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClients")]
-		public ISingleResult<usp_GetClientsResult> usp_GetClients([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CLIENT_GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> cLIENT_GUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_GUID);
-			return ((ISingleResult<usp_GetClientsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateClient")]
@@ -482,11 +468,74 @@ namespace DataAccessLayer
 			return ((int)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClients")]
+		public ISingleResult<usp_GetClientsResult> usp_GetClients([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CLIENT_GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> cLIENT_GUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_GUID);
+			return ((ISingleResult<usp_GetClientsResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetHPJobs")]
 		public ISingleResult<usp_GetHPJobsResult> usp_GetHPJobs([global::System.Data.Linq.Mapping.ParameterAttribute(Name="USER_ID", DbType="NVarChar(128)")] string uSER_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Job_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> job_ID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), uSER_ID, job_ID);
 			return ((ISingleResult<usp_GetHPJobsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetShifts")]
+		public ISingleResult<usp_GetShiftsResult> usp_GetShifts()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<usp_GetShiftsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetJobs")]
+		public ISingleResult<usp_GetJobsResult> usp_GetJobs([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CLIENT_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> cLIENT_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_ID, jOB_ID);
+			return ((ISingleResult<usp_GetJobsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddJobShift")]
+		public int usp_AddJobShift([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SHIFT_ID", DbType="Int")] System.Nullable<int> sHIFT_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID, sHIFT_ID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetJobShifts")]
+		public ISingleResult<usp_GetJobShiftsResult> usp_GetJobShifts([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID);
+			return ((ISingleResult<usp_GetJobShiftsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteJobShifts")]
+		public int usp_DeleteJobShifts([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteJobShift")]
+		public int usp_DeleteJobShift([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SHIFT_ID", DbType="Int")] System.Nullable<int> sHIFT_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID, sHIFT_ID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateJobCandidate")]
+		public int usp_UpdateJobCandidate([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientInterest", DbType="Bit")] System.Nullable<bool> clientInterest, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientStarred", DbType="Bit")] System.Nullable<bool> clientStarred, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CoffeeConnect", DbType="Bit")] System.Nullable<bool> coffeeConnect, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ApplicantApplied", DbType="Bit")] System.Nullable<bool> applicantApplied, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Exclude", DbType="Bit")] System.Nullable<bool> exclude)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID, userID, clientInterest, clientStarred, coffeeConnect, applicantApplied, exclude);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetJobCandidates")]
+		public ISingleResult<usp_GetJobCandidatesResult> usp_GetJobCandidates([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CandidateId", DbType="NVarChar(128)")] string candidateId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jOB_ID, candidateId);
+			return ((ISingleResult<usp_GetJobCandidatesResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1628,176 +1677,6 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetJobsResult
-	{
-		
-		private System.Guid _ID;
-		
-		private System.Nullable<System.Guid> _ClientId;
-		
-		private string _ClientName;
-		
-		private string _NAME;
-		
-		private string _DESCRIPTION;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
-		private System.DateTime _CREATED;
-		
-		private int _ApplicantCount;
-		
-		public usp_GetJobsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> ClientId
-		{
-			get
-			{
-				return this._ClientId;
-			}
-			set
-			{
-				if ((this._ClientId != value))
-				{
-					this._ClientId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="VarChar(50)")]
-		public string ClientName
-		{
-			get
-			{
-				return this._ClientName;
-			}
-			set
-			{
-				if ((this._ClientName != value))
-				{
-					this._ClientName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string NAME
-		{
-			get
-			{
-				return this._NAME;
-			}
-			set
-			{
-				if ((this._NAME != value))
-				{
-					this._NAME = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(MAX)")]
-		public string DESCRIPTION
-		{
-			get
-			{
-				return this._DESCRIPTION;
-			}
-			set
-			{
-				if ((this._DESCRIPTION != value))
-				{
-					this._DESCRIPTION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this._StartDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this._EndDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CREATED", DbType="DateTime NOT NULL")]
-		public System.DateTime CREATED
-		{
-			get
-			{
-				return this._CREATED;
-			}
-			set
-			{
-				if ((this._CREATED != value))
-				{
-					this._CREATED = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicantCount", DbType="Int NOT NULL")]
-		public int ApplicantCount
-		{
-			get
-			{
-				return this._ApplicantCount;
-			}
-			set
-			{
-				if ((this._ApplicantCount != value))
-				{
-					this._ApplicantCount = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_AddClientResult
 	{
 		
@@ -1837,248 +1716,6 @@ namespace DataAccessLayer
 				if ((this._CLIENT_GUID != value))
 				{
 					this._CLIENT_GUID = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_GetClientsResult
-	{
-		
-		private System.Guid _ID;
-		
-		private string _NAME;
-		
-		private string _DESCRIPTION;
-		
-		private string _Address1;
-		
-		private string _Address2;
-		
-		private string _CITY;
-		
-		private string _STATE;
-		
-		private string _ZIP;
-		
-		private System.DateTime _DateCreated;
-		
-		private System.Nullable<System.Guid> _ParentId;
-		
-		private string _SupplementalDescr;
-		
-		private string _URLRoute;
-		
-		private System.Nullable<int> _ProfileTemplateId;
-		
-		public usp_GetClientsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string NAME
-		{
-			get
-			{
-				return this._NAME;
-			}
-			set
-			{
-				if ((this._NAME != value))
-				{
-					this._NAME = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(MAX)")]
-		public string DESCRIPTION
-		{
-			get
-			{
-				return this._DESCRIPTION;
-			}
-			set
-			{
-				if ((this._DESCRIPTION != value))
-				{
-					this._DESCRIPTION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address1", DbType="VarChar(50)")]
-		public string Address1
-		{
-			get
-			{
-				return this._Address1;
-			}
-			set
-			{
-				if ((this._Address1 != value))
-				{
-					this._Address1 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address2", DbType="VarChar(50)")]
-		public string Address2
-		{
-			get
-			{
-				return this._Address2;
-			}
-			set
-			{
-				if ((this._Address2 != value))
-				{
-					this._Address2 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CITY", DbType="VarChar(50)")]
-		public string CITY
-		{
-			get
-			{
-				return this._CITY;
-			}
-			set
-			{
-				if ((this._CITY != value))
-				{
-					this._CITY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STATE", DbType="VarChar(2)")]
-		public string STATE
-		{
-			get
-			{
-				return this._STATE;
-			}
-			set
-			{
-				if ((this._STATE != value))
-				{
-					this._STATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZIP", DbType="VarChar(16)")]
-		public string ZIP
-		{
-			get
-			{
-				return this._ZIP;
-			}
-			set
-			{
-				if ((this._ZIP != value))
-				{
-					this._ZIP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this._DateCreated = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> ParentId
-		{
-			get
-			{
-				return this._ParentId;
-			}
-			set
-			{
-				if ((this._ParentId != value))
-				{
-					this._ParentId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SupplementalDescr", DbType="NVarChar(MAX)")]
-		public string SupplementalDescr
-		{
-			get
-			{
-				return this._SupplementalDescr;
-			}
-			set
-			{
-				if ((this._SupplementalDescr != value))
-				{
-					this._SupplementalDescr = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_URLRoute", DbType="VarChar(50)")]
-		public string URLRoute
-		{
-			get
-			{
-				return this._URLRoute;
-			}
-			set
-			{
-				if ((this._URLRoute != value))
-				{
-					this._URLRoute = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProfileTemplateId", DbType="Int")]
-		public System.Nullable<int> ProfileTemplateId
-		{
-			get
-			{
-				return this._ProfileTemplateId;
-			}
-			set
-			{
-				if ((this._ProfileTemplateId != value))
-				{
-					this._ProfileTemplateId = value;
 				}
 			}
 		}
@@ -3300,60 +2937,60 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetHPJobsResult
+	public partial class usp_GetClientsResult
 	{
 		
-		private System.Guid _JobID;
+		private System.Guid _ID;
 		
 		private string _NAME;
 		
 		private string _DESCRIPTION;
 		
-		private System.Nullable<System.DateTime> _StartDate;
+		private string _Address1;
 		
-		private System.Nullable<System.DateTime> _EndDate;
+		private string _Address2;
 		
-		private string _Specialties;
+		private string _CITY;
 		
-		private System.Nullable<System.Guid> _ClientId;
+		private string _STATE;
 		
-		private string _ClientName;
+		private string _ZIP;
 		
-		private string _ClientAddress;
+		private System.DateTime _DateCreated;
 		
-		private string _ClientAddress2;
+		private System.Nullable<System.Guid> _ParentId;
 		
-		private string _ClientCity;
+		private string _SupplementalDescr;
 		
-		private string _ClientState;
+		private string _URLRoute;
 		
-		private string _ClientZIP;
+		private System.Nullable<int> _ProfileTemplateId;
 		
-		private bool _STARRED;
+		private System.Nullable<int> _NumOfActiveJobs;
 		
-		private bool _CLIENT_INTEREST;
+		private System.Nullable<int> _NumOfApplicants;
 		
-		public usp_GetHPJobsResult()
+		public usp_GetClientsResult()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid JobID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ID
 		{
 			get
 			{
-				return this._JobID;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._JobID != value))
+				if ((this._ID != value))
 				{
-					this._JobID = value;
+					this._ID = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
 		public string NAME
 		{
 			get
@@ -3385,50 +3022,256 @@ namespace DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> StartDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address1", DbType="VarChar(50)")]
+		public string Address1
 		{
 			get
 			{
-				return this._StartDate;
+				return this._Address1;
 			}
 			set
 			{
-				if ((this._StartDate != value))
+				if ((this._Address1 != value))
 				{
-					this._StartDate = value;
+					this._Address1 = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EndDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address2", DbType="VarChar(50)")]
+		public string Address2
 		{
 			get
 			{
-				return this._EndDate;
+				return this._Address2;
 			}
 			set
 			{
-				if ((this._EndDate != value))
+				if ((this._Address2 != value))
 				{
-					this._EndDate = value;
+					this._Address2 = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Specialties", DbType="NVarChar(MAX)")]
-		public string Specialties
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CITY", DbType="VarChar(50)")]
+		public string CITY
 		{
 			get
 			{
-				return this._Specialties;
+				return this._CITY;
 			}
 			set
 			{
-				if ((this._Specialties != value))
+				if ((this._CITY != value))
 				{
-					this._Specialties = value;
+					this._CITY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STATE", DbType="VarChar(2)")]
+		public string STATE
+		{
+			get
+			{
+				return this._STATE;
+			}
+			set
+			{
+				if ((this._STATE != value))
+				{
+					this._STATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZIP", DbType="VarChar(16)")]
+		public string ZIP
+		{
+			get
+			{
+				return this._ZIP;
+			}
+			set
+			{
+				if ((this._ZIP != value))
+				{
+					this._ZIP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ParentId
+		{
+			get
+			{
+				return this._ParentId;
+			}
+			set
+			{
+				if ((this._ParentId != value))
+				{
+					this._ParentId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SupplementalDescr", DbType="NVarChar(MAX)")]
+		public string SupplementalDescr
+		{
+			get
+			{
+				return this._SupplementalDescr;
+			}
+			set
+			{
+				if ((this._SupplementalDescr != value))
+				{
+					this._SupplementalDescr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_URLRoute", DbType="VarChar(50)")]
+		public string URLRoute
+		{
+			get
+			{
+				return this._URLRoute;
+			}
+			set
+			{
+				if ((this._URLRoute != value))
+				{
+					this._URLRoute = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProfileTemplateId", DbType="Int")]
+		public System.Nullable<int> ProfileTemplateId
+		{
+			get
+			{
+				return this._ProfileTemplateId;
+			}
+			set
+			{
+				if ((this._ProfileTemplateId != value))
+				{
+					this._ProfileTemplateId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumOfActiveJobs", DbType="Int")]
+		public System.Nullable<int> NumOfActiveJobs
+		{
+			get
+			{
+				return this._NumOfActiveJobs;
+			}
+			set
+			{
+				if ((this._NumOfActiveJobs != value))
+				{
+					this._NumOfActiveJobs = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumOfApplicants", DbType="Int")]
+		public System.Nullable<int> NumOfApplicants
+		{
+			get
+			{
+				return this._NumOfApplicants;
+			}
+			set
+			{
+				if ((this._NumOfApplicants != value))
+				{
+					this._NumOfApplicants = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetHPJobsResult
+	{
+		
+		private System.Guid _JobID;
+		
+		private System.Nullable<System.Guid> _ClientId;
+		
+		private string _ClientName;
+		
+		private string _ClientAddress;
+		
+		private string _ClientAddress2;
+		
+		private string _ClientCity;
+		
+		private string _ClientState;
+		
+		private string _ClientZIP;
+		
+		private string _NAME;
+		
+		private string _DESCRIPTION;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private System.DateTime _CREATED;
+		
+		private bool _STARRED;
+		
+		private bool _CLIENT_INTEREST;
+		
+		private string _Specialties;
+		
+		private int _Applied;
+		
+		private System.Nullable<int> _SCLMatch;
+		
+		private string _Shifts;
+		
+		public usp_GetHPJobsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					this._JobID = value;
 				}
 			}
 		}
@@ -3545,6 +3388,86 @@ namespace DataAccessLayer
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string NAME
+		{
+			get
+			{
+				return this._NAME;
+			}
+			set
+			{
+				if ((this._NAME != value))
+				{
+					this._NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(MAX)")]
+		public string DESCRIPTION
+		{
+			get
+			{
+				return this._DESCRIPTION;
+			}
+			set
+			{
+				if ((this._DESCRIPTION != value))
+				{
+					this._DESCRIPTION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this._StartDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this._EndDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CREATED", DbType="DateTime NOT NULL")]
+		public System.DateTime CREATED
+		{
+			get
+			{
+				return this._CREATED;
+			}
+			set
+			{
+				if ((this._CREATED != value))
+				{
+					this._CREATED = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STARRED", DbType="Bit NOT NULL")]
 		public bool STARRED
 		{
@@ -3573,6 +3496,516 @@ namespace DataAccessLayer
 				if ((this._CLIENT_INTEREST != value))
 				{
 					this._CLIENT_INTEREST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Specialties", DbType="NVarChar(MAX)")]
+		public string Specialties
+		{
+			get
+			{
+				return this._Specialties;
+			}
+			set
+			{
+				if ((this._Specialties != value))
+				{
+					this._Specialties = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Applied", DbType="Int NOT NULL")]
+		public int Applied
+		{
+			get
+			{
+				return this._Applied;
+			}
+			set
+			{
+				if ((this._Applied != value))
+				{
+					this._Applied = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int")]
+		public System.Nullable<int> SCLMatch
+		{
+			get
+			{
+				return this._SCLMatch;
+			}
+			set
+			{
+				if ((this._SCLMatch != value))
+				{
+					this._SCLMatch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Shifts", DbType="NVarChar(MAX)")]
+		public string Shifts
+		{
+			get
+			{
+				return this._Shifts;
+			}
+			set
+			{
+				if ((this._Shifts != value))
+				{
+					this._Shifts = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetShiftsResult
+	{
+		
+		private int _ID;
+		
+		private string _DESCRIPTION;
+		
+		public usp_GetShiftsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string DESCRIPTION
+		{
+			get
+			{
+				return this._DESCRIPTION;
+			}
+			set
+			{
+				if ((this._DESCRIPTION != value))
+				{
+					this._DESCRIPTION = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetJobsResult
+	{
+		
+		private System.Guid _ID;
+		
+		private System.Nullable<System.Guid> _ClientId;
+		
+		private string _ClientName;
+		
+		private string _NAME;
+		
+		private string _DESCRIPTION;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private System.DateTime _CREATED;
+		
+		private int _ApplicantCount;
+		
+		private string _Shifts;
+		
+		public usp_GetJobsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ClientId
+		{
+			get
+			{
+				return this._ClientId;
+			}
+			set
+			{
+				if ((this._ClientId != value))
+				{
+					this._ClientId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="VarChar(50)")]
+		public string ClientName
+		{
+			get
+			{
+				return this._ClientName;
+			}
+			set
+			{
+				if ((this._ClientName != value))
+				{
+					this._ClientName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string NAME
+		{
+			get
+			{
+				return this._NAME;
+			}
+			set
+			{
+				if ((this._NAME != value))
+				{
+					this._NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(MAX)")]
+		public string DESCRIPTION
+		{
+			get
+			{
+				return this._DESCRIPTION;
+			}
+			set
+			{
+				if ((this._DESCRIPTION != value))
+				{
+					this._DESCRIPTION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this._StartDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this._EndDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CREATED", DbType="DateTime NOT NULL")]
+		public System.DateTime CREATED
+		{
+			get
+			{
+				return this._CREATED;
+			}
+			set
+			{
+				if ((this._CREATED != value))
+				{
+					this._CREATED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicantCount", DbType="Int NOT NULL")]
+		public int ApplicantCount
+		{
+			get
+			{
+				return this._ApplicantCount;
+			}
+			set
+			{
+				if ((this._ApplicantCount != value))
+				{
+					this._ApplicantCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Shifts", DbType="NVarChar(MAX)")]
+		public string Shifts
+		{
+			get
+			{
+				return this._Shifts;
+			}
+			set
+			{
+				if ((this._Shifts != value))
+				{
+					this._Shifts = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetJobShiftsResult
+	{
+		
+		private int _ID;
+		
+		private string _Description;
+		
+		public usp_GetJobShiftsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetJobCandidatesResult
+	{
+		
+		private string _UserId;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private string _Email;
+		
+		private System.Nullable<bool> _clientInterest;
+		
+		private System.Nullable<bool> _clientStarred;
+		
+		private System.Nullable<bool> _coffeeConnect;
+		
+		private System.Nullable<bool> _applicantApplied;
+		
+		private System.Nullable<bool> _exclude;
+		
+		public usp_GetJobCandidatesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100)")]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this._FirstName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100)")]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this._LastName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this._Email = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientInterest", DbType="Bit")]
+		public System.Nullable<bool> clientInterest
+		{
+			get
+			{
+				return this._clientInterest;
+			}
+			set
+			{
+				if ((this._clientInterest != value))
+				{
+					this._clientInterest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientStarred", DbType="Bit")]
+		public System.Nullable<bool> clientStarred
+		{
+			get
+			{
+				return this._clientStarred;
+			}
+			set
+			{
+				if ((this._clientStarred != value))
+				{
+					this._clientStarred = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_coffeeConnect", DbType="Bit")]
+		public System.Nullable<bool> coffeeConnect
+		{
+			get
+			{
+				return this._coffeeConnect;
+			}
+			set
+			{
+				if ((this._coffeeConnect != value))
+				{
+					this._coffeeConnect = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_applicantApplied", DbType="Bit")]
+		public System.Nullable<bool> applicantApplied
+		{
+			get
+			{
+				return this._applicantApplied;
+			}
+			set
+			{
+				if ((this._applicantApplied != value))
+				{
+					this._applicantApplied = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exclude", DbType="Bit")]
+		public System.Nullable<bool> exclude
+		{
+			get
+			{
+				return this._exclude;
+			}
+			set
+			{
+				if ((this._exclude != value))
+				{
+					this._exclude = value;
 				}
 			}
 		}

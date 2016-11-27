@@ -11,6 +11,24 @@ using System.Threading.Tasks;
 namespace DoddleNow.API.Controllers
 {
     ///<summary>
+    ///Shift controller.  
+    ///</summary>
+    [RoutePrefix("api/v1/shifts")]
+    public class ShiftController : ApiController
+    {
+        ///<summary>
+        ///Get all shifts
+        ///</summary>
+        [AllowAnonymous]
+        [Route("")]
+        [HttpGet]
+        public IHttpActionResult GetAllShifts()
+        {
+            return Ok(Jobs.GetAllShifts());
+        }
+    }
+
+    ///<summary>
     ///Client controller.  Used to get client related information across the whole system or an individual
     ///</summary>
     [RoutePrefix("api/v1/jobs")]
@@ -26,6 +44,8 @@ namespace DoddleNow.API.Controllers
         {
             return Ok(Jobs.GetAllJobs());
         }
+
+        
 
         ///<summary>
         ///Get job with id = id 
@@ -111,7 +131,60 @@ namespace DoddleNow.API.Controllers
             return Ok();
         }
 
-        
+        ///<summary>
+        ///Get job specialties for job id 
+        ///</summary>
+        [Route("{jobId}/shifts")]
+        [HttpGet]
+        public IHttpActionResult GetJobShifts(Guid jobId)
+        {
+            return Ok(Jobs.GetJobShifts(jobId));
+        }
+
+
+        ///<summary>
+        ///Create new specialty for job with id = id
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{jobId}/shifts/{shiftId}")]
+        [HttpPost]
+        public IHttpActionResult AddShift(Guid jobId, int shiftId)
+        {
+            Jobs.AddJobShift(jobId, shiftId);
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Delete Job Shift
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{jobId}/shifts/{shiftId}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteShift(Guid jobId, int shiftId)
+        {
+            if (Jobs.GetJobShifts(jobId).Where(v => v.ID == shiftId).Count() > 0)
+            {
+                Jobs.DeleteJobShift(jobId, shiftId);
+            }
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Delete Job Shifts
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{jobId}/shifts")]
+        [HttpDelete]
+        public IHttpActionResult DeleteShifts(Guid jobId)
+        {
+            Jobs.DeleteJobShifts(jobId);
+            
+            return Ok();
+        }
+
+
         ///<summary>
         ///Delete Job Specialties
         ///</summary>
@@ -382,6 +455,60 @@ namespace DoddleNow.API.Controllers
             return da.GetJobs(null, null).ToList();
         }
 
+        /// <summary>
+        /// Get job shifts
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        public static List<usp_GetJobShiftsResult> GetJobShifts(Guid jobId)
+        {
+            DataAccess da = new DataAccess();
+            return da.GetJobShifts(jobId).ToList();
+        }
+
+        /// <summary>
+        /// Add an individual job shift
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="shiftId"></param>
+        public static void AddJobShift(Guid jobId, int shiftId)
+        {
+            DataAccess da = new DataAccess();
+            da.AddJobShift(jobId, shiftId);
+        }
+
+
+        /// <summary>
+        /// Delete a single job shift
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="shiftId"></param>
+        public static void DeleteJobShift(Guid jobId, int shiftId)
+        {
+            DataAccess da = new DataAccess();
+            da.DeleteJobShift(jobId, shiftId);
+        }
+
+        /// <summary>
+        /// Delete all job shifts
+        /// </summary>
+        /// <param name="jobId"></param>
+        public static void DeleteJobShifts(Guid jobId)
+        {
+            DataAccess da = new DataAccess();
+            da.DeleteJobShifts(jobId);
+        }
+
+        ///<summary>
+        ///Get all shifts
+        ///</summary>
+        public static List<usp_GetShiftsResult> GetAllShifts()
+        {
+            DataAccess da = new DataAccess();
+            return da.GetShifts().ToList();
+        }
+
+
 
 
         ///<summary>
@@ -495,6 +622,27 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
             da.DeleteJobSpecialty(jobId, specialtyId);
         }
+
+
+
+        public static List<usp_GetJobCandidatesResult> GetJobCandidates(Guid jobId)
+        {
+            DataAccess da = new DataAccess();
+            return da.GetJobCandidates(jobId);
+        }
+
+        public static usp_GetJobCandidatesResult GetJobCandidate(Guid jobId, string candidateId)
+        {
+            DataAccess da = new DataAccess();
+            return da.GetJobCandidate(jobId, candidateId);
+        }
+
+        public static void UpdateJobCandidate(Guid jobId, Candidate candidate)
+        {
+            DataAccess da = new DataAccess();
+            da.UpdateJobCandidate(jobId, candidate.UserId.ToString(), candidate.ClientInterest, candidate.ClientStarred, candidate.CoffeeConnect, candidate.ApplicantApplied, candidate.Exclude);
+        }
+
     }
     #endregion
 }

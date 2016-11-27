@@ -93,5 +93,19 @@ namespace DoddleNow.API.Models
         [Display(Name = "Marketing Bullets")]
         public string[] MarketingBullets { get; set; }
 
+        ///<summary>
+        ///# of Active Jobs
+        ///</summary>
+        [Display(Name = "Number of Active Jobs")]
+        public int NumOfActiveJobs { get; set; }
+
+        ///<summary>
+        ///# of Active Jobs
+        ///</summary>
+        [Display(Name = "Number of Applicants in Active Jobs")]
+        public int NumOfApplicants { get; set; }
+
+
+
     }
 }

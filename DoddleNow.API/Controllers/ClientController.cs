@@ -713,7 +713,9 @@ namespace DoddleNow.API.Controllers
                 ParentId = c.ParentId,
                 State = c.STATE,
                 ZIP = c.ZIP,
-                MarketingBullets = GetMarketingBullets(c.ID)
+                MarketingBullets = GetMarketingBullets(c.ID),
+                NumOfActiveJobs = c.NumOfActiveJobs.HasValue ? c.NumOfActiveJobs.Value : 0,
+                NumOfApplicants = c.NumOfApplicants.HasValue ? c.NumOfApplicants.Value : 0
             };
 
             return client;
@@ -738,7 +740,7 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
             da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId, client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId);
-            if (client.MarketingBullets.Length > 0)
+            if (client.MarketingBullets != null && client.MarketingBullets.Length > 0)
             {
                 da.DeleteMarketingBullets(client.Id);
                 foreach(string mb in client.MarketingBullets)
@@ -759,10 +761,14 @@ namespace DoddleNow.API.Controllers
             Guid clientId = da.AddClient(client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId.HasValue ? client.ParentId.Value : new Guid(), client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId).Value;
 
-            foreach (string b in client.MarketingBullets)
+            if(client.MarketingBullets != null)
             {
-                da.AddMarketingBullet(clientId, b);
+                foreach (string b in client.MarketingBullets)
+                {
+                    da.AddMarketingBullet(clientId, b);
+                }
             }
+            
 
             return clientId;
         }

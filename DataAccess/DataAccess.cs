@@ -14,6 +14,41 @@ namespace DataAccessLayer
         
         DataClasses1DataContext context = new DataClasses1DataContext(ConfigurationManager.ConnectionStrings["AuthContext"].ToString());
 
+        public List<usp_GetJobShiftsResult> GetJobShifts(Guid jobId)
+        {
+            return context.usp_GetJobShifts(jobId).ToList();
+        }
+
+        public void AddJobShift(Guid jobId, int shiftId)
+        {
+            context.usp_AddJobShift(jobId, shiftId);
+        }
+
+        public void DeleteJobShift(Guid jobId, int shiftId)
+        {
+            context.usp_DeleteJobShift(jobId, shiftId);
+        }
+
+        public void DeleteJobShifts(Guid jobId)
+        {
+            context.usp_DeleteJobShifts(jobId);
+        }
+
+        public List<usp_GetJobCandidatesResult> GetJobCandidates(Guid jobId)
+        {
+            return context.usp_GetJobCandidates(jobId, null).ToList();
+        }
+
+        public usp_GetJobCandidatesResult GetJobCandidate(Guid jobId, string candidateId)
+        {
+            return context.usp_GetJobCandidates(jobId, candidateId).FirstOrDefault();
+        }
+
+        public void UpdateJobCandidate(Guid jobId, string userId, bool clientInterest, bool clientStarred, bool coffeeConnect, bool applicantApplied, bool exclude)
+        {
+            context.usp_UpdateJobCandidate(jobId, userId, clientInterest, clientStarred, coffeeConnect, applicantApplied, exclude);
+        }
+
 
         public void UpdateUser(Guid userId, int roleId, string userName, string firstName, string lastName, string phone, string title, string department, Guid clientGUID)
         {
@@ -33,6 +68,11 @@ namespace DataAccessLayer
         public List<usp_GetHPJobsResult> GetHPJobs(string userId)
         {
             return context.usp_GetHPJobs(userId, null).ToList();
+        }
+
+        public List<usp_GetShiftsResult> GetShifts()
+        {
+            return context.usp_GetShifts().ToList();
         }
 
         public List<usp_GetHPJobsResult> GetHPJobs(string userId, Guid jobId)

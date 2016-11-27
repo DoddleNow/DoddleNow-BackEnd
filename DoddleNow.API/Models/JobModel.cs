@@ -68,7 +68,30 @@ namespace DoddleNow.API.Models
         [Display(Name = "EndDate")]
         public DateTime? EndDate { get; set; }
 
-       
+
+        ///<summary>
+        ///Job Shift(s) - comma delimited names
+        ///</summary>        
+        [Display(Name = "Shifts")]
+        public string Shifts { get; set; }
+
+
+      }
+
+    public class Shift
+    {
+        ///<summary>
+        ///Shift Id
+        ///</summary>
+        [Display(Name = "ID")]
+        public int Id { get; set; }
+
+        ///<summary>
+        ///Shift Description
+        ///</summary>
+        [Display(Name = "Description")]
+        public string Description { get; set; }
 
     }
+
 }

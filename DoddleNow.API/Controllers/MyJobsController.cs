@@ -55,8 +55,8 @@ namespace DoddleNow.API.Controllers
 
             for(int i=0; i< items.Count; ++i)
             {
-                jobs.Add(new HPJob { ClientId = items[i].ClientId.Value, ClientInterested = items[i].CLIENT_INTEREST,
-                    JobDescription = items[i].DESCRIPTION, EndDate = items[i].EndDate, JobId = items[i].JobID, JobName = items[i].NAME,
+                jobs.Add(new HPJob { ClientId = items[i].ClientId.Value, ClientInterested = items[i].CLIENT_INTEREST, Applied = items[i].Applied == 1 ? true : false, Shifts = items[i].Shifts,
+                    JobDescription = items[i].DESCRIPTION, EndDate = items[i].EndDate, JobId = items[i].JobID, JobName = items[i].NAME, SCLMatch = items[i].SCLMatch.HasValue ? items[i].SCLMatch.Value : 0,
                     Starred = items[i].STARRED, StartDate = items[i].StartDate, ClientAddress=items[i].ClientAddress, ClientAddress2=items[i].ClientAddress2,
                  ClientCity=items[i].ClientCity, ClientName=items[i].ClientName, ClientState=items[i].ClientState, ClientZip=items[i].ClientZIP, Specialities=items[i].Specialties});
             }
