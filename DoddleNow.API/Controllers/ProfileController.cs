@@ -11,6 +11,9 @@ using System.Web.Http;
 using System.Security.Claims;
 using System.Web;
 using System.Diagnostics;
+using DoddleNow.Photo;
+using Connections.Amazon;
+using System.Configuration;
 
 namespace DoddleNow.API.Controllers
 {
@@ -65,20 +68,46 @@ namespace DoddleNow.API.Controllers
         //    return task;
         //}
 
+        //[AllowAnonymous]
+        //[Route("image2")]
+        //[HttpPost]
+        //public async Task<IHttpActionResult> PostUserImage2()
+        //{
+        //    IPhotoManager photoManager;
+        //    // Check if the request contains multipart/form-data.
+        //    if (!Request.Content.IsMimeMultipartContent("form-data"))
+        //    {
+        //        return BadRequest("Unsupported media type");
+        //    }
 
-            /// <summary>
-            /// Posts image to server, saves to AWS, saves URL to profile
-            /// </summary>
-            /// <returns></returns>
+        //    try
+        //    {
+        //        var photos = await photoManager.Add(Request);
+        //        return Ok(new { Message = "Photos uploaded ok", Photos = photos });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.GetBaseException().Message);
+        //    }
+
+        //}
+
+
+        /// <summary>
+        /// Posts image to server, saves to AWS, saves URL to profile
+        /// </summary>
+        /// <returns></returns>
         //[Authorize(Roles = "6")]
-        [AllowAnonymous]
+        [Authorize(Roles = "6")]
         [Route("image")]
         [HttpPost]
         public async Task<HttpResponseMessage> PostUserImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
+            string urlToFile = string.Empty;
             try
             {
+                string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
                 var httpRequest = HttpContext.Current.Request;
 
@@ -89,7 +118,6 @@ namespace DoddleNow.API.Controllers
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
                         int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
 
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
@@ -117,13 +145,28 @@ namespace DoddleNow.API.Controllers
                             postedFile.SaveAs(filePath);
 
                             // off to AWS
+                            S3File newFile = new S3File();
+                            newFile.AWSProfileName = ConfigurationManager.AppSettings["AWSUser"];
+                            newFile.BucketName = ConfigurationManager.AppSettings["AWSS3Bucket"];
+                            //newFile.ContentType = "application/pdf";
+                            newFile.FilePath = filePath;
+                            newFile.Key = userId + "/profile/" + DateTime.Now.ToShortDateString().Replace("/",string.Empty) + "_" + postedFile.FileName + extension;
+                            AWS.AddS3Object(newFile);
 
-                        //delete file
+                            urlToFile = AWS.GetUnexpiringS3Object(newFile.BucketName, newFile.Key);
+
+                            HPOverview overview = Profiles.GetOverview(Guid.Parse(userId));
+                            overview.ImageUrl = urlToFile;
+
+                            await this.UpdateOverview(overview);
+
+                            //delete file
+                            System.IO.File.Delete(filePath);
                         }
                     }
 
                     var message1 = string.Format("Image Updated Successfully.");
-                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
+                    return Request.CreateResponse(HttpStatusCode.Created, urlToFile); ;
                 }
                 var res = string.Format("Please upload an image.");
                 dict.Add("error", res);

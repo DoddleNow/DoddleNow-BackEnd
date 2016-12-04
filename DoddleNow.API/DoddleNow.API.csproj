@@ -232,6 +232,7 @@
     <EmbeddedResource Include="CustomContent\index.html" />
     <EmbeddedResource Include="CustomContent\images\Doddle_logo.png" />
     <Content Include="Global.asax" />
+    <Content Include="UserImages\DoNotRemove.txt.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -246,6 +247,7 @@
     <Compile Include="ChallengeResult.cs" />
     <Compile Include="Controllers\MyJobsController.cs" />
     <Compile Include="Controllers\HAController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Models\HPOverviewModel.cs" />
     <Compile Include="Models\HPJobModel.cs" />
     <Compile Include="Models\HAModel.cs" />
+    <Compile Include="Models\PhotoViewModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\MarketingBulletModel.cs" />
     <Compile Include="Models\AddressModel.cs" />
@@ -283,6 +286,10 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\HPJobSearchModel.cs" />
     <Compile Include="Models\WorkHistoryModel.cs" />
+    <Compile Include="Photo\IPhotoManager.cs" />
+    <Compile Include="Photo\LocalPhotoManager.cs" />
+    <Compile Include="Photo\PhotoActionResult.cs" />
+    <Compile Include="Photo\PhotoMultipartFormDataStreamProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomJWTFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
@@ -302,9 +309,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="UserImages\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Connections\Connections.csproj">
+      <Project>{91f10285-1f04-47ee-ba47-24933247d12a}</Project>
+      <Name>Connections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccessLayer.csproj">
       <Project>{86cdc450-d582-47be-9864-6945fdda4f22}</Project>
       <Name>DataAccessLayer</Name>

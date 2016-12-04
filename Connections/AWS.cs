@@ -66,7 +66,7 @@ namespace Connections.Amazon
                     string accessKey = appConfig["AWSAccessKey"];
                     string secretKey = appConfig["AWSSecretKey"];
                     var credentials = new BasicAWSCredentials(accessKey, secretKey);
-                    var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest2);
+                    var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
                     using (s3Client)
                     {
@@ -122,7 +122,7 @@ namespace Connections.Amazon
                     string accessKey = appConfig["AWSAccessKey"];
                     string secretKey = appConfig["AWSSecretKey"];
                     var credentials = new BasicAWSCredentials(accessKey, secretKey);
-                    var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest2);
+                    var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
                     //convert to memory stream
                     MemoryStream stream = new MemoryStream();
@@ -168,6 +168,8 @@ namespace Connections.Amazon
             }
         }
 
+
+
         public static string GetS3Object(string bucketName, string key)
         {
             try
@@ -181,7 +183,7 @@ namespace Connections.Amazon
                 {
                     BucketName = bucketName,
                     Key = key,
-                     Expires = DateTime.Now.AddMinutes(10)
+                    Expires = DateTime.Now.AddDays(1)
                 };
 
                 NameValueCollection appConfig = ConfigurationManager.AppSettings;
@@ -189,10 +191,52 @@ namespace Connections.Amazon
                 string accessKey = appConfig["AWSAccessKey"];
                 string secretKey = appConfig["AWSSecretKey"];
                 var credentials = new BasicAWSCredentials(accessKey, secretKey);
-                var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest2);
+                var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
                 string url = s3Client.GetPreSignedURL(request);
                 
+                return url;
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    throw new Exception("Please check the provided AWS Credentials.");
+                }
+                else
+                {
+                    throw new Exception(string.Format("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message));
+                }
+            }
+        }
+
+        public static string GetUnexpiringS3Object(string bucketName, string key)
+        {
+            try
+            {
+                //GetObjectRequest request = new GetObjectRequest()
+                //{
+                //    BucketName = bucketName,
+                //    Key = key
+                //};
+                GetPreSignedUrlRequest request = new GetPreSignedUrlRequest()
+                {
+                    BucketName = bucketName,
+                    Key = key,
+                    Expires = DateTime.Now.AddYears(20)
+                };
+
+                NameValueCollection appConfig = ConfigurationManager.AppSettings;
+                string region = appConfig["AWSRegion"];
+                string accessKey = appConfig["AWSAccessKey"];
+                string secretKey = appConfig["AWSSecretKey"];
+                var credentials = new BasicAWSCredentials(accessKey, secretKey);
+                var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
+
+                string url = s3Client.GetPreSignedURL(request);
+
                 return url;
             }
             catch (AmazonS3Exception amazonS3Exception)
@@ -225,7 +269,7 @@ namespace Connections.Amazon
                 string accessKey = appConfig["AWSAccessKey"];
                 string secretKey = appConfig["AWSSecretKey"];
                 var credentials = new BasicAWSCredentials(accessKey, secretKey);
-                var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest2);
+                var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
                 using (s3Client)
                 {
