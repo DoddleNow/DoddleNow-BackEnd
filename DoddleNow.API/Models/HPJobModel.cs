@@ -16,19 +16,19 @@ namespace DoddleNow.API.Models
         /// JobId
         /// </summary>
         [Display(Name = "JobId")]
-        public Guid JobId { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// JobName
         /// </summary>
         [Display(Name = "JobName")]
-        public string JobName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// JobDescription
         /// </summary>
         [Display(Name = "JobDescription")]
-        public string JobDescription { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// ClientName
@@ -120,7 +120,31 @@ namespace DoddleNow.API.Models
         ///Job Shift(s) - comma delimited
         ///</summary>        
         [Display(Name = "Shifts")]
-        public string Shifts { get; set; }
+        public List<string> Shifts { get; set; }
+
+        ///<summary>
+        ///New applicants count 
+        ///</summary>        
+        [Display(Name = "NewApplicants")]
+        public int NewApplicants { get; set; }
+
+        ///<summary>
+        ///Number of applicants for job
+        ///</summary>        
+        [Display(Name = "ApplicantCount")]
+        public int ApplicantCount { get; set; }
+
+        ///<summary>
+        ///Active (bool)
+        ///</summary>        
+        [Display(Name = "Active")]
+        public bool Active { get; set; }
+
+        ///<summary>
+        ///SCL Match Preference, set by HA.  HP must meet or exceed this percentage
+        ///</summary>        
+        [Display(Name = "SCLMatchPreference")]
+        public int SCLMatchPreference { get; set; }
 
     }
     

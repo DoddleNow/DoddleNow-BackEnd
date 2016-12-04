@@ -105,6 +105,12 @@ namespace DoddleNow.API.Models
         [Display(Name = "Number of Applicants in Active Jobs")]
         public int NumOfApplicants { get; set; }
 
+        ///<summary>
+        ///# of Past Jobs
+        ///</summary>
+        [Display(Name = "Number of Past Jobs")]
+        public int NumOfPastJobs { get; set; }
+
 
 
     }

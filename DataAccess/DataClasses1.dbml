@@ -15,18 +15,6 @@
     <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.usp_UpdateUser" Method="usp_UpdateUser">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="NVarChar(256)" />
-    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="NVarChar(MAX)" />
-    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="Department" Parameter="department" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="ClientGUID" Parameter="clientGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.usp_UpdateJob" Method="usp_UpdateJob">
     <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -300,20 +288,6 @@
       <Column Name="ContactPhone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetWorkHistories" Method="usp_GetWorkHistories">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetWorkHistoriesResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="CompanyName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="CompanyCity" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="CompanyState" Type="System.String" DbType="NVarChar(2) NOT NULL" CanBeNull="false" />
-      <Column Name="JobTitle" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="JobResponsibilities" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetLocations" Method="usp_GetLocations">
     <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
     <ElementType Name="usp_GetLocationsResult">
@@ -424,28 +398,6 @@
     <Parameter Name="ContactPhone" Parameter="contactPhone" Type="System.String" DbType="NVarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.usp_AddWorkHistory" Method="usp_AddWorkHistory">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <Parameter Name="CompanyName" Parameter="companyName" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="CompanyCity" Parameter="companyCity" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="CompanyState" Parameter="companyState" Type="System.String" DbType="NVarChar(2)" />
-    <Parameter Name="JobTitle" Parameter="jobTitle" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="JobResponsibilities" Parameter="jobResponsibilities" Type="System.String" DbType="VarChar(1000)" />
-    <Parameter Name="StartDate" Parameter="startDate" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="EndDate" Parameter="endDate" Type="System.DateTime" DbType="DateTime" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.usp_UpdateWorkHistory" Method="usp_UpdateWorkHistory">
-    <Parameter Name="ID" Parameter="iD" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="CompanyName" Parameter="companyName" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="CompanyCity" Parameter="companyCity" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="CompanyState" Parameter="companyState" Type="System.String" DbType="NVarChar(2)" />
-    <Parameter Name="JobTitle" Parameter="jobTitle" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="JobResponsibilities" Parameter="jobResponsibilities" Type="System.String" DbType="VarChar(1000)" />
-    <Parameter Name="StartDate" Parameter="startDate" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="EndDate" Parameter="endDate" Type="System.DateTime" DbType="DateTime" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.usp_GetCertifications" Method="usp_GetCertifications">
     <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
     <ElementType Name="usp_GetCertificationsResult">
@@ -457,77 +409,9 @@
       <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetUserResult">
-      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
-      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="ImageURL" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="VideoUrl" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="SECONDARY_EMAIL" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CELL_PHONE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PERSONAL_SUMMARY" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
-      <Column Name="PERSONAL_INTERESTS" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
-      <Column Name="AvailabilityInDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_UpdateUserDetails" Method="usp_UpdateUserDetails">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <Parameter Name="SecondaryEmail" Parameter="secondaryEmail" Type="System.String" DbType="NVarChar(250)" />
-    <Parameter Name="CellPhone" Parameter="cellPhone" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="PersonalSummary" Parameter="personalSummary" Type="System.String" DbType="VarChar(5000)" />
-    <Parameter Name="PersonalInterests" Parameter="personalInterests" Type="System.String" DbType="VarChar(5000)" />
-    <Parameter Name="DisableNotifications" Parameter="disableNotifications" Type="System.Boolean" DbType="Bit" />
-    <Parameter Name="AvailabilityInDays" Parameter="availabilityInDays" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ImageUrl" Parameter="imageUrl" Type="System.String" DbType="VarChar(250)" />
-    <Parameter Name="VideoUrl" Parameter="videoUrl" Type="System.String" DbType="VarChar(250)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.usp_AddUserLanguage" Method="usp_AddUserLanguage">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(100)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.usp_GetUserLanguages" Method="usp_GetUserLanguages">
-    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetUserLanguagesResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_DeleteUserLanguage" Method="usp_DeleteUserLanguage">
     <Parameter Name="ID" Parameter="iD" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.usp_GetClients" Method="usp_GetClients">
-    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetClientsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Address1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Address2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CITY" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="STATE" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
-      <Column Name="ZIP" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="ParentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="SupplementalDescr" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="URLRoute" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ProfileTemplateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NumOfActiveJobs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NumOfApplicants" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
   </Function>
   <Function Name="dbo.usp_GetHPJobs" Method="usp_GetHPJobs">
     <Parameter Name="USER_ID" Parameter="uSER_ID" Type="System.String" DbType="NVarChar(128)" />
@@ -558,22 +442,6 @@
     <ElementType Name="usp_GetShiftsResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetJobs" Method="usp_GetJobs">
-    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetJobsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="ApplicantCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Shifts" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.usp_AddJobShift" Method="usp_AddJobShift">
@@ -607,6 +475,199 @@
     <Parameter Name="Exclude" Parameter="exclude" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_GetUser" Method="usp_GetUser">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserResult">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="ImageURL" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="VideoUrl" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="SECONDARY_EMAIL" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CELL_PHONE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PERSONAL_SUMMARY" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Column Name="PERSONAL_INTERESTS" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Column Name="AvailabilityInDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OnNewMatches" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactViaPhone" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ContactViaEmail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ContactViaSMS" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="YearsOfExperience" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaxEducation" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ShiftPreference" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateUserDetails" Method="usp_UpdateUserDetails">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="SecondaryEmail" Parameter="secondaryEmail" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="CellPhone" Parameter="cellPhone" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="PersonalSummary" Parameter="personalSummary" Type="System.String" DbType="VarChar(5000)" />
+    <Parameter Name="PersonalInterests" Parameter="personalInterests" Type="System.String" DbType="VarChar(5000)" />
+    <Parameter Name="DisableNotifications" Parameter="disableNotifications" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="AvailabilityInDays" Parameter="availabilityInDays" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ImageUrl" Parameter="imageUrl" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="VideoUrl" Parameter="videoUrl" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="OnNewMatches" Parameter="onNewMatches" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactViaPhone" Parameter="contactViaPhone" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ContactViaEmail" Parameter="contactViaEmail" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ContactViaSMS" Parameter="contactViaSMS" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="YearsOfExperience" Parameter="yearsOfExperience" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaxEducation" Parameter="maxEducation" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ShiftPreference" Parameter="shiftPreference" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdateUser" Method="usp_UpdateUser">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="NVarChar(256)" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Department" Parameter="department" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="ClientGUID" Parameter="clientGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetHPSpecialties" Method="usp_GetHPSpecialties">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetHPSpecialtiesResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetHPSkillsChecklists" Method="usp_GetHPSkillsChecklists">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetHPSkillsChecklistsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddHPSpecialty" Method="usp_AddHPSpecialty">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteHPSpecialty" Method="usp_DeleteHPSpecialty">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="SpecialtyId" Parameter="specialtyId" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddUserLanguage" Method="usp_AddUserLanguage">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Level" Parameter="level" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetUserLanguages" Method="usp_GetUserLanguages">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserLanguagesResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddWorkHistoryJobResponsibility" Method="usp_AddWorkHistoryJobResponsibility">
+    <Parameter Name="WorkHistoryID" Parameter="workHistoryID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="JobResponsibility" Parameter="jobResponsibility" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteWorkHistoryJobResponbilities" Method="usp_DeleteWorkHistoryJobResponbilities">
+    <Parameter Name="WorkHistoryID" Parameter="workHistoryID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetWorkHistories" Method="usp_GetWorkHistories">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetWorkHistoriesResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="CompanyName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CompanyCity" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CompanyState" Type="System.String" DbType="NVarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="JobTitle" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetWorkHistoryJobResponsibilities" Method="usp_GetWorkHistoryJobResponsibilities">
+    <Parameter Name="WorkHistoryID" Parameter="workHistoryID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetWorkHistoryJobResponsibilitiesResult">
+      <Column Name="WorkHistoryID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Responsibility" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddWorkHistory" Method="usp_AddWorkHistory">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="CompanyName" Parameter="companyName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="CompanyCity" Parameter="companyCity" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="CompanyState" Parameter="companyState" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="JobTitle" Parameter="jobTitle" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="StartDate" Parameter="startDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="EndDate" Parameter="endDate" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="usp_AddWorkHistoryResult">
+      <Column Name="" Member="Column1" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateWorkHistory" Method="usp_UpdateWorkHistory">
+    <Parameter Name="ID" Parameter="iD" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="CompanyName" Parameter="companyName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="CompanyCity" Parameter="companyCity" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="CompanyState" Parameter="companyState" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="JobTitle" Parameter="jobTitle" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="StartDate" Parameter="startDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="EndDate" Parameter="endDate" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetJobs" Method="usp_GetJobs">
+    <Parameter Name="CLIENT_ID" Parameter="cLIENT_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetJobsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicantCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Shifts" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NewApplicants" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sclMatchPreference" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetClients" Method="usp_GetClients">
+    <Parameter Name="CLIENT_GUID" Parameter="cLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Address1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Address2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CITY" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="STATE" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="ZIP" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ParentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="SupplementalDescr" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="URLRoute" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ProfileTemplateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumOfActiveJobs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumOfApplicants" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumOfPastJobs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.usp_GetJobCandidates" Method="usp_GetJobCandidates">
     <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="CandidateId" Parameter="candidateId" Type="System.String" DbType="NVarChar(128)" />
@@ -615,11 +676,38 @@
       <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="clientInterest" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="clientStarred" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="coffeeConnect" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="applicantApplied" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="exclude" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="clientInterest" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="clientStarred" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="coffeeConnect" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="applicantApplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="exclude" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="location" Type="System.String" DbType="NVarChar(202)" CanBeNull="true" />
+      <Column Name="locationDistance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANDIDATE_ALIAS_GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetClientCandidates" Method="usp_GetClientCandidates">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientCandidatesResult">
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="clientInterest" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="clientStarred" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="coffeeConnect" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="applicantApplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="exclude" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="location" Type="System.String" DbType="NVarChar(202)" CanBeNull="true" />
+      <Column Name="locationDistance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANDIDATE_ALIAS_GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateUserJob" Method="usp_UpdateUserJob">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Starred" Parameter="starred" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ClientInterest" Parameter="clientInterest" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

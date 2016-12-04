@@ -27,7 +27,13 @@ namespace DoddleNow.API.Models
         ///</summary>
         [Display(Name = "Description")]
         public string Description { get; set; }
-        
+
+        ///<summary>
+        ///Proficiency Level
+        ///</summary>
+        [Display(Name = "Level")]
+        public int Level { get; set; }
+
 
     }
 }

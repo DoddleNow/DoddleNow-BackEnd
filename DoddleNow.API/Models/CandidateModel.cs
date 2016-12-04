@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DoddleNow.API.Models
 {
-    
+
     public class Candidate
     {
         ///<summary>
@@ -64,6 +64,44 @@ namespace DoddleNow.API.Models
         /// </summary>
         [Display(Name = "Exclude")]
         public bool Exclude { get; set; }
+
+        /// <summary>
+        /// Location of HP
+        /// </summary>
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Distance of candidate's home from client address
+        /// </summary>
+        [Display(Name = "LocationDistance")]
+        public int LocationDistance { get; set; }
+
+        /// <summary>
+        /// Candidate Work History
+        /// </summary>
+        [Display(Name = "WorkHistory")]
+        public List<WorkHistory> WorkHistories { get; set; }
+
+        /// <summary>
+        /// Automatically assigned candidate guid.  Used to create alias
+        /// </summary>
+        [Display(Name = "CandidateGuid")]
+
+        public Guid CandidateGuid { get; set; }
+
+        /// <summary>
+        /// Candidate Alias
+        /// </summary>
+        [Display(Name = "CandidateAlias")]
+        public string CandidateAlias
+        {
+            get
+            {
+                return string.Format("HP{0}", CandidateGuid.ToString().Substring(0, 5)).ToUpper();
+            }
+        }
+
 
     }
 }

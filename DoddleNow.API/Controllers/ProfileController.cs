@@ -187,14 +187,90 @@ namespace DoddleNow.API.Controllers
             }
 
             user.UserId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
+            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
+            //have to get preferences if they exist for the update
+            List<Address> addresses = Profiles.GetAddresses(user.UserId);
+            usp_GetUserResult profile = da.GetUser(user.UserId);
+
+            Address add = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
+
+            HPPreferences preferences = new HPPreferences();
+            preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.Address = add == null ? new Address() : add;
+            preferences.Experience = new HPExperience();
+            preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Notifications = new HPNotification();
+            preferences.Notifications.OnNewMatches = profile.OnNewMatches;
+            preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
+            preferences.Notifications.ContactViaPhone = profile.ContactViaPhone.HasValue ? profile.ContactViaPhone.Value : false;
+            preferences.Notifications.ContactViaSMS = profile.ContactViaSMS.HasValue ? profile.ContactViaSMS.Value : false;
+
+            preferences.ShiftPreference = profile.ShiftPreference;
 
             //add additional user info to database
-            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
             da.UpdateUser(user.UserId, 6, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
-            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.Title, user.Department, false, user.ImageUrl, user.VideoUrl, user.AvailabilityInDays);
+            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, preferences.AvailabilityInDays, preferences.Notifications.OnNewMatches,
+                preferences.Notifications.ContactViaPhone, preferences.Notifications.ContactViaEmail, preferences.Notifications.ContactViaSMS, preferences.Experience.YearsOfExperience, preferences.Experience.MaxEducation, preferences.ShiftPreference );
 
             return Ok();
         }
+
+        ///<summary>
+        ///Update user with id = id
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("preferences")]
+        [HttpPost]
+        public async Task<IHttpActionResult> UpdatePreferences(HPPreferences prefs)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
+            HPOverview user = Profiles.GetOverview(userId);
+
+            //add additional user info to database
+            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
+            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, prefs.AvailabilityInDays, prefs.Notifications.OnNewMatches,
+                prefs.Notifications.ContactViaPhone, prefs.Notifications.ContactViaEmail, prefs.Notifications.ContactViaSMS, prefs.Experience.YearsOfExperience, prefs.Experience.MaxEducation, prefs.ShiftPreference);
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Get locations based on signed in user's token
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("preferences")]
+        [HttpGet]
+        public IHttpActionResult GetPreferences()
+        {
+            var userId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
+            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
+            //have to get preferences if they exist for the update
+            List<Address> addresses = Profiles.GetAddresses(userId);
+            usp_GetUserResult profile = da.GetUser(userId);
+
+            Address add = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
+
+            HPPreferences preferences = new HPPreferences();
+            preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.Address = add == null ? new Address() : add;
+            preferences.Experience = new HPExperience();
+            preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Notifications = new HPNotification();
+            preferences.Notifications.OnNewMatches = profile.OnNewMatches;
+            preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
+            preferences.Notifications.ContactViaPhone = profile.ContactViaPhone.HasValue ? profile.ContactViaPhone.Value : false;
+            preferences.Notifications.ContactViaSMS = profile.ContactViaSMS.HasValue ? profile.ContactViaSMS.Value : false;
+
+            preferences.ShiftPreference = profile.ShiftPreference;
+
+            return Ok(preferences);
+        }
+
 
         #region Image
 
@@ -249,81 +325,153 @@ namespace DoddleNow.API.Controllers
         ///Get locations based on signed in user's token
         ///</summary>
         [Authorize(Roles = "6")]
-        [Route("location")]
+        [Route("addresses")]
         [HttpGet]
-        public IHttpActionResult GetLocations()
+        public IHttpActionResult GetAddresses()
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
-            return Ok(Profiles.GetLocations(Guid.Parse(userId)));
+            return Ok(Profiles.GetAddresses(Guid.Parse(userId)));
         }
+
+        ///<summary>
+        ///Get addresses based on signed in user's token
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("addresses/{addressId}")]
+        [HttpGet]
+        public IHttpActionResult GetAddress(Guid addressId)
+        {
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
+            return Ok(Profiles.GetAddresses(Guid.Parse(userId)).Where(v => v.ID == addressId).FirstOrDefault());
+        }
+
+        ///<summary>
+        ///Add address
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("addresses")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddAddress(Address address)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
+            //add additional user info to database
+            DataAccess da = new DataAccess();
+            da.AddLocation(Guid.Parse(userId), address.AddressTypeId, address.Address_1, address.Address_2, address.City, address.State, address.ZIP);
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Update address with id = id
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("addresses/{addressId}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> UpdateAddress(Guid addressId, Address address)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            address.ID = addressId;
+            //add additional user info to database
+            DataAccess da = new DataAccess();
+            da.UpdateLocation(address.ID, address.AddressTypeId, address.Address_1, address.Address_2, address.City, address.State, address.ZIP);
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Delete address with id = id
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("address/{addressId}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteAddress(Guid addressId)
+        {
+            DataAccess da = new DataAccess();
+            da.DeleteLocation(addressId);
+            return Ok();
+        }
+
+        #endregion
+
+        #region Specialties
 
         ///<summary>
         ///Get locations based on signed in user's token
         ///</summary>
         [Authorize(Roles = "6")]
-        [Route("location/{locationId}")]
+        [Route("specialties")]
         [HttpGet]
-        public IHttpActionResult GetLocations(Guid locationId)
+        public IHttpActionResult GetHPSpecialties()
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
-            return Ok(Profiles.GetLocations(Guid.Parse(userId)).Where(v => v.ID == locationId).FirstOrDefault());
+            DataAccess da = new DataAccess();
+            List<usp_GetHPSpecialtiesResult> items = da.GetHPSpecialties(userId);
+
+            return Ok(items);
         }
 
         ///<summary>
-        ///Add location
+        ///Add 
         ///</summary>
         [Authorize(Roles = "6")]
-        [Route("location")]
+        [Route("specialties")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddLocation(Location location)
+        public async Task<IHttpActionResult> AddSpecialty(HPSpecialty specialty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddLocation(location.UserId, location.AddressTypeId, location.Address, location.Address_2, location.City, location.State, location.ZIP);
+            da.AddHPSpecialty(userId, specialty.Id);
 
             return Ok();
         }
 
         ///<summary>
-        ///Update locations with id = id
+        ///Delete  id = id
         ///</summary>
         [Authorize(Roles = "6")]
-        [Route("location/{locationId}")]
-        [HttpPost]
-        public async Task<IHttpActionResult> UpdateLocation(Guid locationId, Location location)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            location.ID = locationId;
-            //add additional user info to database
-            DataAccess da = new DataAccess();
-            da.UpdateLocation(location.ID, location.AddressTypeId, location.Address, location.Address_2, location.City, location.State, location.ZIP);
-
-            return Ok();
-        }
-
-        ///<summary>
-        ///Delete location with id = id
-        ///</summary>
-        [Authorize(Roles = "6")]
-        [Route("location/{locationId}")]
+        [Route("specialties/{specialtyId}")]
         [HttpDelete]
-        public IHttpActionResult DeleteLocation(Guid locationId)
+        public IHttpActionResult DeleteHPSpecialty(int specialtyId)
         {
             DataAccess da = new DataAccess();
-            da.DeleteLocation(locationId);
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            da.DeleteHPSpecialty(userId, specialtyId);
             return Ok();
         }
+
+        ///<summary>
+        ///Delete  all for user
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("specialties")]
+        [HttpDelete]
+        public IHttpActionResult DeleteHPSpecialties()
+        {
+            DataAccess da = new DataAccess();
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            da.DeleteHPSpecialties(userId);
+            return Ok();
+        }
+
 
         #endregion
 
@@ -367,10 +515,10 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddEducation(education.UserId, education.InstitutionName, education.Major, education.StartDate, education.EndDate, education.HighestDegreeEarnedID, education.OtherDegree, education.Graduated, education.GraduationDate);
+            da.AddEducation(Guid.Parse(userId), education.InstitutionName, education.Major, education.StartDate, education.EndDate, education.HighestDegreeEarnedID, education.OtherDegree, education.Graduated, education.GraduationDate);
 
             return Ok();
         }
@@ -451,9 +599,11 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddCertification(cert.UserId, cert.Name, cert.IssuingBody, cert.IssuanceDate, cert.ExpirationDate);
+            da.AddCertification(Guid.Parse(userId), cert.Name, cert.IssuingBody, cert.IssuanceDate, cert.ExpirationDate);
 
             return Ok();
         }
@@ -533,10 +683,10 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddReference(reference.UserId, reference.Name, reference.Title, reference.DirectSupervisor, reference.ContactPhone);
+            da.AddReference(Guid.Parse(userId), reference.Name, reference.Title, reference.DirectSupervisor, reference.ContactPhone);
 
             return Ok();
         }
@@ -617,10 +767,19 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddWorkHistory(wh.UserId, wh.CompanyName, wh.CompanyCity, wh.CompanyState, wh.JobTitle, wh.JobResponsibilities, wh.StartDate, wh.EndDate);
+            Guid? id = da.AddWorkHistory(Guid.Parse(userId), wh.CompanyName, wh.CompanyCity, wh.CompanyState, wh.JobTitle, wh.StartDate, wh.EndDate);
+
+            if(id != null && wh.JobResponsibilities != null && wh.JobResponsibilities.Count > 0)
+            {
+                for(int y=0;y<wh.JobResponsibilities.Count; ++ y)
+                {
+                    da.AddWorkHistoryJobResponsibility(id.Value, wh.JobResponsibilities[y]);
+                }
+            }
 
             return Ok();
         }
@@ -641,7 +800,17 @@ namespace DoddleNow.API.Controllers
             wh.ID = workHistoryId;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.UpdateWorkHistory(wh.ID, wh.CompanyName, wh.CompanyCity, wh.CompanyState, wh.JobTitle, wh.JobResponsibilities, wh.StartDate, wh.EndDate);
+            da.UpdateWorkHistory(wh.ID, wh.CompanyName, wh.CompanyCity, wh.CompanyState, wh.JobTitle, wh.StartDate, wh.EndDate);
+
+            if(wh.JobResponsibilities !=null && wh.JobResponsibilities.Count > 0)
+            {
+                da.DeleteWorkHistoryJobResponsibilities(workHistoryId);
+                for(int y=0;y<wh.JobResponsibilities.Count; ++ y)
+                {
+                    da.AddWorkHistoryJobResponsibility(workHistoryId, wh.JobResponsibilities[y]);
+                }
+            }
+
 
             return Ok();
         }
@@ -700,10 +869,10 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddUserLanguage(lang.UserId.ToString(), lang.Description);
+            da.AddUserLanguage(userId, lang.Description, lang.Level);
 
             return Ok();
         }
@@ -790,6 +959,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             usp_GetUserResult profile = da.GetUser(userId);
+            List<Language> languages = GetLanguages(userId);
 
             HPOverview p = new HPOverview()
             {
@@ -805,7 +975,8 @@ namespace DoddleNow.API.Controllers
                 SecondaryEmail = profile.SECONDARY_EMAIL,
                 Title = profile.Title,
                 UserId = Guid.Parse(profile.Id),
-                VideoUrl = profile.VideoUrl
+                VideoUrl = profile.VideoUrl,
+                Languages = languages
             };
 
             return p;
@@ -820,12 +991,10 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             usp_GetUserResult profile = da.GetUser(userId);
-            List<Location> locs = GetLocations(userId);
-            List<Education> eds = GetEducations(userId);
-            List<Certification> certs = GetCertifications(userId);
-            List<WorkHistory> wh = GetWorkHistories(userId);
-            List<Reference> refs = GetReferences(userId);
+            List<Address> addresses = GetAddresses(userId);
             List<Language> languages = GetLanguages(userId);
+            List<HPSpecialty> specialties = GetHPSpecialties(userId);
+            List<HPSkillsChecklist> scls = GetHPSkillsChecklists(userId);
 
             HPOverview overview = new HPOverview
             {
@@ -842,33 +1011,52 @@ namespace DoddleNow.API.Controllers
                 Title = profile.Title,
                 UserId = Guid.Parse(profile.Id),
                 VideoUrl = profile.VideoUrl,
-                AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0
+                Languages = languages
             };
+
+            HPPreferences preferences = new HPPreferences();
+            preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.Address = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
+            preferences.Experience = new HPExperience();
+            preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Notifications = new HPNotification();
+            preferences.Notifications.OnNewMatches = profile.OnNewMatches;
+            preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
+            preferences.Notifications.ContactViaPhone = profile.ContactViaPhone.HasValue ? profile.ContactViaPhone.Value : false;
+            preferences.Notifications.ContactViaSMS = profile.ContactViaSMS.HasValue ? profile.ContactViaSMS.Value : false;
+
+            preferences.ShiftPreference = profile.ShiftPreference;
+
+            List<Education> eds = GetEducations(userId);
+            List<Certification> certs = GetCertifications(userId);
+            List<WorkHistory> wh = GetWorkHistories(userId);
+            List<Reference> refs = GetReferences(userId);
 
 
             Profile p = new Profile
             {
                 Overview = overview,
-                Locations = locs,
+                Preferences = preferences,
+                Specialties = specialties,
+                SCLS = scls,
                 Educations = eds,
                 Certifications = certs,
                 WorkHistories = wh,
-                References = refs,
-                Languages = languages
+                References = refs
             };
 
             return p;
         }
 
-        public static List<Location> GetLocations(Guid userId)
+        public static List<Address> GetAddresses(Guid userId)
         {
             DataAccess da = new DataAccess();
             List<usp_GetLocationsResult> locations = da.GetLocations(userId);
 
-            List<Location> locs = new List<Location>();
+            List<Address> locs = new List<Address>();
             for (int i = 0; i < locations.Count; ++i)
             {
-                locs.Add(new Location { ID = locations[i].ID, Address = locations[i].ADDRESS_1, AddressType = locations[i].ADDRESS_TYPE, AddressTypeId = locations[i].ADDRESS_TYPE_ID, Address_2 = locations[i].ADDRESS_2, City = locations[i].CITY, State = locations[i].STATE, UserId = Guid.Parse(locations[i].UserID), ZIP = locations[i].ZIP});
+                locs.Add(new Address { ID = locations[i].ID, Address_1 = locations[i].ADDRESS_1, AddressType = locations[i].ADDRESS_TYPE, AddressTypeId = locations[i].ADDRESS_TYPE_ID, Address_2 = locations[i].ADDRESS_2, City = locations[i].CITY, State = locations[i].STATE, UserId = Guid.Parse(locations[i].UserID), ZIP = locations[i].ZIP});
             }
 
             return locs;
@@ -910,7 +1098,18 @@ namespace DoddleNow.API.Controllers
             List<WorkHistory> whs = new List<WorkHistory>();
             for (int i = 0; i < wh.Count; ++i)
             {
-                whs.Add(new WorkHistory { UserId = userId, CompanyCity = wh[i].CompanyCity, CompanyName = wh[i].CompanyName, CompanyState = wh[i].CompanyState, EndDate = wh[i].EndDate, ID = wh[i].ID, JobResponsibilities = wh[i].JobResponsibilities, JobTitle = wh[i].JobTitle, StartDate = wh[i].StartDate });
+                List<string> responsibilities = new List<string>();
+                //check for job responsibilities
+                List<usp_GetWorkHistoryJobResponsibilitiesResult> res = da.GetWorkHistoryJobResponsibilities(wh[i].ID);
+                if (res != null && res.Count > 0)
+                {
+                    for (int y = 0; y < res.Count; ++y)
+                    {
+                        responsibilities.Add(res[y].Responsibility);
+                    }
+                }
+                whs.Add(new WorkHistory { UserId = userId, CompanyCity = wh[i].CompanyCity, JobResponsibilities = responsibilities, CompanyName = wh[i].CompanyName, CompanyState = wh[i].CompanyState, EndDate = wh[i].EndDate, ID = wh[i].ID, JobTitle = wh[i].JobTitle, StartDate = wh[i].StartDate });
+
             }
 
             return whs;
@@ -938,10 +1137,38 @@ namespace DoddleNow.API.Controllers
             List<Language> langs = new List<Language>();
             for (int i = 0; i < r.Count; ++i)
             {
-                langs.Add(new Language { UserId = userId, Description = r[i].Description, ID = r[i].ID});
+                langs.Add(new Language { UserId = userId, Description = r[i].Description, ID = r[i].ID, Level=r[i].Level.HasValue ? r[i].Level.Value : 0});
             }
 
             return langs;
+        }
+
+        public static List<HPSpecialty> GetHPSpecialties(Guid userId)
+        {
+            DataAccess da = new DataAccess();
+            List<usp_GetHPSpecialtiesResult> r = da.GetHPSpecialties(userId.ToString());
+
+            List<HPSpecialty> specialties = new List<HPSpecialty>();
+            for (int i = 0; i < r.Count; ++i)
+            {
+                specialties.Add(new HPSpecialty { UserId = userId, Id = r[i].Id, Name=r[i].Name });
+            }
+
+            return specialties;
+        }
+
+        public static List<HPSkillsChecklist> GetHPSkillsChecklists(Guid userId)
+        {
+            DataAccess da = new DataAccess();
+            List<usp_GetHPSkillsChecklistsResult> r = da.GetHPSkillsCheckists(userId.ToString());
+
+            List<HPSkillsChecklist> scls = new List<HPSkillsChecklist>();
+            for (int i = 0; i < r.Count; ++i)
+            {
+                scls.Add(new HPSkillsChecklist { UserId = userId, Id = r[i].Id, Title = r[i].Title});
+            }
+
+            return scls;
         }
 
 

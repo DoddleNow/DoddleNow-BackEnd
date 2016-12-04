@@ -70,10 +70,10 @@ namespace DoddleNow.API.Models
 
 
         ///<summary>
-        ///Job Shift(s) - comma delimited names
+        ///Job Shift(s) 
         ///</summary>        
         [Display(Name = "Shifts")]
-        public string Shifts { get; set; }
+        public List<string> Shifts { get; set; }
 
 
       }

@@ -638,10 +638,45 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all jobs for client with id = id
         ///</summary>
-        public static List<usp_GetJobsResult> GetJobs(Guid clientId, Guid? jobId)
+        public static List<HPJob> GetJobs(Guid clientId, Guid? jobId)
         {
             DataAccess da = new DataAccess();
-            return da.GetJobs(clientId, jobId).ToList();
+            List<usp_GetJobsResult> items = da.GetJobs(clientId, jobId).ToList();
+            List<HPJob> final = new List<HPJob>();
+
+            for (int i=0;i<items.Count; ++i)
+            {
+                List<string> shifts = new List<string>();
+                if(items[i].Shifts != null)
+                    shifts = GetShifts(items[i].Shifts);
+
+                final.Add(new HPJob
+                {
+                    ClientId = items[i].ClientId.Value,
+                    ClientName = items[i].ClientName,
+                    Active = items[i].Active == 1 ? true : false,
+                    ApplicantCount = items[i].ApplicantCount.Value,
+                    Name = items[i].NAME,
+                    Description = items[i].DESCRIPTION,
+                    EndDate = items[i].EndDate,
+                    StartDate = items[i].StartDate,
+                    NewApplicants = items[i].NewApplicants.Value,
+                    SCLMatchPreference = items[i].sclMatchPreference.HasValue ? items[i].sclMatchPreference.Value : 0,
+                    Shifts = shifts
+                });    
+            }
+            return final;
+        }
+
+        //separates comma delimited string of shifts
+        public static List<string> GetShifts(string list)
+        {
+            List<string> shifts = new List<string>();
+
+            if(list.Length > 0)
+                shifts = list.Split(",".ToCharArray()).ToList<string>();
+
+            return shifts;
         }
 
         /// <summary>
@@ -715,7 +750,8 @@ namespace DoddleNow.API.Controllers
                 ZIP = c.ZIP,
                 MarketingBullets = GetMarketingBullets(c.ID),
                 NumOfActiveJobs = c.NumOfActiveJobs.HasValue ? c.NumOfActiveJobs.Value : 0,
-                NumOfApplicants = c.NumOfApplicants.HasValue ? c.NumOfApplicants.Value : 0
+                NumOfApplicants = c.NumOfApplicants.HasValue ? c.NumOfApplicants.Value : 0,
+                NumOfPastJobs = c.NumOfPastJobs.HasValue ? c.NumOfPastJobs.Value : 0
             };
 
             return client;

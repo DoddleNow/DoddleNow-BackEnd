@@ -21,7 +21,7 @@ namespace DoddleNow.API.Models
 
                 if (Overview != null)
                     numerator += 1;
-                if (Locations != null && Locations.Count > 0)
+                if (Preferences != null)
                     numerator += 1;
                 if (Educations != null && Educations.Count > 0)
                     numerator += 1;
@@ -43,12 +43,25 @@ namespace DoddleNow.API.Models
         [Display(Name = "Overview")]
         public HPOverview Overview { get; set; }
 
+        /// <summary>
+        /// HPPreferences
+        /// </summary>
+        [Display(Name = "Preferences")]
+        public HPPreferences Preferences { get; set; }
 
         /// <summary>
-        /// Locations
+        /// Specialties
         /// </summary>
-        [Display(Name = "Locations")]
-        public List<Location> Locations { get; set; }
+        [Display(Name = "Specialties")]
+        public List<HPSpecialty> Specialties { get; set; }
+
+
+        /// <summary>
+        /// SCL
+        /// </summary>
+        [Display(Name = "SkillsChecklists")]
+        public List<HPSkillsChecklist> SCLS { get; set; }
+
 
         /// <summary>
         /// Educations
@@ -74,12 +87,7 @@ namespace DoddleNow.API.Models
         [Display(Name = "References")]
         public List<Reference> References { get; set; }
 
-        /// <summary>
-        /// Languages
-        /// </summary>
-        [Display(Name = "Languages")]
-        public List<Language> Languages { get; set; }
-
+        
 
     }
     

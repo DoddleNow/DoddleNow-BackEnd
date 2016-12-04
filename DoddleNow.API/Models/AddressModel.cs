@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DoddleNow.API.Models
 {
    
-    public class Location
+    public class Address
     {
         ///<summary>
         ///ID
@@ -39,7 +39,7 @@ namespace DoddleNow.API.Models
         ///Address
         ///</summary>
         [Display(Name = "Address")]
-        public string Address { get; set; }
+        public string Address_1 { get; set; }
 
         ///<summary>
         ///Address 2

@@ -53,12 +53,7 @@ namespace DoddleNow.API.Models
         [Display(Name = "Department")]
         public string Department { get; set; }
 
-        ///<summary>
-        ///Availability: Zero is available now.  365 is available in one year
-        ///</summary>
-        [Display(Name = "Availability")]
-        public int AvailabilityInDays { get; set; }
-
+       
         ///<summary>
         ///User phone
         ///</summary>
@@ -102,25 +97,32 @@ namespace DoddleNow.API.Models
         ///</summary>
         [Display(Name = "Personal Interests")]
         public string PersonalInterests { get; set; }
-        
-        
-        ///<summary>
-        ///User password
-        ///</summary>
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+
 
         ///<summary>
-        ///Confirmation of user password
+        ///Languages
         ///</summary>
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "Languages")]
+        public List<Language> Languages { get; set; }
 
-        
+
+        /////<summary>
+        /////User password
+        /////</summary>
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Password")]
+        //public string Password { get; set; }
+
+        /////<summary>
+        /////Confirmation of user password
+        /////</summary>
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //public string ConfirmPassword { get; set; }
+
+
 
     }
     

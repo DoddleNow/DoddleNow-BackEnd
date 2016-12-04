@@ -625,16 +625,92 @@ namespace DoddleNow.API.Controllers
 
 
 
-        public static List<usp_GetJobCandidatesResult> GetJobCandidates(Guid jobId)
+        public static List<Candidate> GetJobCandidates(Guid jobId)
         {
             DataAccess da = new DataAccess();
-            return da.GetJobCandidates(jobId);
+            List<Candidate> candidates = new List<Models.Candidate>();
+
+            List<usp_GetJobCandidatesResult> p = da.GetJobCandidates(jobId);
+
+            for(int i=0;i< p.Count; ++ i)
+            {
+                candidates.Add(new Candidate
+                {
+                    ApplicantApplied = p[i].applicantApplied,
+                    ClientInterest = p[i].clientInterest,
+                    ClientStarred = p[i].clientStarred,
+                    CoffeeConnect = p[i].coffeeConnect,
+                    EMail = p[i].Email,
+                    Exclude = p[i].exclude,
+                    FirstName = p[i].FirstName,
+                    LastName = p[i].LastName,
+                    Location = p[i].location,
+                    LocationDistance = p[i].locationDistance,
+                    WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p[i].UserId)),
+                    UserId = Guid.Parse(p[i].UserId),
+                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID
+                });
+            }
+
+            return candidates;
         }
 
-        public static usp_GetJobCandidatesResult GetJobCandidate(Guid jobId, string candidateId)
+        public static List<Candidate> GetClientCandidates(Guid clientId)
         {
             DataAccess da = new DataAccess();
-            return da.GetJobCandidate(jobId, candidateId);
+            List<Candidate> candidates = new List<Models.Candidate>();
+
+            List<usp_GetClientCandidatesResult> p = da.GetClientCandidates(clientId);
+
+            for (int i = 0; i < p.Count; ++i)
+            {
+                candidates.Add(new Candidate
+                {
+                    ApplicantApplied = p[i].applicantApplied,
+                    ClientInterest = p[i].clientInterest,
+                    ClientStarred = p[i].clientStarred,
+                    CoffeeConnect = p[i].coffeeConnect,
+                    EMail = p[i].Email,
+                    Exclude = p[i].exclude,
+                    FirstName = p[i].FirstName,
+                    LastName = p[i].LastName,
+                    Location = p[i].location,
+                    LocationDistance = p[i].locationDistance,
+                    WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p[i].UserId)),
+                    UserId = Guid.Parse(p[i].UserId),
+                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID
+                });
+            }
+
+            return candidates;
+        }
+
+        public static Candidate GetJobCandidate(Guid jobId, string candidateId)
+        {
+            DataAccess da = new DataAccess();
+            Candidate candidate = new Candidate();
+
+            usp_GetJobCandidatesResult p = da.GetJobCandidate(jobId, candidateId);
+
+            
+                candidate= new Candidate
+                {
+                    ApplicantApplied = p.applicantApplied,
+                    ClientInterest = p.clientInterest,
+                    ClientStarred = p.clientStarred,
+                    CoffeeConnect = p.coffeeConnect,
+                    EMail = p.Email,
+                    Exclude = p.exclude,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Location = p.location,
+                    LocationDistance = p.locationDistance,
+                    WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p.UserId)),
+                    UserId = Guid.Parse(p.UserId),
+                    CandidateGuid = p.CANDIDATE_ALIAS_GUID
+                };
+
+            return candidate;
         }
 
         public static void UpdateJobCandidate(Guid jobId, Candidate candidate)

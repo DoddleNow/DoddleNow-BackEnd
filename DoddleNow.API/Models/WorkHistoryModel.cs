@@ -52,7 +52,7 @@ namespace DoddleNow.API.Models
         ///Job Responsibilities
         ///</summary>
         [Display(Name = "Job Responsibilities")]
-        public string JobResponsibilities { get; set; }
+        public List<string> JobResponsibilities { get; set; }
 
         ///<summary>
         ///Start Date
@@ -71,4 +71,5 @@ namespace DoddleNow.API.Models
 
 
     }
+
 }

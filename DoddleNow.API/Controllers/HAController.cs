@@ -357,6 +357,24 @@ namespace DoddleNow.API.Controllers
         ///Get all job candidates for client with id = id
         ///</summary>
         [Authorize(Roles = "3")]
+        [Route("{clientId}/candidates")]
+        [HttpGet]
+        public IHttpActionResult GetClientApplicants(Guid clientId)
+        {
+            if (IsValidClientNetwork(clientId))
+            {
+                var candidates = Jobs.GetClientCandidates(clientId).ToList();
+                return Ok(candidates);
+            }
+            else
+                return Ok("Not a valid client");
+
+        }
+
+        ///<summary>
+        ///Get all job candidates for client with id = id
+        ///</summary>
+        [Authorize(Roles = "3")]
         [Route("{clientId}/jobs/{jobId}/candidates/{candidateId}")]
         [HttpGet]
         public IHttpActionResult GetClientJobCandidate(Guid clientId, Guid jobId, Guid candidateId)
@@ -523,15 +541,15 @@ namespace DoddleNow.API.Controllers
             return currentProfile;
         }
 
-        public static List<Location> GetLocations(Guid userId)
+        public static List<Address> GetLocations(Guid userId)
         {
             DataAccess da = new DataAccess();
             List<usp_GetLocationsResult> locations = da.GetLocations(userId);
 
-            List<Location> locs = new List<Location>();
+            List<Address> locs = new List<Address>();
             for (int i = 0; i < locations.Count; ++i)
             {
-                locs.Add(new Location { ID = locations[i].ID, Address = locations[i].ADDRESS_1, AddressType = locations[i].ADDRESS_TYPE, AddressTypeId = locations[i].ADDRESS_TYPE_ID, Address_2 = locations[i].ADDRESS_2, City = locations[i].CITY, State = locations[i].STATE, UserId = Guid.Parse(locations[i].UserID), ZIP = locations[i].ZIP});
+                locs.Add(new Address { ID = locations[i].ID, Address_1 = locations[i].ADDRESS_1, AddressType = locations[i].ADDRESS_TYPE, AddressTypeId = locations[i].ADDRESS_TYPE_ID, Address_2 = locations[i].ADDRESS_2, City = locations[i].CITY, State = locations[i].STATE, UserId = Guid.Parse(locations[i].UserID), ZIP = locations[i].ZIP});
             }
 
             return locs;
@@ -573,7 +591,18 @@ namespace DoddleNow.API.Controllers
             List<WorkHistory> whs = new List<WorkHistory>();
             for (int i = 0; i < wh.Count; ++i)
             {
-                whs.Add(new WorkHistory { UserId = userId, CompanyCity = wh[i].CompanyCity, CompanyName = wh[i].CompanyName, CompanyState = wh[i].CompanyState, EndDate = wh[i].EndDate, ID = wh[i].ID, JobResponsibilities = wh[i].JobResponsibilities, JobTitle = wh[i].JobTitle, StartDate = wh[i].StartDate });
+                List<string> responsibilities = new List<string>();
+                //check for job responsibilities
+                List<usp_GetWorkHistoryJobResponsibilitiesResult> res = da.GetWorkHistoryJobResponsibilities(wh[i].ID);
+                if (res != null && res.Count > 0)
+                {
+                    for (int y = 0; y < res.Count; ++y)
+                    {
+                        responsibilities.Add(res[y].Responsibility);
+                    }
+                }
+                whs.Add(new WorkHistory { UserId = userId, CompanyCity = wh[i].CompanyCity, JobResponsibilities = responsibilities, CompanyName = wh[i].CompanyName, CompanyState = wh[i].CompanyState, EndDate = wh[i].EndDate, ID = wh[i].ID, JobTitle = wh[i].JobTitle, StartDate = wh[i].StartDate });
+
             }
 
             return whs;

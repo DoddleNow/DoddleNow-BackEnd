@@ -6,12 +6,16 @@ using System.Configuration;
 using System.IO;
 using System.Data;
 using System.Runtime.Remoting.Contexts;
+using System.Data.SqlClient;
+using Microsoft.SqlServer.Server;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataAccessLayer
 {
     public class DataAccess
     {
-        
+
         DataClasses1DataContext context = new DataClasses1DataContext(ConfigurationManager.ConnectionStrings["AuthContext"].ToString());
 
         public List<usp_GetJobShiftsResult> GetJobShifts(Guid jobId)
@@ -24,9 +28,46 @@ namespace DataAccessLayer
             context.usp_AddJobShift(jobId, shiftId);
         }
 
+
+        public List<usp_GetClientCandidatesResult> GetClientCandidates(Guid clientId)
+        {
+            return context.usp_GetClientCandidates(clientId).ToList();
+        }
+
         public void DeleteJobShift(Guid jobId, int shiftId)
         {
             context.usp_DeleteJobShift(jobId, shiftId);
+        }
+
+        public void UpdateUserJob(string userId, Guid jobId, bool starred, bool clientInterest = false)
+        {
+            context.usp_UpdateUserJob(userId, jobId, starred, clientInterest);
+        }
+
+        public void AddHPSpecialty(string userId, int specialtyId)
+        {
+            context.usp_AddHPSpecialty(userId, specialtyId);
+        }
+
+        public void DeleteHPSpecialties(string userId)
+        {
+            context.usp_DeleteHPSpecialty(userId, 0);
+        }
+
+        public void DeleteHPSpecialty(string userId, int specialtyId)
+        {
+            context.usp_DeleteHPSpecialty(userId, specialtyId);
+        }
+
+
+        public List<usp_GetHPSkillsChecklistsResult> GetHPSkillsCheckists(string userId)
+        {
+            return context.usp_GetHPSkillsChecklists(userId).ToList();
+        }
+
+        public List<usp_GetHPSpecialtiesResult> GetHPSpecialties(string userId)
+        {
+            return context.usp_GetHPSpecialties(userId).ToList();
         }
 
         public void DeleteJobShifts(Guid jobId)
@@ -85,9 +126,24 @@ namespace DataAccessLayer
             context.usp_DeleteUserLanguage(id);
         }
 
-        public void AddUserLanguage(string userId, string description)
+        public List<usp_GetWorkHistoryJobResponsibilitiesResult> GetWorkHistoryJobResponsibilities(Guid workHistoryId)
         {
-            context.usp_AddUserLanguage(userId, description);
+            return context.usp_GetWorkHistoryJobResponsibilities(workHistoryId).ToList();
+        }
+
+        public void AddWorkHistoryJobResponsibility(Guid workHistoryId, string responsibility)
+        {
+            context.usp_AddWorkHistoryJobResponsibility(workHistoryId, responsibility);
+        }
+
+        public void DeleteWorkHistoryJobResponsibilities(Guid workHistoryId)
+        {
+            context.usp_DeleteWorkHistoryJobResponbilities(workHistoryId);
+        }
+
+        public void AddUserLanguage(string userId, string description, int level)
+        {
+            context.usp_AddUserLanguage(userId, description, level);
         }
 
         public void AddLocation(Guid userId, int addressTypeId, string address1, string address2, string city, string state, string zip)
@@ -150,21 +206,22 @@ namespace DataAccessLayer
             return context.usp_GetWorkHistories(userId.ToString()).ToList();
         }
 
-        public void AddWorkHistory(Guid userId, string companyName, string companyCity, string companyState, string jobTitle, string jobResponsibilities, DateTime? startDate, DateTime? endDate)
+        public Guid? AddWorkHistory(Guid userId, string companyName, string companyCity, string companyState, string jobTitle, DateTime? startDate, DateTime? endDate)
         {
-            context.usp_AddWorkHistory(userId.ToString(), companyName, companyCity, companyState, jobTitle, jobResponsibilities, startDate, endDate);
+            var val = context.usp_AddWorkHistory(userId.ToString(), companyName, companyCity, companyState, jobTitle, startDate, endDate).FirstOrDefault().Column1;
+            return val;
         }
 
-        public void UpdateWorkHistory(Guid workHistoryId, string companyName, string companyCity, string companyState, string jobTitle, string jobResponsibilities, DateTime? startDate, DateTime? endDate)
+        public void UpdateWorkHistory(Guid workHistoryId, string companyName, string companyCity, string companyState, string jobTitle, DateTime? startDate, DateTime? endDate)
         {
-            context.usp_UpdateWorkHistory(workHistoryId, companyName, companyCity, companyState, jobTitle, jobResponsibilities, startDate, endDate);
+            context.usp_UpdateWorkHistory(workHistoryId, companyName, companyCity, companyState, jobTitle, startDate, endDate);
         }
 
         public void DeleteWorkHistory(Guid workHistoryId)
         {
             context.usp_DeleteWorkHistory(workHistoryId);
         }
-        
+
         public List<usp_GetReferencesResult> GetReferences(Guid userId)
         {
             return context.usp_GetReferences(userId.ToString()).ToList();
@@ -205,9 +262,11 @@ namespace DataAccessLayer
             context.usp_DeleteSpecialty(specialtyId);
         }
 
-        public void UpdateUserDetails(Guid userId, string secondaryEmail, string cellPhone, string personalSummary, string personalInterests, bool disableNotifications, string imageUrl, string videoUrl, int availabilityInDays)
+        public void UpdateUserDetails(Guid userId, string secondaryEmail, string cellPhone, string personalSummary, string personalInterests, bool disableNotifications, string imageUrl, string videoUrl, int availabilityInDays,
+            string onNewMatches = "", bool contactViaPhone = false, bool contactViaEmail = false, bool contactViaSMS = false, int yearsOfExperience = 0, string maxEducation = "", string shiftPreference = "")
         {
-            context.usp_UpdateUserDetails(userId.ToString(), secondaryEmail, cellPhone, personalSummary, personalInterests, disableNotifications, availabilityInDays, imageUrl, videoUrl);
+            context.usp_UpdateUserDetails(userId.ToString(), secondaryEmail, cellPhone, personalSummary, personalInterests, disableNotifications, availabilityInDays, imageUrl, videoUrl, onNewMatches, contactViaPhone,
+                contactViaEmail, contactViaSMS, yearsOfExperience, maxEducation, shiftPreference);
         }
 
         public void UpdateQuestion(Guid surveyId, Guid skillsChecklistQuestionId, string text, int questionTypeId, bool required, int? position)
@@ -371,7 +430,157 @@ namespace DataAccessLayer
         {
             context.usp_DeleteUser(userId);
         }
+
+
+        public List<HPJobDL> GetJobsBySearchParam(string userId, string globalSearchParam, IEnumerable<long> ids, int distance = 0)
+        {
+            List<HPJobDL> list = new List<HPJobDL>();
+            string connectionString = ConfigurationManager.ConnectionStrings["AuthContext"].ToString();
+            DataSet ds = ExecuteJobSearchProcedure(connectionString, ids, userId, globalSearchParam);
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
+                {
+                    var item = ds.Tables[0].Rows[i];
+                    bool starred = bool.TryParse((item["STARRED"] ?? "0").ToString(), out starred);
+                    bool clientInterest = bool.TryParse((item["CLIENT_INTEREST"] ?? "0").ToString(), out clientInterest);
+                    bool applied = bool.TryParse((item["Applied"] ?? "0").ToString(), out applied);
+
+                    DateTime? start = null;
+                    DateTime? end = null;
+
+                    DateTime s;
+                    DateTime e;
+                    if (DateTime.TryParse((item["StartDate"] ?? string.Empty).ToString(), out s))
+                        start = s;
+                    if (DateTime.TryParse((item["EndDate"] ?? string.Empty).ToString(), out e))
+                        end = e;
+
+                    list.Add(new HPJobDL
+                    {
+                        JobId = (Guid)item["JobID"],
+                        ClientId = (Guid)item["ClientId"],
+                        ClientName = (item["ClientName"] ?? string.Empty).ToString(),
+                        ClientAddress = (item["ClientAddress"] ?? string.Empty).ToString(),
+                        ClientAddress2 = (item["ClientAddress2"] ?? string.Empty).ToString(),
+                        ClientCity = (item["ClientCity"] ?? string.Empty).ToString(),
+                        ClientState = (item["ClientState"] ?? string.Empty).ToString(),
+                        ClientZip = (item["ClientZip"] ?? string.Empty).ToString(),
+                        JobName = (item["Name"] ?? string.Empty).ToString(),
+                        JobDescription = (item["Description"] ?? string.Empty).ToString(),
+                        EndDate = end,
+                        StartDate = start,
+                        Starred = starred,
+                        ClientInterested = clientInterest,
+                        Specialities = (item["Specialties"] ?? string.Empty).ToString(),
+                        Applied = applied,
+                        SCLMatch = int.Parse((item["SCLMatch"] ?? "0").ToString()),
+                        Shifts = (item["Shifts"] ?? string.Empty).ToString()
+                    }
+                    );
+                }
+            }
+
+            return list;
+        }
+
+
+
+        /// <summary>
+        /// Need this to send table value param to SQL as unsupported by LinqToSql
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="ids"></param>
+        private static DataSet ExecuteJobSearchProcedure(string connectionString, IEnumerable<long> ids, string userId, string globalParam)
+        {
+            DataSet ds = new DataSet();
+            using (SqlCommand cmd = new SqlCommand("dbo.usp_GetJobsBySearchParam", new SqlConnection(connectionString)))
+            {
+                cmd.CommandText = "dbo.usp_GetJobsBySearchParam";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter parameter;
+                parameter = cmd.Parameters.AddWithValue("@SpecialtyIDs", CreateDataTable(ids));
+
+                parameter.SqlDbType = SqlDbType.Structured;
+                parameter.TypeName = "dbo.ttSpecialtyIDs";
+
+                cmd.Parameters.AddWithValue("@USER_ID", userId);
+                cmd.Parameters.AddWithValue("@GLOBAL_PARAM", globalParam);
+
+                cmd.Connection.Open();
+                DataTable table = new DataTable();
+                table.Load(cmd.ExecuteReader());
+                ds.Tables.Add(table);
+            }
+            return ds;
+        }
+
+        private static DataTable CreateDataTable(IEnumerable<long> ids)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("ID", typeof(long));
+            foreach (long id in ids)
+            {
+                table.Rows.Add(id);
+            }
+            return table;
+        }
+
+        private static IEnumerable<SqlDataRecord> CreateSqlDataRecords(IEnumerable<long> ids)
+        {
+            SqlMetaData[] metaData = new SqlMetaData[1];
+            metaData[0] = new SqlMetaData("ID", SqlDbType.BigInt);
+            SqlDataRecord record = new SqlDataRecord(metaData);
+            foreach (long id in ids)
+            {
+                record.SetInt64(0, id);
+                yield return record;
+            }
+        }
     }
 
-    
+   
+    public class HPJobDL 
+    {
+
+        public Guid JobId { get; set; }
+
+        public string JobName { get; set; }
+
+        public string JobDescription { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string ClientAddress { get; set; }
+
+        public string ClientAddress2 { get; set; }
+
+        public string ClientCity { get; set; }
+
+        public string ClientState { get; set; }
+
+        public string ClientZip { get; set; }
+
+        public string Specialities { get; set; }
+
+        public bool Starred { get; set; }
+
+        public bool ClientInterested { get; set; }
+
+        public Guid ClientId { get; set; }
+
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
+
+        public bool Applied { get; set; }
+
+        public int SCLMatch { get; set; }
+
+        public string Shifts { get; set; }
+
+    }
+
+
 }
