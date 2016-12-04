@@ -76,7 +76,7 @@ namespace DoddleNow.API.Models
         /// HP Starred the job with interest
         /// </summary>
         [Display(Name = "Starred")]
-        public bool Starred { get; set; }
+        public bool? Starred { get; set; }
 
         /// <summary>
         /// Client Interested in HP
@@ -108,7 +108,7 @@ namespace DoddleNow.API.Models
         /// HP applied to job
         /// </summary>
         [Display(Name = "Applied")]
-        public bool Applied { get; set; }
+        public bool? Applied { get; set; }
 
         /// <summary>
         /// Percentage SCL Match as a whole number

@@ -39,9 +39,9 @@ namespace DataAccessLayer
             context.usp_DeleteJobShift(jobId, shiftId);
         }
 
-        public void UpdateUserJob(string userId, Guid jobId, bool starred, bool clientInterest = false)
+        public void UpdateUserJob(string userId, Guid jobId, bool? starred = null, bool? applied = null, bool clientInterest = false)
         {
-            context.usp_UpdateUserJob(userId, jobId, starred, clientInterest);
+            context.usp_UpdateUserJob(userId, jobId, starred, applied, clientInterest);
         }
 
         public void AddHPSpecialty(string userId, int specialtyId)

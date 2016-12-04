@@ -707,6 +707,7 @@
     <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
     <Parameter Name="JobID" Parameter="jobID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Starred" Parameter="starred" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Applied" Parameter="applied" Type="System.Boolean" DbType="Bit" />
     <Parameter Name="ClientInterest" Parameter="clientInterest" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>

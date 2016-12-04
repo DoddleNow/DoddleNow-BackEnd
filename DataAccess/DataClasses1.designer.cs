@@ -611,9 +611,9 @@ namespace DataAccessLayer
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateUserJob")]
-		public int usp_UpdateUserJob([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Starred", DbType="Bit")] System.Nullable<bool> starred, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientInterest", DbType="Bit")] System.Nullable<bool> clientInterest)
+		public int usp_UpdateUserJob([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Starred", DbType="Bit")] System.Nullable<bool> starred, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Applied", DbType="Bit")] System.Nullable<bool> applied, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientInterest", DbType="Bit")] System.Nullable<bool> clientInterest)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, jobID, starred, clientInterest);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, jobID, starred, applied, clientInterest);
 			return ((int)(result.ReturnValue));
 		}
 	}

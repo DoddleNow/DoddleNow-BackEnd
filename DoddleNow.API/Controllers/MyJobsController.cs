@@ -133,7 +133,7 @@ namespace DoddleNow.API.Controllers
 
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             DataAccess da = new DataAccess();
-            da.UpdateUserJob(userId, jobId, job.Starred);
+            da.UpdateUserJob(userId, jobId, job.Starred, job.Applied);
 
             return Ok();
         }
