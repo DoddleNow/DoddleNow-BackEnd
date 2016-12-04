@@ -227,7 +227,7 @@ namespace DoddleNow.API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }   
 
             user.UserId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();

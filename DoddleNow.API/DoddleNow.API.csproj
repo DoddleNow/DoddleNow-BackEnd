@@ -299,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include=".ebextensions\DoddleNowAPI-test.config" />
     <None Include="Properties\PublishProfiles\John Local.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

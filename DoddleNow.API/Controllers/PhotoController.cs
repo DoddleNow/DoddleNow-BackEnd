@@ -22,7 +22,8 @@ namespace DoddleNow.Controllers
 
         public PhotoController()
             : this(new LocalPhotoManager(HttpRuntime.AppDomainAppPath + @"\UserImages"))
-        {            
+        {
+                        
         }
 
         public PhotoController(IPhotoManager photoManager)
