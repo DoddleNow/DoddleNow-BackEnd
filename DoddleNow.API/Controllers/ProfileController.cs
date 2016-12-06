@@ -239,9 +239,12 @@ namespace DoddleNow.API.Controllers
 
             HPPreferences preferences = new HPPreferences();
             preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.AvailableOn = profile.AvailableOn;
+            preferences.WillingToTravelMiles = profile.WillingToTravelMiles;
             preferences.Address = add == null ? new Address() : add;
             preferences.Experience = new HPExperience();
             preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Experience.YearsOfExperience = profile.YearsOfExperience.HasValue ? profile.YearsOfExperience.Value : 0;
             preferences.Notifications = new HPNotification();
             preferences.Notifications.OnNewMatches = profile.OnNewMatches;
             preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
@@ -253,7 +256,7 @@ namespace DoddleNow.API.Controllers
             //add additional user info to database
             da.UpdateUser(user.UserId, 6, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, preferences.AvailabilityInDays, preferences.Notifications.OnNewMatches,
-                preferences.Notifications.ContactViaPhone, preferences.Notifications.ContactViaEmail, preferences.Notifications.ContactViaSMS, preferences.Experience.YearsOfExperience, preferences.Experience.MaxEducation, preferences.ShiftPreference );
+                preferences.Notifications.ContactViaPhone, preferences.Notifications.ContactViaEmail, preferences.Notifications.ContactViaSMS, preferences.Experience.YearsOfExperience, preferences.Experience.MaxEducation, preferences.ShiftPreference, preferences.AvailableOn , preferences.WillingToTravelMiles);
 
             return Ok();
         }
@@ -290,7 +293,7 @@ namespace DoddleNow.API.Controllers
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
             da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, prefs.AvailabilityInDays, prefs.Notifications.OnNewMatches,
-                prefs.Notifications.ContactViaPhone, prefs.Notifications.ContactViaEmail, prefs.Notifications.ContactViaSMS, prefs.Experience.YearsOfExperience, prefs.Experience.MaxEducation, prefs.ShiftPreference);
+                prefs.Notifications.ContactViaPhone, prefs.Notifications.ContactViaEmail, prefs.Notifications.ContactViaSMS, prefs.Experience.YearsOfExperience, prefs.Experience.MaxEducation, prefs.ShiftPreference, prefs.AvailableOn, prefs.WillingToTravelMiles);
 
             return Ok();
         }
@@ -313,9 +316,12 @@ namespace DoddleNow.API.Controllers
 
             HPPreferences preferences = new HPPreferences();
             preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.AvailableOn = profile.AvailableOn;
+            preferences.WillingToTravelMiles = profile.WillingToTravelMiles;
             preferences.Address = add == null ? new Address() : add;
             preferences.Experience = new HPExperience();
             preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Experience.YearsOfExperience = profile.YearsOfExperience.HasValue ? profile.YearsOfExperience.Value : 0;
             preferences.Notifications = new HPNotification();
             preferences.Notifications.OnNewMatches = profile.OnNewMatches;
             preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
@@ -1072,9 +1078,12 @@ namespace DoddleNow.API.Controllers
 
             HPPreferences preferences = new HPPreferences();
             preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.AvailableOn = profile.AvailableOn;
+            preferences.WillingToTravelMiles = profile.WillingToTravelMiles;
             preferences.Address = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
             preferences.Experience = new HPExperience();
             preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Experience.YearsOfExperience = profile.YearsOfExperience.HasValue ? profile.YearsOfExperience.Value : 0;
             preferences.Notifications = new HPNotification();
             preferences.Notifications.OnNewMatches = profile.OnNewMatches;
             preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;

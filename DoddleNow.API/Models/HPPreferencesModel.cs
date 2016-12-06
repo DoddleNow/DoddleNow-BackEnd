@@ -1,4 +1,6 @@
 ﻿using DoddleNow.API.Controllers;
+using DoddleNow.API.Infrastructure;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,10 +21,17 @@ namespace DoddleNow.API.Models
         public int AvailabilityInDays { get; set; }
 
         ///<summary>
+        ///Available On Date
+        ///</summary>
+        [Display(Name = "AvailableOn")]
+        [JsonConverter(typeof(ShortDateConverter))]
+        public DateTime? AvailableOn { get; set; }
+
+        ///<summary>
         ///Willing to travel in miles
         ///</summary>
         [Display(Name = "WillingToTravelMiles")]
-        public int WillingToTravelMiles { get; set; }
+        public int? WillingToTravelMiles { get; set; }
 
         ///<summary>
         ///Shift Preference

@@ -263,10 +263,10 @@ namespace DataAccessLayer
         }
 
         public void UpdateUserDetails(Guid userId, string secondaryEmail, string cellPhone, string personalSummary, string personalInterests, bool disableNotifications, string imageUrl, string videoUrl, int availabilityInDays,
-            string onNewMatches = "", bool contactViaPhone = false, bool contactViaEmail = false, bool contactViaSMS = false, int yearsOfExperience = 0, string maxEducation = "", string shiftPreference = "")
+            string onNewMatches = "", bool contactViaPhone = false, bool contactViaEmail = false, bool contactViaSMS = false, int yearsOfExperience = 0, string maxEducation = "", string shiftPreference = "", DateTime? availableOn = null, int? willingnessToTravelMiles = 0)
         {
             context.usp_UpdateUserDetails(userId.ToString(), secondaryEmail, cellPhone, personalSummary, personalInterests, disableNotifications, availabilityInDays, imageUrl, videoUrl, onNewMatches, contactViaPhone,
-                contactViaEmail, contactViaSMS, yearsOfExperience, maxEducation, shiftPreference);
+                contactViaEmail, contactViaSMS, yearsOfExperience, maxEducation, shiftPreference, availableOn, willingnessToTravelMiles);
         }
 
         public void UpdateQuestion(Guid surveyId, Guid skillsChecklistQuestionId, string text, int questionTypeId, bool required, int? position)
