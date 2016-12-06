@@ -24,13 +24,14 @@ namespace DoddleNow.API.Controllers
         ///</summary>
         [Authorize(Roles = "6")]
         [Route("")]
-        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}")]
+        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpGet]
-        public IHttpActionResult GetMyJobs(int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc")
+        public IHttpActionResult GetMyJobs(int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc", string filter = "")
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             List<HPJob> items = MyJobs.GetHPJobs(Guid.Parse(userId), null);
 
+            
             //only allow orderby on these
             if (orderBy.Length > 0 && !(orderBy.ToUpper().Contains("JOBNAME") || orderBy.ToUpper().Contains("CLIENTNAME") || orderBy.ToUpper().Contains("STARRED") || orderBy.ToUpper().Contains("CLIENTINTERESTED")
                 || orderBy.ToUpper().Contains("APPLIED") || orderBy.ToUpper().Contains("SCLMATCH")))
@@ -38,11 +39,31 @@ namespace DoddleNow.API.Controllers
                 orderBy = string.Empty;
             }
 
-            var totalCount = items.Count();
-            var totalPages = Math.Ceiling((double)totalCount / perPage);
             var totalStarred = items.Where(v => v.Starred == true).Count();
             var totalInterested = items.Where(v => v.ClientInterested == true).Count();
             var totalApplied = items.Where(v => v.Applied == true).Count();
+            var totalMatches = items.Count();
+
+            if (filter.Length > 0)
+            {
+                if (filter.ToLower() == "applied")
+                {
+                    items = items.Where(v => v.Applied == true).ToList();
+                }
+                else if (filter.ToLower() == "starred")
+                {
+                    items = items.Where(v => v.Starred == true).ToList();
+                }
+                else if (filter.ToLower() == "clientinterested")
+                {
+                    items = items.Where(v => v.ClientInterested == true).ToList();
+                }
+            }
+
+            //count of items returned after filter and total pages
+            var totalCount = items.Count();
+            var totalPages = Math.Ceiling((double)totalCount / perPage);
+
 
             if (QueryHelper.PropertyExists<HPJob>(orderBy))
             {
@@ -97,6 +118,7 @@ namespace DoddleNow.API.Controllers
                 totalStarred = totalStarred,
                 totalInterested = totalInterested,
                 totalApplied = totalApplied,
+                totalMatches = totalMatches
                 data = jobs
             };
 
@@ -114,6 +136,7 @@ namespace DoddleNow.API.Controllers
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             HPJob item = MyJobs.GetHPJobs(Guid.Parse(userId), jobId).FirstOrDefault();
+
             
             return Ok(item);
         }
@@ -144,9 +167,9 @@ namespace DoddleNow.API.Controllers
         ///</summary>
         [Authorize(Roles = "6")]
         [Route("search")]
-        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}")]
+        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpPost]
-        public IHttpActionResult GetHPJobsBySearchParam(HPJobSearchModel searchModel, int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc")
+        public IHttpActionResult GetHPJobsBySearchParam(HPJobSearchModel searchModel, int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc", string filter = "")
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
@@ -160,7 +183,9 @@ namespace DoddleNow.API.Controllers
             }
             
             List<DataAccessLayer.HPJobDL> items = MyJobs.GetHPJobsBySearchParam(userId, searchModel.SearchParam, ids);
+
             
+
             //only allow orderby on these
             if (orderBy.Length > 0 && !(orderBy.ToUpper().Contains("JOBNAME") || orderBy.ToUpper().Contains("CLIENTNAME") || orderBy.ToUpper().Contains("STARRED") || orderBy.ToUpper().Contains("CLIENTINTERESTED")
                 || orderBy.ToUpper().Contains("APPLIED") || orderBy.ToUpper().Contains("SCLMATCH")))
@@ -168,12 +193,31 @@ namespace DoddleNow.API.Controllers
                 orderBy = string.Empty;
             }
             
-            var totalCount = items.Count();
-            var totalPages = Math.Ceiling((double)totalCount / perPage);
-
+            //global variables
             var totalStarred = items.Where(v => v.Starred == true).Count();
             var totalInterested = items.Where(v => v.ClientInterested == true).Count();
             var totalApplied = items.Where(v => v.Applied == true).Count();
+            var totalMatches = items.Count();
+
+            if (filter.Length > 0)
+            {
+                if (filter.ToLower() == "applied")
+                {
+                    items = items.Where(v => v.Applied == true).ToList();
+                }
+                else if (filter.ToLower() == "starred")
+                {
+                    items = items.Where(v => v.Starred == true).ToList();
+                }
+                else if (filter.ToLower() == "clientinterested")
+                {
+                    items = items.Where(v => v.ClientInterested == true).ToList();
+                }
+            }
+
+            //count of items returned after filter and total pages
+            var totalCount = items.Count();
+            var totalPages = Math.Ceiling((double)totalCount / perPage);
 
             if (QueryHelper.PropertyExists<DataAccessLayer.HPJobDL>(orderBy))
             {
@@ -228,6 +272,7 @@ namespace DoddleNow.API.Controllers
                 totalStarred = totalStarred,
                 totalInterested = totalInterested,
                 totalApplied = totalApplied,
+                totalMatches = totalMatches,
                 data = jobs
             };
 
@@ -266,7 +311,7 @@ namespace DoddleNow.API.Controllers
 
 
                 jobs.Add(new Models.HPJob
-                { ClientId = items[i].ClientId.Value, ClientInterested = items[i].CLIENT_INTEREST, Applied = items[i].Applied == 1 ? true : false, Shifts = shifts,
+                { ClientId = items[i].ClientId, ClientDescription=items[i].ClientDescription, ClientInterested = items[i].CLIENT_INTEREST, Applied = items[i].Applied == 1 ? true : false, Shifts = shifts,
                     Description = items[i].DESCRIPTION, EndDate = items[i].EndDate, Id = items[i].JobID, Name = items[i].NAME, SCLMatch = items[i].SCLMatch.HasValue ? items[i].SCLMatch.Value : 0,
                     Starred = items[i].STARRED, StartDate = items[i].StartDate, ClientAddress=items[i].ClientAddress, ClientAddress2=items[i].ClientAddress2,
                  ClientCity=items[i].ClientCity, ClientName=items[i].ClientName, ClientState=items[i].ClientState, ClientZip=items[i].ClientZIP, Specialities=items[i].Specialties});

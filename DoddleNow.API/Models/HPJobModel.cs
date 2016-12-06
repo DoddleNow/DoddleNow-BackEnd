@@ -37,6 +37,13 @@ namespace DoddleNow.API.Models
         public string ClientName { get; set; }
 
         /// <summary>
+        /// ClientDescription
+        /// </summary>
+        [Display(Name = "ClientDescription")]
+        public string ClientDescription { get; set; }
+
+
+        /// <summary>
         /// ClientAddress
         /// </summary>
         [Display(Name = "ClientAddress")]

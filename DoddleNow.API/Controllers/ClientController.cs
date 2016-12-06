@@ -652,6 +652,7 @@ namespace DoddleNow.API.Controllers
 
                 final.Add(new HPJob
                 {
+                    Id = items[i].ID,
                     ClientId = items[i].ClientId.Value,
                     ClientName = items[i].ClientName,
                     Active = items[i].Active == 1 ? true : false,

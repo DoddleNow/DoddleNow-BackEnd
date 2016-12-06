@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Security.Claims;
 using System.Web;
 using System.Diagnostics;
+using DoddleNow.API.Utility;
 
 namespace DoddleNow.API.Controllers
 {
@@ -230,13 +231,88 @@ namespace DoddleNow.API.Controllers
         ///</summary>
         [Authorize(Roles = "3")]
         [Route("{clientId}/jobs")]
+        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpGet]
-        public IHttpActionResult GetClientJobs(Guid clientId)
+        public IHttpActionResult GetClientJobs(Guid clientId, int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc", string filter = "")
         {
             if (IsValidClientNetwork(clientId))
             {
                 var jobs = Clients.GetJobs(clientId, null);
-                return Ok(jobs);
+
+                //only allow orderby on these
+                if (orderBy.Length > 0 && !(orderBy.ToUpper().Contains("NAME") || orderBy.ToUpper().Contains("NEWAPPLICANTS") || orderBy.ToUpper().Contains("APPLICANTCOUNT") || orderBy.ToUpper().Contains("SCLMATCHPREFERENCE")))
+                {
+                    orderBy = string.Empty;
+                }
+
+                var totalJobs = jobs.Count();
+                var totalPastJobs = jobs.Where(v => (v.EndDate != null && v.EndDate.Value < DateTime.Now)).Count();
+                var totalActiveJobs = jobs.Where(v => (v.EndDate == null || v.EndDate.Value >= DateTime.Now) && (v.StartDate == null || v.StartDate <= DateTime.Now)).Count();
+
+                if (filter.Length > 0)
+                {
+                    if (filter.ToLower() == "active")
+                    {
+                        jobs = jobs.Where(v => (v.EndDate == null || v.EndDate.Value >= DateTime.Now) && (v.StartDate == null || v.StartDate <= DateTime.Now)).ToList();
+                    }
+                    else if (filter.ToLower() == "past")
+                    {
+                        jobs = jobs.Where(v => (v.EndDate != null && v.EndDate.Value < DateTime.Now) ).ToList();
+                    }
+                }
+
+                var totalCount = jobs.Count();
+                var totalPages = Math.Ceiling((double)totalCount / perPage);
+
+                if (QueryHelper.PropertyExists<HPJob>(orderBy))
+                {
+                    ///var orderByExpression = QueryHelper.GetPropertyExpression<DataAccessLayer.DL>(orderBy);
+
+                    //need major refactor.  HPJobDL won't allow the orderByExpression so have to do a nasty if/else
+                    if (sort.ToUpper() == "ASC" || sort == string.Empty)
+                    {
+                        if (orderBy.ToUpper() == "NAME")
+                            jobs = jobs.OrderBy(c => c.Name).ToList();
+                        else if (orderBy.ToUpper() == "NEWAPPLICANTS")
+                            jobs = jobs.OrderBy(c => c.NewApplicants).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTCOUNT")
+                            jobs = jobs.OrderBy(c => c.ApplicantCount).ToList();
+                        else if (orderBy.ToUpper() == "SCLMATCHPREFERENCE")
+                            jobs = jobs.OrderBy(c => c.SCLMatchPreference).ToList();
+                    }
+                    else
+                    {
+                        if (orderBy.ToUpper() == "NAME")
+                            jobs = jobs.OrderByDescending(c => c.Name).ToList();
+                        else if (orderBy.ToUpper() == "NEWAPPLICANTS")
+                            jobs = jobs.OrderByDescending(c => c.NewApplicants).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTCOUNT")
+                            jobs = jobs.OrderByDescending(c => c.ApplicantCount).ToList();
+                        else if (orderBy.ToUpper() == "SCLMATCHPREFERENCE")
+                            jobs = jobs.OrderByDescending(c => c.SCLMatchPreference).ToList();
+                    }
+                }
+                else
+                {
+                    jobs = jobs.OrderBy(c => c.Starred).OrderBy(c => c.Name).ToList();
+                }
+
+                jobs = jobs.Skip((page - 1) * perPage)
+                                        .Take(perPage)
+                                        .ToList();
+
+                var result = new
+                {
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    currentPage = page,
+                    totalJobs = totalJobs,
+                    totalPastJobs = totalPastJobs,
+                    totalActiveJobs = totalActiveJobs,
+                    data = jobs
+                };
+
+                return Ok(result);
             }
             else
                 return Ok("Not a valid client");
