@@ -274,6 +274,19 @@ namespace DoddleNow.API.Controllers
             var userId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
             HPOverview user = Profiles.GetOverview(userId);
 
+            Address homeAddress = Profiles.GetAddresses(userId).Where(v=>v.AddressTypeId == 1).FirstOrDefault();
+
+            if(homeAddress == null)
+            {
+                //new address
+                await AddAddress(new Address { AddressTypeId = 1, Address_1 = prefs.Address.Address_1, Address_2 = prefs.Address.Address_2, City = prefs.Address.City, State = prefs.Address.State, UserId = userId, ZIP = prefs.Address.ZIP });
+            }
+            else
+            {
+                await UpdateAddress(homeAddress.ID, new Address { AddressTypeId = 1, Address_1 = prefs.Address.Address_1, Address_2 = prefs.Address.Address_2, City = prefs.Address.City, State = prefs.Address.State, UserId = userId, ZIP = prefs.Address.ZIP });
+            }
+
+
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
             da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, prefs.AvailabilityInDays, prefs.Notifications.OnNewMatches,
