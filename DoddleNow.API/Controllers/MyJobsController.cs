@@ -118,7 +118,7 @@ namespace DoddleNow.API.Controllers
                 totalStarred = totalStarred,
                 totalInterested = totalInterested,
                 totalApplied = totalApplied,
-                totalMatches = totalMatches
+                totalMatches = totalMatches,
                 data = jobs
             };
 
