@@ -78,12 +78,6 @@ namespace DoddleNow.API.Models
         public int LocationDistance { get; set; }
 
         /// <summary>
-        /// Candidate Work History
-        /// </summary>
-        [Display(Name = "WorkHistory")]
-        public List<WorkHistory> WorkHistories { get; set; }
-
-        /// <summary>
         /// Automatically assigned candidate guid.  Used to create alias
         /// </summary>
         [Display(Name = "CandidateGuid")]
@@ -101,6 +95,27 @@ namespace DoddleNow.API.Models
                 return string.Format("HP{0}", CandidateGuid.ToString().Substring(0, 5)).ToUpper();
             }
         }
+
+
+        /// <summary>
+        /// SCL MAtch
+        /// </summary>
+        [Display(Name = "SCLMatch")]
+        public int SCLMatch { get; set; }
+
+
+        /// <summary>
+        /// String representation of Years of Experience field
+        /// </summary>
+        [Display(Name = "YearsOfExperienceStr")]
+        public string YearsOfExperienceStr { get; set; }
+
+        /// <summary>
+        /// Candidate Work History
+        /// </summary>
+        [Display(Name = "WorkHistory")]
+        public List<WorkHistory> WorkHistories { get; set; }
+
 
 
     }

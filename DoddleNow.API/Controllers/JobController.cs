@@ -648,7 +648,9 @@ namespace DoddleNow.API.Controllers
                     LocationDistance = p[i].locationDistance,
                     WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p[i].UserId)),
                     UserId = Guid.Parse(p[i].UserId),
-                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID
+                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID,
+                    SCLMatch = p[i].SCLMatch.HasValue ? p[i].SCLMatch.Value : 0,
+                    YearsOfExperienceStr = p[i].YearsOfExperienceStr
                 });
             }
 
@@ -678,9 +680,12 @@ namespace DoddleNow.API.Controllers
                     LocationDistance = p[i].locationDistance,
                     WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p[i].UserId)),
                     UserId = Guid.Parse(p[i].UserId),
-                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID
+                    CandidateGuid = p[i].CANDIDATE_ALIAS_GUID,
+                    SCLMatch = p[i].SCLMatch.HasValue ? p[i].SCLMatch.Value : 0,
+                    YearsOfExperienceStr = p[i].YearsOfExperienceStr
                 });
             }
+            
 
             return candidates;
         }
@@ -692,23 +697,25 @@ namespace DoddleNow.API.Controllers
 
             usp_GetJobCandidatesResult p = da.GetJobCandidate(jobId, candidateId);
 
-            
-                candidate= new Candidate
-                {
-                    ApplicantApplied = p.applicantApplied,
-                    ClientInterest = p.clientInterest,
-                    ClientStarred = p.clientStarred,
-                    CoffeeConnect = p.coffeeConnect,
-                    EMail = p.Email,
-                    Exclude = p.exclude,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    Location = p.location,
-                    LocationDistance = p.locationDistance,
-                    WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p.UserId)),
-                    UserId = Guid.Parse(p.UserId),
-                    CandidateGuid = p.CANDIDATE_ALIAS_GUID
-                };
+
+            candidate = new Candidate
+            {
+                ApplicantApplied = p.applicantApplied,
+                ClientInterest = p.clientInterest,
+                ClientStarred = p.clientStarred,
+                CoffeeConnect = p.coffeeConnect,
+                EMail = p.Email,
+                Exclude = p.exclude,
+                FirstName = p.FirstName,
+                LastName = p.LastName,
+                Location = p.location,
+                LocationDistance = p.locationDistance,
+                WorkHistories = HAHelper.GetWorkHistories(Guid.Parse(p.UserId)),
+                UserId = Guid.Parse(p.UserId),
+                CandidateGuid = p.CANDIDATE_ALIAS_GUID,
+                SCLMatch = p.SCLMatch.HasValue ? p.SCLMatch.Value : 0,
+                YearsOfExperienceStr = p.YearsOfExperienceStr
+            };
 
             return candidate;
         }

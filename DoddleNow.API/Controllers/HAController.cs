@@ -416,13 +416,104 @@ namespace DoddleNow.API.Controllers
         ///</summary>
         [Authorize(Roles = "3")]
         [Route("{clientId}/jobs/{jobId}/candidates")]
+        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpGet]
-        public IHttpActionResult GetClientJobApplicants(Guid clientId, Guid jobId)
+        public IHttpActionResult GetClientJobApplicants(Guid clientId, Guid jobId, int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc", string filter = "")
         {
             if (IsValidClientNetwork(clientId))
             {
                 var candidates = Jobs.GetJobCandidates(jobId).ToList();
-                return Ok(candidates);
+
+                //only allow orderby on these
+                if (orderBy.Length > 0 && !(orderBy.ToUpper().Contains("FIRSTNAME") || orderBy.ToUpper().Contains("LASTNAME") || orderBy.ToUpper().Contains("APPLICANTAPPLIED") || orderBy.ToUpper().Contains("CLIENTINTEREST")
+                    || orderBy.ToUpper().Contains("CLIENTSTARRED") || orderBy.ToUpper().Contains("COFFEECONNECT")))
+                {
+                    orderBy = string.Empty;
+                }
+
+                var totalCandidates = candidates.Count();
+                var totalStarred = candidates.Where(v => v.ClientStarred == true).Count();
+                var totalCoffeeConnected = candidates.Where(v => v.CoffeeConnect == true).Count();
+
+                //TODO: Filters if necessary
+                //if (filter.Length > 0)
+                //{
+                //    if (filter.ToLower() == "applied")
+                //    {
+                //        items = items.Where(v => v.Applied == true).ToList();
+                //    }
+                //    else if (filter.ToLower() == "starred")
+                //    {
+                //        items = items.Where(v => v.Starred == true).ToList();
+                //    }
+                //    else if (filter.ToLower() == "clientinterested")
+                //    {
+                //        items = items.Where(v => v.ClientInterested == true).ToList();
+                //    }
+                //}
+
+                //count of items returned after filter and total pages
+                var totalCount = candidates.Count();
+                var totalPages = Math.Ceiling((double)totalCount / perPage);
+
+                if (QueryHelper.PropertyExists<HPJob>(orderBy))
+                {
+                    ///var orderByExpression = QueryHelper.GetPropertyExpression<DataAccessLayer.DL>(orderBy);
+
+                    //need major refactor.  HPJobDL won't allow the orderByExpression so have to do a nasty if/else
+                    if (sort.ToUpper() == "ASC" || sort == string.Empty)
+                    {
+                        if (orderBy.ToUpper() == "FIRSTNAME")
+                            candidates = candidates.OrderBy(c => c.FirstName).ToList();
+                        else if (orderBy.ToUpper() == "LASTNAME")
+                            candidates = candidates.OrderBy(c => c.LastName).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTAPPLIED")
+                            candidates = candidates.OrderBy(c => c.ApplicantApplied).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTINTEREST")
+                            candidates = candidates.OrderBy(c => c.ClientInterest).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTSTARRED")
+                            candidates = candidates.OrderBy(c => c.ClientStarred).ToList();
+                        else if (orderBy.ToUpper() == "COFFEECONNECT")
+                            candidates = candidates.OrderBy(c => c.CoffeeConnect).ToList();
+                    }
+                    else
+                    {
+                        if (orderBy.ToUpper() == "FIRSTNAME")
+                            candidates = candidates.OrderByDescending(c => c.FirstName).ToList();
+                        else if (orderBy.ToUpper() == "LASTNAME")
+                            candidates = candidates.OrderByDescending(c => c.LastName).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTAPPLIED")
+                            candidates = candidates.OrderByDescending(c => c.ApplicantApplied).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTINTEREST")
+                            candidates = candidates.OrderByDescending(c => c.ClientInterest).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTSTARRED")
+                            candidates = candidates.OrderByDescending(c => c.ClientStarred).ToList();
+                        else if (orderBy.ToUpper() == "COFFEECONNECT")
+                            candidates = candidates.OrderByDescending(c => c.CoffeeConnect).ToList();
+                    }
+                }
+                else
+                {
+                    candidates = candidates.OrderBy(c => c.ClientStarred).OrderBy(c => c.LastName).ToList();
+                }
+
+                candidates = candidates.Skip((page - 1) * perPage)
+                                        .Take(perPage)
+                                        .ToList();
+
+                var result = new
+                {
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    currentPage = page,
+                    totalCandidates = totalCandidates,
+                    totalFavorited = totalStarred,
+                    totalCoffeeConnected = totalCoffeeConnected,
+                    data = candidates
+                };
+
+
+                return Ok(result);
             }
             else
                 return Ok("Not a valid client");
@@ -434,13 +525,103 @@ namespace DoddleNow.API.Controllers
         ///</summary>
         [Authorize(Roles = "3")]
         [Route("{clientId}/candidates")]
+        [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpGet]
-        public IHttpActionResult GetClientApplicants(Guid clientId)
+        public IHttpActionResult GetClientApplicants(Guid clientId, int perPage = 1000, int page = 1, string orderBy = "", string sort = "asc", string filter = "")
         {
             if (IsValidClientNetwork(clientId))
             {
                 var candidates = Jobs.GetClientCandidates(clientId).ToList();
-                return Ok(candidates);
+                //only allow orderby on these
+                if (orderBy.Length > 0 && !(orderBy.ToUpper().Contains("FIRSTNAME") || orderBy.ToUpper().Contains("LASTNAME") || orderBy.ToUpper().Contains("APPLICANTAPPLIED") || orderBy.ToUpper().Contains("CLIENTINTEREST")
+                    || orderBy.ToUpper().Contains("CLIENTSTARRED") || orderBy.ToUpper().Contains("COFFEECONNECT")))
+                {
+                    orderBy = string.Empty;
+                }
+
+                var totalCandidates = candidates.Count();
+                var totalStarred = candidates.Where(v => v.ClientStarred == true).Count();
+                var totalCoffeeConnected = candidates.Where(v => v.CoffeeConnect == true).Count();
+
+                //TODO: Filters if necessary
+                //if (filter.Length > 0)
+                //{
+                //    if (filter.ToLower() == "applied")
+                //    {
+                //        items = items.Where(v => v.Applied == true).ToList();
+                //    }
+                //    else if (filter.ToLower() == "starred")
+                //    {
+                //        items = items.Where(v => v.Starred == true).ToList();
+                //    }
+                //    else if (filter.ToLower() == "clientinterested")
+                //    {
+                //        items = items.Where(v => v.ClientInterested == true).ToList();
+                //    }
+                //}
+
+                //count of items returned after filter and total pages
+                var totalCount = candidates.Count();
+                var totalPages = Math.Ceiling((double)totalCount / perPage);
+
+                if (QueryHelper.PropertyExists<HPJob>(orderBy))
+                {
+                    ///var orderByExpression = QueryHelper.GetPropertyExpression<DataAccessLayer.DL>(orderBy);
+
+                    //need major refactor.  HPJobDL won't allow the orderByExpression so have to do a nasty if/else
+                    if (sort.ToUpper() == "ASC" || sort == string.Empty)
+                    {
+                        if (orderBy.ToUpper() == "FIRSTNAME")
+                            candidates = candidates.OrderBy(c => c.FirstName).ToList();
+                        else if (orderBy.ToUpper() == "LASTNAME")
+                            candidates = candidates.OrderBy(c => c.LastName).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTAPPLIED")
+                            candidates = candidates.OrderBy(c => c.ApplicantApplied).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTINTEREST")
+                            candidates = candidates.OrderBy(c => c.ClientInterest).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTSTARRED")
+                            candidates = candidates.OrderBy(c => c.ClientStarred).ToList();
+                        else if (orderBy.ToUpper() == "COFFEECONNECT")
+                            candidates = candidates.OrderBy(c => c.CoffeeConnect).ToList();
+                    }
+                    else
+                    {
+                        if (orderBy.ToUpper() == "FIRSTNAME")
+                            candidates = candidates.OrderByDescending(c => c.FirstName).ToList();
+                        else if (orderBy.ToUpper() == "LASTNAME")
+                            candidates = candidates.OrderByDescending(c => c.LastName).ToList();
+                        else if (orderBy.ToUpper() == "APPLICANTAPPLIED")
+                            candidates = candidates.OrderByDescending(c => c.ApplicantApplied).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTINTEREST")
+                            candidates = candidates.OrderByDescending(c => c.ClientInterest).ToList();
+                        else if (orderBy.ToUpper() == "CLIENTSTARRED")
+                            candidates = candidates.OrderByDescending(c => c.ClientStarred).ToList();
+                        else if (orderBy.ToUpper() == "COFFEECONNECT")
+                            candidates = candidates.OrderByDescending(c => c.CoffeeConnect).ToList();
+                    }
+                }
+                else
+                {
+                    candidates = candidates.OrderBy(c => c.ClientStarred).OrderBy(c => c.LastName).ToList();
+                }
+
+                candidates = candidates.Skip((page - 1) * perPage)
+                                        .Take(perPage)
+                                        .ToList();
+
+                var result = new
+                {
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    currentPage = page,
+                    totalCandidates = totalCandidates,
+                    totalFavorited = totalStarred,
+                    totalCoffeeConnected = totalCoffeeConnected,
+                    data = candidates
+                };
+
+
+                return Ok(result);
             }
             else
                 return Ok("Not a valid client");
