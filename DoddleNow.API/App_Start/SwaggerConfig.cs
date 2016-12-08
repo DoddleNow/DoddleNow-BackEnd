@@ -3,6 +3,9 @@ using WebActivatorEx;
 using DoddleNow.API;
 using Swashbuckle.Application;
 using DoddleNow.API.App_Start;
+using Swashbuckle.Swagger;
+using System.Web.Http.Description;
+using System.Linq;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "AddUser")]
 
@@ -34,6 +37,7 @@ namespace DoddleNow.API
                         // additional fields by chaining methods off SingleApiVersion.
                         //
                         c.SingleApiVersion("v1", "DoddleNow.API");
+                        c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -228,4 +232,5 @@ namespace DoddleNow.API
                     });
         }
     }
+    
 }

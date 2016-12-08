@@ -110,12 +110,7 @@ namespace DoddleNow.API.Models
         [Display(Name = "YearsOfExperienceStr")]
         public string YearsOfExperienceStr { get; set; }
 
-        /// <summary>
-        /// Candidate Work History
-        /// </summary>
-        [Display(Name = "WorkHistory")]
-        public List<WorkHistory> WorkHistories { get; set; }
-
+        
 
 
     }

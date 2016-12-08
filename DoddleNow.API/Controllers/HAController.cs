@@ -639,7 +639,14 @@ namespace DoddleNow.API.Controllers
             if (IsValidClientNetwork(clientId))
             {
                 var candidate = Jobs.GetJobCandidate(jobId, candidateId.ToString());
-                return Ok(candidate);
+                if(candidate.CoffeeConnect == true)
+                {
+                    Profile p = Profiles.GetProfile(candidateId);
+                    p.CandidateDetails = candidate;
+                    return Ok(p);
+                }
+                else
+                    return Ok(candidate);
             }
             else
                 return Ok("Not a valid client");

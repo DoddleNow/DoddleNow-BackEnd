@@ -11,6 +11,13 @@ namespace DoddleNow.API.Models
     {
 
         /// <summary>
+        /// If the client connects, they can see the full profile.  This contains extra candidate details not visible to the HP 
+        /// </summary>
+        [Display(Name = "References")]
+        public Candidate CandidateDetails { get; set; }
+
+
+        /// <summary>
         /// Returns double for a percent of profile completed
         /// </summary>
         public double Progress {
@@ -88,7 +95,6 @@ namespace DoddleNow.API.Models
         public List<Reference> References { get; set; }
 
         
-
     }
     
 }
