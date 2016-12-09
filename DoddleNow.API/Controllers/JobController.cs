@@ -720,7 +720,14 @@ namespace DoddleNow.API.Controllers
         public static void UpdateJobCandidate(Guid jobId, Candidate candidate)
         {
             DataAccess da = new DataAccess();
-            da.UpdateJobCandidate(jobId, candidate.UserId.ToString(), candidate.ClientInterest, candidate.ClientStarred, candidate.CoffeeConnect, candidate.ApplicantApplied, candidate.Exclude);
+            Candidate c = GetJobCandidate(jobId, candidate.UserId.ToString());
+            c.ClientInterest = candidate.ClientInterest == null ? c.ClientInterest.Value : candidate.ClientInterest.Value;
+            c.ClientStarred = candidate.ClientStarred == null ? c.ClientStarred.Value : candidate.ClientStarred.Value;
+            c.CoffeeConnect = candidate.CoffeeConnect == null ? c.CoffeeConnect.Value : candidate.CoffeeConnect.Value;
+            c.Exclude = candidate.Exclude == null ? c.Exclude.Value : candidate.Exclude.Value;
+            c.ApplicantApplied = candidate.ApplicantApplied == null ? c.ApplicantApplied.Value : candidate.ApplicantApplied.Value;
+
+            da.UpdateJobCandidate(jobId, c.UserId.ToString(), c.ClientInterest.Value, c.ClientStarred.Value, c.CoffeeConnect.Value, c.ApplicantApplied.Value, c.Exclude.Value);
         }
 
     }

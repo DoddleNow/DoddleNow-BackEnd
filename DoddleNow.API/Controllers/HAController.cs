@@ -667,6 +667,8 @@ namespace DoddleNow.API.Controllers
             {
                 candidate.UserId = candidateId;
 
+
+
                 Jobs.UpdateJobCandidate(jobId, candidate);
                 return Ok();
             }

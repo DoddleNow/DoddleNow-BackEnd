@@ -39,31 +39,31 @@ namespace DoddleNow.API.Models
         /// HP Applied for this job vs. found via search
         /// </summary>
         [Display(Name = "ApplicantApplied")]
-        public bool ApplicantApplied { get; set; }
+        public bool? ApplicantApplied { get; set; }
 
         /// <summary>
         /// Set true if client interest
         /// </summary>
         [Display(Name = "ClientInterest")]
-        public bool ClientInterest { get; set; }
+        public bool? ClientInterest { get; set; }
 
         /// <summary>
         /// Set true if client starred
         /// </summary>
         [Display(Name = "ClientStarred")]
-        public bool ClientStarred { get; set; }
+        public bool? ClientStarred { get; set; }
 
         /// <summary>
         /// Connected/paid for the applicant's full information
         /// </summary>
         [Display(Name = "CoffeeConnect")]
-        public bool CoffeeConnect { get; set; }
+        public bool? CoffeeConnect { get; set; }
 
         /// <summary>
         /// Exclude from results for HA
         /// </summary>
         [Display(Name = "Exclude")]
-        public bool Exclude { get; set; }
+        public bool? Exclude { get; set; }
 
         /// <summary>
         /// Location of HP
