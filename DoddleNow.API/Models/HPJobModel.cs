@@ -130,10 +130,10 @@ namespace DoddleNow.API.Models
         public List<string> Shifts { get; set; }
 
         ///<summary>
-        ///New applicants count 
+        ///Count of candidates
         ///</summary>        
-        [Display(Name = "NewApplicants")]
-        public int NewApplicants { get; set; }
+        [Display(Name = "CandidateCount")]
+        public int CandidateCount { get; set; }
 
         ///<summary>
         ///Number of applicants for job

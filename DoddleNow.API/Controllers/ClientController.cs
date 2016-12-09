@@ -661,7 +661,7 @@ namespace DoddleNow.API.Controllers
                     Description = items[i].DESCRIPTION,
                     EndDate = items[i].EndDate,
                     StartDate = items[i].StartDate,
-                    NewApplicants = items[i].NewApplicants.Value,
+                    CandidateCount = items[i].NewApplicants.Value,
                     SCLMatchPreference = items[i].sclMatchPreference.HasValue ? items[i].sclMatchPreference.Value : 0,
                     Shifts = shifts
                 });    

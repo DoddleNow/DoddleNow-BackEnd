@@ -274,7 +274,7 @@ namespace DoddleNow.API.Controllers
                         if (orderBy.ToUpper() == "NAME")
                             jobs = jobs.OrderBy(c => c.Name).ToList();
                         else if (orderBy.ToUpper() == "NEWAPPLICANTS")
-                            jobs = jobs.OrderBy(c => c.NewApplicants).ToList();
+                            jobs = jobs.OrderBy(c => c.CandidateCount).ToList();
                         else if (orderBy.ToUpper() == "APPLICANTCOUNT")
                             jobs = jobs.OrderBy(c => c.ApplicantCount).ToList();
                         else if (orderBy.ToUpper() == "SCLMATCHPREFERENCE")
@@ -285,7 +285,7 @@ namespace DoddleNow.API.Controllers
                         if (orderBy.ToUpper() == "NAME")
                             jobs = jobs.OrderByDescending(c => c.Name).ToList();
                         else if (orderBy.ToUpper() == "NEWAPPLICANTS")
-                            jobs = jobs.OrderByDescending(c => c.NewApplicants).ToList();
+                            jobs = jobs.OrderByDescending(c => c.CandidateCount).ToList();
                         else if (orderBy.ToUpper() == "APPLICANTCOUNT")
                             jobs = jobs.OrderByDescending(c => c.ApplicantCount).ToList();
                         else if (orderBy.ToUpper() == "SCLMATCHPREFERENCE")
