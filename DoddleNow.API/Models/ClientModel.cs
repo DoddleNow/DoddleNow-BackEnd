@@ -19,7 +19,6 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///Client Name
         ///</summary>
-        [Required]
         [Display(Name = "Client Name")]
         public string Name { get; set; }
 
@@ -38,7 +37,6 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///Primary Address
         ///</summary>
-        [Required]
         [Display(Name = "Primary Address 1")]
         public string Address1 { get; set; }
 
@@ -51,21 +49,18 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///City
         ///</summary>
-        [Required]
         [Display(Name = "City")]
         public string City { get; set; }
 
         ///<summary>
         ///State
         ///</summary>
-        [Required]
         [Display(Name = "State")]
         public string State { get; set; }
 
         ///<summary>
         ///User primary email
         ///</summary>
-        [Required]
         [Display(Name = "ZIP Code")]
         public string ZIP { get; set; }
 

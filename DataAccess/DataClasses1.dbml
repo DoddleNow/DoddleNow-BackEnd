@@ -720,4 +720,95 @@
       <Column Name="YearsOfExperienceStr" Type="System.String" DbType="VarChar(23)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.usp_GetClientGlobalSettings" Method="usp_GetClientGlobalSettings">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientGlobalSettingsResult">
+      <Column Name="ClientID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Availability" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Experience" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SCLMatch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Education" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Shift" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UpdateClientGlobalSettings" Method="usp_UpdateClientGlobalSettings">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Availability" Parameter="availability" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Experience" Parameter="experience" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SCLMatch" Parameter="sCLMatch" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Education" Parameter="education" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Shift" Parameter="shift" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdateClientSpecialtySettings" Method="usp_UpdateClientSpecialtySettings">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Availability" Parameter="availability" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Experience" Parameter="experience" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SCLMatch" Parameter="sCLMatch" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Education" Parameter="education" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Shift" Parameter="shift" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetClientSpecialtySettings" Method="usp_GetClientSpecialtySettings">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetClientSpecialtySettingsResult">
+      <Column Name="ClientID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SpecialtyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Availability" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Experience" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SCLMatch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Education" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Shift" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetSpecialtyUserMatches" Method="usp_GetSpecialtyUserMatches">
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetSpecialtyUserMatchesResult">
+      <Column Name="userId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableOn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Education" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearsOfExperience" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Shift" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SCLMatch" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(202)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetMarketInsights" Method="usp_GetMarketInsights">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Availability" Parameter="availability" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Experience" Parameter="experience" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SCLMatch" Parameter="sCLMatch" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Education" Parameter="education" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Shift" Parameter="shift" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetMarketInsightsResult">
+      <Column Name="SpecialtyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ShortName" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="matches" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[0]" Member="_0" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[20]" Member="_20" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[40]" Member="_40" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[60]" Member="_60" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[80]" Member="_80" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[100]" Member="_100" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetMarketSpecialtyInsights" Method="usp_GetMarketSpecialtyInsights">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Availability" Parameter="availability" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Experience" Parameter="experience" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SCLMatch" Parameter="sCLMatch" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Education" Parameter="education" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Shift" Parameter="shift" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_GetMarketSpecialtyInsightsResult">
+      <Column Name="SpecialtyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ShortName" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="matches" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

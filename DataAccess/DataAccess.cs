@@ -28,6 +28,41 @@ namespace DataAccessLayer
             context.usp_AddJobShift(jobId, shiftId);
         }
 
+        public List<usp_GetMarketInsightsResult> GetMarketInsights(Guid clientId, int availability, int experience, int sclMatch, int education, int shift)
+        {
+            return context.usp_GetMarketInsights(clientId, availability, experience, sclMatch, education, shift).ToList();
+        }
+
+        public usp_GetMarketSpecialtyInsightsResult GetMarketSpecialtyInsights(Guid clientId, int specialtyId, int availability, int experience, int sclMatch, int education, int shift)
+        {
+            return context.usp_GetMarketSpecialtyInsights(clientId, specialtyId, availability, experience, sclMatch, education, shift).FirstOrDefault();
+        }
+
+        public List<usp_GetSpecialtyUserMatchesResult> GetSpecialtyUserMatches(int specialtyId)
+        {
+            return context.usp_GetSpecialtyUserMatches(specialtyId).ToList();
+        }
+
+        public void UpdateClientGlobalSettings(Guid clientId, int availability, int experience, int sclMatch, int education, int shift)
+        {
+            context.usp_UpdateClientGlobalSettings(clientId, availability, experience, sclMatch, education, shift);
+        }
+
+        public usp_GetClientGlobalSettingsResult GetClientGlobalSettings(Guid clientId)
+        {
+            return context.usp_GetClientGlobalSettings(clientId).FirstOrDefault();
+        }
+
+
+        public void UpdateClientSpecialtySettings(Guid clientId, int specialtyId, int availability, int experience, int sclMatch, int education, int shift)
+        {
+            context.usp_UpdateClientSpecialtySettings(clientId, specialtyId, availability, experience, sclMatch, education, shift);
+        }
+
+        public usp_GetClientSpecialtySettingsResult GetClientSpecialtySettings(Guid clientId, int specialtyId)
+        {
+            return context.usp_GetClientSpecialtySettings(clientId, specialtyId).FirstOrDefault();
+        }
 
         public List<usp_GetClientCandidatesResult> GetClientCandidates(Guid clientId)
         {

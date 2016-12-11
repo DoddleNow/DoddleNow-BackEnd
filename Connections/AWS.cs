@@ -51,8 +51,7 @@ namespace Connections.Amazon
 
     public class AWS
     {
-        static IAmazonS3 client;
-
+       
         public static string AddS3Object(S3File s3File)
         {
             string tag = string.Empty;

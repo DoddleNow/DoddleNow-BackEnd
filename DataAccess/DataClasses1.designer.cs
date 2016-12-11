@@ -618,6 +618,55 @@ namespace DataAccessLayer
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
 			return ((ISingleResult<usp_GetClientCandidatesResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClientGlobalSettings")]
+		public ISingleResult<usp_GetClientGlobalSettingsResult> usp_GetClientGlobalSettings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
+			return ((ISingleResult<usp_GetClientGlobalSettingsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateClientGlobalSettings")]
+		public int usp_UpdateClientGlobalSettings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Availability", DbType="Int")] System.Nullable<int> availability, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Experience", DbType="Int")] System.Nullable<int> experience, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SCLMatch", DbType="Int")] System.Nullable<int> sCLMatch, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Education", DbType="Int")] System.Nullable<int> education, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Shift", DbType="Int")] System.Nullable<int> shift)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, availability, experience, sCLMatch, education, shift);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdateClientSpecialtySettings")]
+		public int usp_UpdateClientSpecialtySettings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SpecialtyID", DbType="Int")] System.Nullable<int> specialtyID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Availability", DbType="Int")] System.Nullable<int> availability, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Experience", DbType="Int")] System.Nullable<int> experience, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SCLMatch", DbType="Int")] System.Nullable<int> sCLMatch, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Education", DbType="Int")] System.Nullable<int> education, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Shift", DbType="Int")] System.Nullable<int> shift)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, specialtyID, availability, experience, sCLMatch, education, shift);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClientSpecialtySettings")]
+		public ISingleResult<usp_GetClientSpecialtySettingsResult> usp_GetClientSpecialtySettings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SpecialtyID", DbType="Int")] System.Nullable<int> specialtyID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, specialtyID);
+			return ((ISingleResult<usp_GetClientSpecialtySettingsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetSpecialtyUserMatches")]
+		public ISingleResult<usp_GetSpecialtyUserMatchesResult> usp_GetSpecialtyUserMatches([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SpecialtyID", DbType="Int")] System.Nullable<int> specialtyID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), specialtyID);
+			return ((ISingleResult<usp_GetSpecialtyUserMatchesResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetMarketInsights")]
+		public ISingleResult<usp_GetMarketInsightsResult> usp_GetMarketInsights([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Availability", DbType="Int")] System.Nullable<int> availability, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Experience", DbType="Int")] System.Nullable<int> experience, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SCLMatch", DbType="Int")] System.Nullable<int> sCLMatch, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Education", DbType="Int")] System.Nullable<int> education, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Shift", DbType="Int")] System.Nullable<int> shift)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, availability, experience, sCLMatch, education, shift);
+			return ((ISingleResult<usp_GetMarketInsightsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetMarketSpecialtyInsights")]
+		public ISingleResult<usp_GetMarketSpecialtyInsightsResult> usp_GetMarketSpecialtyInsights([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SpecialtyID", DbType="Int")] System.Nullable<int> specialtyID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Availability", DbType="Int")] System.Nullable<int> availability, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Experience", DbType="Int")] System.Nullable<int> experience, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SCLMatch", DbType="Int")] System.Nullable<int> sCLMatch, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Education", DbType="Int")] System.Nullable<int> education, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Shift", DbType="Int")] System.Nullable<int> shift)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID, specialtyID, availability, experience, sCLMatch, education, shift);
+			return ((ISingleResult<usp_GetMarketSpecialtyInsightsResult>)(result.ReturnValue));
+		}
 	}
 	
 	public partial class usp_GetRolesResult
@@ -4883,6 +4932,676 @@ namespace DataAccessLayer
 				if ((this._YearsOfExperienceStr != value))
 				{
 					this._YearsOfExperienceStr = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetClientGlobalSettingsResult
+	{
+		
+		private System.Guid _ClientID;
+		
+		private int _Availability;
+		
+		private int _Experience;
+		
+		private int _SCLMatch;
+		
+		private int _Education;
+		
+		private int _Shift;
+		
+		public usp_GetClientGlobalSettingsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ClientID
+		{
+			get
+			{
+				return this._ClientID;
+			}
+			set
+			{
+				if ((this._ClientID != value))
+				{
+					this._ClientID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Availability", DbType="Int NOT NULL")]
+		public int Availability
+		{
+			get
+			{
+				return this._Availability;
+			}
+			set
+			{
+				if ((this._Availability != value))
+				{
+					this._Availability = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Experience", DbType="Int NOT NULL")]
+		public int Experience
+		{
+			get
+			{
+				return this._Experience;
+			}
+			set
+			{
+				if ((this._Experience != value))
+				{
+					this._Experience = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int NOT NULL")]
+		public int SCLMatch
+		{
+			get
+			{
+				return this._SCLMatch;
+			}
+			set
+			{
+				if ((this._SCLMatch != value))
+				{
+					this._SCLMatch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Education", DbType="Int NOT NULL")]
+		public int Education
+		{
+			get
+			{
+				return this._Education;
+			}
+			set
+			{
+				if ((this._Education != value))
+				{
+					this._Education = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Shift", DbType="Int NOT NULL")]
+		public int Shift
+		{
+			get
+			{
+				return this._Shift;
+			}
+			set
+			{
+				if ((this._Shift != value))
+				{
+					this._Shift = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetClientSpecialtySettingsResult
+	{
+		
+		private System.Guid _ClientID;
+		
+		private int _SpecialtyID;
+		
+		private int _Availability;
+		
+		private int _Experience;
+		
+		private int _SCLMatch;
+		
+		private int _Education;
+		
+		private int _Shift;
+		
+		public usp_GetClientSpecialtySettingsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ClientID
+		{
+			get
+			{
+				return this._ClientID;
+			}
+			set
+			{
+				if ((this._ClientID != value))
+				{
+					this._ClientID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialtyID", DbType="Int NOT NULL")]
+		public int SpecialtyID
+		{
+			get
+			{
+				return this._SpecialtyID;
+			}
+			set
+			{
+				if ((this._SpecialtyID != value))
+				{
+					this._SpecialtyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Availability", DbType="Int NOT NULL")]
+		public int Availability
+		{
+			get
+			{
+				return this._Availability;
+			}
+			set
+			{
+				if ((this._Availability != value))
+				{
+					this._Availability = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Experience", DbType="Int NOT NULL")]
+		public int Experience
+		{
+			get
+			{
+				return this._Experience;
+			}
+			set
+			{
+				if ((this._Experience != value))
+				{
+					this._Experience = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int NOT NULL")]
+		public int SCLMatch
+		{
+			get
+			{
+				return this._SCLMatch;
+			}
+			set
+			{
+				if ((this._SCLMatch != value))
+				{
+					this._SCLMatch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Education", DbType="Int NOT NULL")]
+		public int Education
+		{
+			get
+			{
+				return this._Education;
+			}
+			set
+			{
+				if ((this._Education != value))
+				{
+					this._Education = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Shift", DbType="Int NOT NULL")]
+		public int Shift
+		{
+			get
+			{
+				return this._Shift;
+			}
+			set
+			{
+				if ((this._Shift != value))
+				{
+					this._Shift = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetSpecialtyUserMatchesResult
+	{
+		
+		private string _userId;
+		
+		private System.DateTime _AvailableOn;
+		
+		private System.Nullable<int> _Education;
+		
+		private int _YearsOfExperience;
+		
+		private System.Nullable<int> _Shift;
+		
+		private System.Nullable<int> _SCLMatch;
+		
+		private string _Location;
+		
+		public usp_GetSpecialtyUserMatchesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string userId
+		{
+			get
+			{
+				return this._userId;
+			}
+			set
+			{
+				if ((this._userId != value))
+				{
+					this._userId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableOn", DbType="DateTime NOT NULL")]
+		public System.DateTime AvailableOn
+		{
+			get
+			{
+				return this._AvailableOn;
+			}
+			set
+			{
+				if ((this._AvailableOn != value))
+				{
+					this._AvailableOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Education", DbType="Int")]
+		public System.Nullable<int> Education
+		{
+			get
+			{
+				return this._Education;
+			}
+			set
+			{
+				if ((this._Education != value))
+				{
+					this._Education = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YearsOfExperience", DbType="Int NOT NULL")]
+		public int YearsOfExperience
+		{
+			get
+			{
+				return this._YearsOfExperience;
+			}
+			set
+			{
+				if ((this._YearsOfExperience != value))
+				{
+					this._YearsOfExperience = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Shift", DbType="Int")]
+		public System.Nullable<int> Shift
+		{
+			get
+			{
+				return this._Shift;
+			}
+			set
+			{
+				if ((this._Shift != value))
+				{
+					this._Shift = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int")]
+		public System.Nullable<int> SCLMatch
+		{
+			get
+			{
+				return this._SCLMatch;
+			}
+			set
+			{
+				if ((this._SCLMatch != value))
+				{
+					this._SCLMatch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="NVarChar(202)")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this._Location = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetMarketInsightsResult
+	{
+		
+		private System.Nullable<int> _SpecialtyID;
+		
+		private string _NAME;
+		
+		private string _ShortName;
+		
+		private System.Nullable<int> _matches;
+		
+		private System.Nullable<int> _total;
+		
+		private System.Nullable<int> @__0;
+		
+		private System.Nullable<int> @__20;
+		
+		private System.Nullable<int> @__40;
+		
+		private System.Nullable<int> @__60;
+		
+		private System.Nullable<int> @__80;
+		
+		private System.Nullable<int> @__100;
+		
+		public usp_GetMarketInsightsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialtyID", DbType="Int")]
+		public System.Nullable<int> SpecialtyID
+		{
+			get
+			{
+				return this._SpecialtyID;
+			}
+			set
+			{
+				if ((this._SpecialtyID != value))
+				{
+					this._SpecialtyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(100)")]
+		public string NAME
+		{
+			get
+			{
+				return this._NAME;
+			}
+			set
+			{
+				if ((this._NAME != value))
+				{
+					this._NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShortName", DbType="VarChar(25)")]
+		public string ShortName
+		{
+			get
+			{
+				return this._ShortName;
+			}
+			set
+			{
+				if ((this._ShortName != value))
+				{
+					this._ShortName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_matches", DbType="Int")]
+		public System.Nullable<int> matches
+		{
+			get
+			{
+				return this._matches;
+			}
+			set
+			{
+				if ((this._matches != value))
+				{
+					this._matches = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_total", DbType="Int")]
+		public System.Nullable<int> total
+		{
+			get
+			{
+				return this._total;
+			}
+			set
+			{
+				if ((this._total != value))
+				{
+					this._total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[0]", Storage="__0", DbType="Int")]
+		public System.Nullable<int> _0
+		{
+			get
+			{
+				return this.@__0;
+			}
+			set
+			{
+				if ((this.@__0 != value))
+				{
+					this.@__0 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[20]", Storage="__20", DbType="Int")]
+		public System.Nullable<int> _20
+		{
+			get
+			{
+				return this.@__20;
+			}
+			set
+			{
+				if ((this.@__20 != value))
+				{
+					this.@__20 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[40]", Storage="__40", DbType="Int")]
+		public System.Nullable<int> _40
+		{
+			get
+			{
+				return this.@__40;
+			}
+			set
+			{
+				if ((this.@__40 != value))
+				{
+					this.@__40 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[60]", Storage="__60", DbType="Int")]
+		public System.Nullable<int> _60
+		{
+			get
+			{
+				return this.@__60;
+			}
+			set
+			{
+				if ((this.@__60 != value))
+				{
+					this.@__60 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[80]", Storage="__80", DbType="Int")]
+		public System.Nullable<int> _80
+		{
+			get
+			{
+				return this.@__80;
+			}
+			set
+			{
+				if ((this.@__80 != value))
+				{
+					this.@__80 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[100]", Storage="__100", DbType="Int")]
+		public System.Nullable<int> _100
+		{
+			get
+			{
+				return this.@__100;
+			}
+			set
+			{
+				if ((this.@__100 != value))
+				{
+					this.@__100 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetMarketSpecialtyInsightsResult
+	{
+		
+		private int _SpecialtyID;
+		
+		private string _NAME;
+		
+		private string _ShortName;
+		
+		private System.Nullable<int> _matches;
+		
+		public usp_GetMarketSpecialtyInsightsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialtyID", DbType="Int NOT NULL")]
+		public int SpecialtyID
+		{
+			get
+			{
+				return this._SpecialtyID;
+			}
+			set
+			{
+				if ((this._SpecialtyID != value))
+				{
+					this._SpecialtyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string NAME
+		{
+			get
+			{
+				return this._NAME;
+			}
+			set
+			{
+				if ((this._NAME != value))
+				{
+					this._NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShortName", DbType="VarChar(25)")]
+		public string ShortName
+		{
+			get
+			{
+				return this._ShortName;
+			}
+			set
+			{
+				if ((this._ShortName != value))
+				{
+					this._ShortName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_matches", DbType="Int")]
+		public System.Nullable<int> matches
+		{
+			get
+			{
+				return this._matches;
+			}
+			set
+			{
+				if ((this._matches != value))
+				{
+					this._matches = value;
 				}
 			}
 		}

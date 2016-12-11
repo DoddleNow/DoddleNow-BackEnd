@@ -177,7 +177,18 @@ namespace DoddleNow.API.Controllers
                 //make sure user exists
                 usp_GetUserResult usr = da.GetUser(userId);
                 if (usr != null)
+                {
+                    user.RoleID = user.RoleID == 0 ? Convert.ToInt32(usr.RoleId) : user.RoleID;
+                    user.EMail = user.EMail == null ? usr.Email : user.EMail;
+                    user.FirstName = user.FirstName == null ? usr.FirstName : user.FirstName;
+                    user.LastName = user.LastName == null ? usr.LastName: user.LastName;
+                    user.Phone = user.Phone == null ? usr.Phone : user.Phone;
+                    user.Title = user.Title == null ? usr.Title : user.Title;
+                    user.Department = user.Department == null ? usr.Department : user.Department;
+
+                    //accommodate a partial update
                     da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+                }   
                 else
                     return Ok("User does not exist");
 
@@ -345,7 +356,7 @@ namespace DoddleNow.API.Controllers
         }
 
         ///<summary>
-        ///Update job user by clientId and jobId
+        ///Update job by clientId and jobId
         ///</summary>
         [Authorize(Roles = "3")]
         [Route("{clientId}/jobs/{jobId}")]
@@ -363,8 +374,7 @@ namespace DoddleNow.API.Controllers
                 job.ClientId = clientId;
                 job.Id = jobId;
                 //add additional user info to database
-                DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate.HasValue ? job.StartDate : null, job.EndDate.HasValue ? job.EndDate : null);
+                Jobs.UpdateJob(job);
 
                 return Ok();
             }

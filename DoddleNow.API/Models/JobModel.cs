@@ -43,7 +43,6 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///Job Name
         ///</summary>
-        [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
 

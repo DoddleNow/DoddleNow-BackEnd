@@ -303,8 +303,8 @@ namespace DoddleNow.API.Controllers
             job.ClientId = clientId;
             job.Id = jobId;
             //add additional user info to database
-            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate.HasValue ? job.StartDate : null, job.EndDate.HasValue ? job.EndDate : null);
+
+            Jobs.UpdateJob(job);
 
             return Ok();
         }
@@ -775,6 +775,22 @@ namespace DoddleNow.API.Controllers
         {
             //add additional user info to database
             DataAccess da = new DataAccess();
+            Client orig = Clients.GetClient(client.Id);
+
+            if(orig != null)
+            {
+                //accommodate partial updates
+                client.Name = client.Name == null ? orig.Name : client.Name;
+                client.Description = client.Description == null ? orig.Description : client.Description;
+                client.Address1 = client.Address1 == null ? orig.Address1 : client.Address1;
+                client.Address2 = client.Address2 == null ? orig.Address2 : client.Address2;
+                client.City = client.City == null ? orig.City : client.City;
+                client.State = client.State == null ? orig.State : client.State;
+                client.ZIP = client.ZIP == null ? orig.ZIP : client.ZIP;
+                client.ParentId = client.ParentId == null ? orig.ParentId : client.ParentId;
+                client.ProfileTemplateId = client.ProfileTemplateId == 0 ? orig.ProfileTemplateId : client.ProfileTemplateId;
+            }
+
             da.UpdateClient(client.Id, client.Name, client.Description, client.Address1, client.Address2, client.City,
                     client.State, client.ZIP, client.ParentId, client.SupplementalDescription, client.URLRoute, client.ProfileTemplateId);
             if (client.MarketingBullets != null && client.MarketingBullets.Length > 0)
@@ -860,9 +876,7 @@ namespace DoddleNow.API.Controllers
         /// <param name="job"></param>
         public static void UpdateJob(Job job)
         {
-            //add additional user info to database
-            DataAccess da = new DataAccess();
-            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate);
+            Jobs.UpdateJob(job);
         }
     }
     #endregion

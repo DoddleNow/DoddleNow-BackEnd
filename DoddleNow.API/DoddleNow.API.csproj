@@ -249,6 +249,7 @@
     <Compile Include="Controllers\HAController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -263,6 +264,7 @@
     </Compile>
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ShortDateConverter.cs" />
+    <Compile Include="Models\InsightModel.cs" />
     <Compile Include="Models\CertificationModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\EducationModel.cs" />

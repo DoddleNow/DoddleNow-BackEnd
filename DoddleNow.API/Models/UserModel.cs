@@ -35,14 +35,12 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///User first name
         ///</summary>
-        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         ///<summary>
         ///User last name
         ///</summary>
-        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -56,7 +54,6 @@ namespace DoddleNow.API.Models
         /// 5	Manager
         /// 6	Healthcare Professional
         ///</summary>
-        [Required]
         [Display(Name = "RoleID")]
         public int RoleID { get; set; }
 
@@ -88,7 +85,6 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///User primary email
         ///</summary>
-        [Required]
         [Display(Name = "EMail")]
         public string EMail { get; set; }
 

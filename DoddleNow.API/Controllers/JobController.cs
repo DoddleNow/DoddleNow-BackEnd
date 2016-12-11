@@ -597,6 +597,15 @@ namespace DoddleNow.API.Controllers
         public static void UpdateJob(Job job)
         {
             DataAccess da = new DataAccess();
+            usp_GetJobsResult original = da.GetJobs(job.ClientId, job.Id).FirstOrDefault();
+            if(original != null)
+            {
+                job.Name = job.Name == null ? original.NAME : job.Name;
+                job.Description = job.Description == null ? original.DESCRIPTION : job.Description;
+                job.StartDate = job.StartDate == null ? original.StartDate : job.StartDate.Value;
+                job.EndDate = job.EndDate == null ? original.EndDate : job.EndDate.Value;
+            }
+
             da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate);
         }
 
