@@ -21,7 +21,7 @@ namespace DoddleNow.API.Models
         ///</summary>
         [Required]
         [Display(Name = "QuestionTypeID")]
-        public int QuestionTypeID { get; set; }
+        public int? QuestionTypeID { get; set; }
 
         ///<summary>
         ///Question Text
@@ -34,13 +34,13 @@ namespace DoddleNow.API.Models
         ///Question position
         ///</summary>
         [Display(Name = "Position")]
-        public int Position { get; set; }
+        public int? Position { get; set; }
 
         ///<summary>
         ///Question Required
         ///</summary>
         [Display(Name = "Required")]
-        public bool Required { get; set; }
+        public bool? Required { get; set; }
 
 
 

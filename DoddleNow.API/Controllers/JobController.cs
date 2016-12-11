@@ -88,7 +88,6 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
             job.Id = jobId;
-
             Jobs.UpdateJob(job);
 
             return Ok();
@@ -286,8 +285,8 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetJobSkillsChecklists(Guid jobId, Guid sclId)
         {
-            usp_GetSkillsChecklistsResult spec = new usp_GetSkillsChecklistsResult();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            SkillsChecklist spec = new SkillsChecklist();
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 spec = SkillsChecklists.GetSkillsChecklist(sclId);
             }
@@ -303,7 +302,7 @@ namespace DoddleNow.API.Controllers
         [HttpPost]
         public IHttpActionResult UpdateSkillsChecklist(Guid jobId, Guid sclId, SkillsChecklist scl)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 scl.Id = sclId;
                 SkillsChecklists.UpdateSkillsChecklist(scl);
@@ -321,7 +320,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklist(Guid jobId, Guid sclId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklist(sclId);
             }
@@ -339,7 +338,7 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult GetJobSkillsChecklistQuestions(Guid jobId, Guid sclId)
         {
             List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
             }
@@ -356,7 +355,7 @@ namespace DoddleNow.API.Controllers
         [HttpPost]
         public IHttpActionResult AddSkillsChecklistQuestion(Guid jobId, Guid sclId, Question question)
         {
-            if(Jobs.GetJobSkillsChecklists(jobId).Where(v=>v.ID == sclId).Count() > 0)
+            if(Jobs.GetJobSkillsChecklists(jobId).Where(v=>v.Id == sclId).Count() > 0)
             {
                 int id = SkillsChecklists.AddQuestion(sclId, question);
             }
@@ -372,7 +371,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklistQuestion(Guid jobId, Guid sclId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, null);
             }
@@ -392,7 +391,7 @@ namespace DoddleNow.API.Controllers
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
 
             usp_GetQuestionsResult spec = new usp_GetQuestionsResult();
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 spec = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);
             }
@@ -409,7 +408,7 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult UpdateSkillsChecklistQuestion(Guid jobId, Guid sclId, Guid questionId, Question question)
         {
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 SkillsChecklists.UpdateQuestion(sclId, questionId, question);
             }
@@ -426,7 +425,7 @@ namespace DoddleNow.API.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklistQuestion(Guid jobId, Guid sclId, Guid questionId)
         {
-            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+            if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, questionId);
             }
@@ -530,12 +529,12 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get job skillsChecklists
         ///</summary>
-        public static List<usp_GetSkillsChecklistsResult> GetJobSkillsChecklists(Guid jobId)
+        public static List<SkillsChecklist> GetJobSkillsChecklists(Guid jobId)
         {
             DataAccess da = new DataAccess();
             var ids = da.GetJobSkillsChecklist(jobId, null).ToList();
 
-            List<usp_GetSkillsChecklistsResult> scls = new List<usp_GetSkillsChecklistsResult>();
+            List<SkillsChecklist> scls = new List<SkillsChecklist>();
             for (int i = 0; i < ids.Count; ++i)
             {
                 scls.Add(SkillsChecklists.GetSkillsChecklist(ids[i].SkillsChecklistGUID));
@@ -562,7 +561,7 @@ namespace DoddleNow.API.Controllers
         public static Guid AddJob(Job job)
         {
             DataAccess da = new DataAccess();
-            return da.AddJob(job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate).Value;
+            return da.AddJob(job.ClientId.Value, job.Name, job.Description, job.StartDate, job.EndDate).Value;
         }
 
         /// <summary>
@@ -604,9 +603,10 @@ namespace DoddleNow.API.Controllers
                 job.Description = job.Description == null ? original.DESCRIPTION : job.Description;
                 job.StartDate = job.StartDate == null ? original.StartDate : job.StartDate.Value;
                 job.EndDate = job.EndDate == null ? original.EndDate : job.EndDate.Value;
+                job.ClientId = job.ClientId == null ? original.ClientId : job.ClientId;
             }
 
-            da.UpdateJob(job.Id, job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate);
+            da.UpdateJob(job.Id, job.ClientId.Value, job.Name, job.Description, job.StartDate, job.EndDate);
         }
 
         /// <summary>

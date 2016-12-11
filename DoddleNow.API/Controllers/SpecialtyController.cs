@@ -61,13 +61,21 @@ namespace DoddleNow.API.Controllers
         [Authorize(Roles = "1")]
         [Route("{specialtyId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateSpecialty(Specialty specialty)
+        public async Task<IHttpActionResult> UpdateSpecialty(int specialtyId, Specialty specialty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            specialty.Id = specialtyId;
 
+            usp_GetSpecialtiesResult orig = Specialties.GetSpecialty(specialty.Id);
+
+            if(orig != null)
+            {
+                specialty.Description = specialty.Description == null ? orig.DESCRIPTION : specialty.Description;
+                specialty.Name = specialty.Name == null ? orig.NAME : specialty.Name;
+            }
             Specialties.UpdateSpecialty(specialty);
 
             return Ok();

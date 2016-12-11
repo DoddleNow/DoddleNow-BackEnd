@@ -79,6 +79,16 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
             scl.Id = sclId;
+
+            SkillsChecklist orig = SkillsChecklists.GetSkillsChecklist(sclId);
+            
+            if(orig != null)
+            {
+                scl.Description = scl.Description == null ? orig.Description : scl.Description;
+                scl.Template = scl.Template == null ? orig.Template : scl.Template;
+                scl.Title = scl.Title == null ? orig.Title : scl.Title;
+            }
+
             SkillsChecklists.UpdateSkillsChecklist(scl);
 
             return Ok();
@@ -153,7 +163,17 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
+            usp_GetQuestionsResult orig = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);
+
+            if(orig != null)
+            {
+                question.Position = question.Position == null ? orig.POSITION : question.Position;
+                question.QuestionTypeID = question.QuestionTypeID == null ? orig.QuestionTypeID : question.QuestionTypeID;
+                question.Required = question.Required == null ? orig.REQUIRED : question.Required;
+                question.Text = question.Text == null ? orig.Text : question.Text;
+            }
+
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
             SkillsChecklists.UpdateQuestion(sclId, questionId, question);
 
@@ -231,10 +251,21 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="skillsChecklistId"></param>
         /// <returns></returns>
-        public static usp_GetSkillsChecklistsResult GetSkillsChecklist(Guid skillsChecklistId)
+        public static SkillsChecklist GetSkillsChecklist(Guid skillsChecklistId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklists(skillsChecklistId).FirstOrDefault();
+            SkillsChecklist scl = null;
+            usp_GetSkillsChecklistsResult item = da.GetSkillsChecklists(skillsChecklistId).FirstOrDefault();
+            if(item != null)
+            {
+                scl = new SkillsChecklist();
+                scl.Description = item.DESCRIPTION;
+                scl.Template = item.TEMPLATE;
+                scl.Title = item.TITLE;
+                scl.Id = item.ID;
+            }
+
+            return scl;
         }
 
         /// <summary>
@@ -245,7 +276,7 @@ namespace DoddleNow.API.Controllers
         public static Guid AddSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             DataAccess da = new DataAccess();
-            return da.AddSkillsChecklist(skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
+            return da.AddSkillsChecklist(skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template.HasValue ? skillsChecklist.Template.Value : false);
         }
 
         /// <summary>
@@ -257,7 +288,7 @@ namespace DoddleNow.API.Controllers
         public static int AddQuestion(Guid skillsChecklistId, Question question)
         {
             DataAccess da = new DataAccess();
-            return da.AddQuestion(skillsChecklistId, question.Text, question.QuestionTypeID, question.Required).ID;
+            return da.AddQuestion(skillsChecklistId, question.Text, question.QuestionTypeID.Value, question.Required.HasValue ? question.Required.Value : false).ID;
         }
 
         /// <summary>
@@ -270,7 +301,7 @@ namespace DoddleNow.API.Controllers
         public static void UpdateQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId, Question question)
         {
             DataAccess da = new DataAccess();
-            da.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question.Text, question.QuestionTypeID, question.Required, question.Position);
+            da.UpdateQuestion(skillsChecklistId, skillsChecklistQuestionId, question.Text, question.QuestionTypeID.Value, question.Required.HasValue ? question.Required.Value : false, question.Position);
         }
 
         /// <summary>
@@ -293,7 +324,7 @@ namespace DoddleNow.API.Controllers
         public static void UpdateSkillsChecklist(SkillsChecklist skillsChecklist)
         {
             DataAccess da = new DataAccess();
-            da.UpdateSkillsChecklist(skillsChecklist.Id, skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template);
+            da.UpdateSkillsChecklist(skillsChecklist.Id, skillsChecklist.Title, skillsChecklist.Description, skillsChecklist.Template.HasValue ? skillsChecklist.Template.Value : false);
         }
 
         /// <summary>

@@ -156,6 +156,13 @@ namespace DoddleNow.API.Controllers
 
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             DataAccess da = new DataAccess();
+            HPJob orig = MyJobs.GetHPJobs(Guid.Parse(userId), jobId).FirstOrDefault();
+            
+            if(orig != null)
+            {
+                job.Starred = job.Starred == null ? orig.Starred : job.Starred;
+                job.Applied = job.Applied == null ? orig.Applied : job.Applied;
+            }
             da.UpdateUserJob(userId, jobId, job.Starred, job.Applied);
 
             return Ok();

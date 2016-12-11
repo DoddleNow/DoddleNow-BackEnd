@@ -38,7 +38,7 @@ namespace DoddleNow.API.Models
         ///Direct Supervisor
         ///</summary>
         [Display(Name = "Direct Supervisor")]
-        public bool DirectSupervisor { get; set; }
+        public bool? DirectSupervisor { get; set; }
 
         ///<summary>
         ///Contact Phone

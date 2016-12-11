@@ -170,7 +170,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+                da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             }
 
             return Ok();
@@ -239,7 +239,18 @@ namespace DoddleNow.API.Controllers
             //make sure user exists
             usp_GetUserResult usr = da.GetUser(userId);
             if (usr != null)
-                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+            {
+                user.RoleID = user.RoleID == 0 ? Convert.ToInt32(usr.RoleId) : user.RoleID;
+                user.EMail = user.EMail == null ? usr.Email : user.EMail;
+                user.FirstName = user.FirstName == null ? usr.FirstName : user.FirstName;
+                user.LastName = user.LastName == null ? usr.LastName : user.LastName;
+                user.Phone = user.Phone == null ? usr.Phone : user.Phone;
+                user.Title = user.Title == null ? usr.Title : user.Title;
+                user.Department = user.Department == null ? usr.Department : user.Department;
+                user.RoleID = user.RoleID == null ? Convert.ToInt32(usr.RoleId) : user.RoleID;
+
+                da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+            }   
             else
                 return Ok("User does not exist");
 
@@ -450,7 +461,7 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetJobSkillsChecklists(Guid clientId, Guid jobId)
         {
-            List<usp_GetSkillsChecklistsResult> scls = new List<usp_GetSkillsChecklistsResult>();
+            List<SkillsChecklist> scls = new List<SkillsChecklist>();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
                 scls = Jobs.GetJobSkillsChecklists(jobId);
@@ -485,10 +496,10 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetJobSkillsChecklists(Guid clientId, Guid jobId, Guid sclId)
         {
-            usp_GetSkillsChecklistsResult spec = new usp_GetSkillsChecklistsResult();
+            SkillsChecklist spec = new SkillsChecklist();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     spec = SkillsChecklists.GetSkillsChecklist(sclId);
                 }
@@ -508,7 +519,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     scl.Id = sclId;
                     SkillsChecklists.UpdateSkillsChecklist(scl);
@@ -528,7 +539,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     SkillsChecklists.DeleteSkillsChecklist(sclId);
                 }
@@ -549,7 +560,7 @@ namespace DoddleNow.API.Controllers
             List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
                 }
@@ -568,7 +579,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     int id = SkillsChecklists.AddQuestion(sclId, question);
                 }
@@ -586,7 +597,7 @@ namespace DoddleNow.API.Controllers
         {
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
-                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.ID == sclId).Count() > 0)
+                if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
                 {
                     SkillsChecklists.DeleteSkillsChecklistQuestions(sclId, null);
                 }
@@ -834,7 +845,7 @@ namespace DoddleNow.API.Controllers
         public static Guid? AddJob(Job job)
         {
             DataAccess da = new DataAccess();
-            return da.AddJob(job.ClientId, job.Name, job.Description, job.StartDate, job.EndDate).Value;
+            return da.AddJob(job.ClientId.Value, job.Name, job.Description, job.StartDate, job.EndDate).Value;
         }
 
         /// <summary>

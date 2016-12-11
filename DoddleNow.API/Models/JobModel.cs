@@ -38,7 +38,7 @@ namespace DoddleNow.API.Models
         ///ClientID for job to client association
         ///</summary>
         [Display(Name = "ClientID")]
-        public Guid ClientId { get; set; }
+        public Guid? ClientId { get; set; }
 
         ///<summary>
         ///Job Name

@@ -34,7 +34,7 @@ namespace DoddleNow.API.Models
         ///Template
         ///</summary>
         [Display(Name = "Template")]
-        public bool Template { get; set; }
+        public bool? Template { get; set; }
 
 
     }

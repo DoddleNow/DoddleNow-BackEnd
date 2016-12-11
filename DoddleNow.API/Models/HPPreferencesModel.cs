@@ -18,7 +18,7 @@ namespace DoddleNow.API.Models
         ///Availability: Zero is available now.  365 is available in one year
         ///</summary>
         [Display(Name = "Availability")]
-        public int AvailabilityInDays { get; set; }
+        public int? AvailabilityInDays { get; set; }
 
         ///<summary>
         ///Available On Date
@@ -73,19 +73,19 @@ namespace DoddleNow.API.Models
         /// Allow contact by phone
         /// </summary>
         [Display(Name = "ContactViaPhone")]
-        public bool ContactViaPhone { get; set; }
+        public bool? ContactViaPhone { get; set; }
 
         /// <summary>
         /// Allow contact by email
         /// </summary>
         [Display(Name = "ContactViaEmail")]
-        public bool ContactViaEmail { get; set; }
+        public bool? ContactViaEmail { get; set; }
 
         /// <summary>
         /// Allow contact by SMS
         /// </summary>
         [Display(Name = "ContactViaSMS")]
-        public bool ContactViaSMS { get; set; }
+        public bool? ContactViaSMS { get; set; }
 
     }
 
@@ -95,7 +95,7 @@ namespace DoddleNow.API.Models
         ///YearsOfExperience
         ///</summary>
         [Display(Name = "YearsOfExperience")]
-        public int YearsOfExperience { get; set; }
+        public int? YearsOfExperience { get; set; }
 
         ///<summary>
         ///MaxEducation

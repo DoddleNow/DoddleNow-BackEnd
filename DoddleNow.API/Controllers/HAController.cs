@@ -187,7 +187,7 @@ namespace DoddleNow.API.Controllers
                     user.Department = user.Department == null ? usr.Department : user.Department;
 
                     //accommodate a partial update
-                    da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+                    da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
                 }   
                 else
                     return Ok("User does not exist");
@@ -228,7 +228,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+                da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             }
 
             return Ok();

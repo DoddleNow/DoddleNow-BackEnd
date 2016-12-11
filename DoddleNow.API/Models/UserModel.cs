@@ -55,7 +55,7 @@ namespace DoddleNow.API.Models
         /// 6	Healthcare Professional
         ///</summary>
         [Display(Name = "RoleID")]
-        public int RoleID { get; set; }
+        public int? RoleID { get; set; }
 
         
         ///<summary>

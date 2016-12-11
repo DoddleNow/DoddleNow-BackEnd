@@ -109,7 +109,7 @@ namespace DoddleNow.API.Controllers
             {
                 //add additional user info to database
                 DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-                da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+                da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             }
 
             return Ok();
@@ -141,9 +141,22 @@ namespace DoddleNow.API.Controllers
 
             user.Id = userId;
 
+            usp_GetUserResult orig = Users.GetUser(userId);
+
+            if(orig != null)
+            {
+                user.RoleID = user.RoleID == null ? Convert.ToInt32(orig.RoleId) : user.RoleID;
+                user.EMail = user.EMail == null ? orig.Email : user.EMail;
+                user.FirstName = user.FirstName == null ? orig.FirstName : user.FirstName;
+                user.LastName = user.LastName == null ? orig.LastName : user.LastName;
+                user.Phone = user.Phone == null ? orig.Phone : user.Phone;
+                user.Title = user.Title == null ? orig.Title : user.Title;
+                user.Department = user.Department == null ? orig.Department : user.Department;
+            }
+
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateUser(user.Id, user.RoleID, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
+            da.UpdateUser(user.Id, user.RoleID.Value, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
             
             return Ok();
         }

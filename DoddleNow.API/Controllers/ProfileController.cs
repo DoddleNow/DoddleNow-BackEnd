@@ -231,6 +231,9 @@ namespace DoddleNow.API.Controllers
 
             user.UserId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
+
+            HPOverview orig = Profiles.GetOverview(user.UserId);
+
             //have to get preferences if they exist for the update
             List<Address> addresses = Profiles.GetAddresses(user.UserId);
             usp_GetUserResult profile = da.GetUser(user.UserId);
@@ -253,10 +256,28 @@ namespace DoddleNow.API.Controllers
 
             preferences.ShiftPreference = profile.ShiftPreference;
 
+
+            if(orig != null)
+            {
+                user.FirstName = user.FirstName == null ? orig.FirstName : user.FirstName;
+                user.LastName = user.LastName== null ? orig.LastName : user.LastName;
+                user.ImageUrl = user.ImageUrl == null ? orig.ImageUrl : user.ImageUrl;
+                user.VideoUrl = user.VideoUrl == null ? orig.VideoUrl : user.VideoUrl;
+                user.Title = user.Title == null ? orig.Title : user.Title;
+                user.Department = user.Department == null ? orig.Department : user.Department;
+                user.Phone = user.Phone == null ? orig.Phone : user.Phone;
+                user.EMail = user.EMail == null ? orig.EMail : user.EMail;
+                user.SecondaryEmail = user.SecondaryEmail == null ? orig.SecondaryEmail : user.SecondaryEmail;
+                user.CellPhone = user.CellPhone == null ? orig.CellPhone : user.CellPhone;
+                user.PersonalInterests = user.PersonalInterests == null ? orig.PersonalInterests : user.PersonalInterests;
+                user.PersonalSummary = user.PersonalSummary == null ? orig.PersonalSummary : user.PersonalSummary;
+            }
+
             //add additional user info to database
             da.UpdateUser(user.UserId, 6, user.EMail, user.FirstName, user.LastName, user.Phone, user.Title, user.Department, user.ClientID);
-            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, preferences.AvailabilityInDays, preferences.Notifications.OnNewMatches,
-                preferences.Notifications.ContactViaPhone, preferences.Notifications.ContactViaEmail, preferences.Notifications.ContactViaSMS, preferences.Experience.YearsOfExperience, preferences.Experience.MaxEducation, preferences.ShiftPreference, preferences.AvailableOn , preferences.WillingToTravelMiles);
+            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, preferences.AvailabilityInDays.HasValue ? preferences.AvailabilityInDays.Value : 0, preferences.Notifications.OnNewMatches,
+                preferences.Notifications.ContactViaPhone.HasValue ? preferences.Notifications.ContactViaPhone.Value : false, preferences.Notifications.ContactViaEmail.HasValue ? preferences.Notifications.ContactViaEmail.Value : false, 
+                preferences.Notifications.ContactViaSMS.HasValue ? preferences.Notifications.ContactViaSMS.Value : false, preferences.Experience.YearsOfExperience.HasValue ? preferences.Experience.YearsOfExperience.Value : 0, preferences.Experience.MaxEducation, preferences.ShiftPreference, preferences.AvailableOn , preferences.WillingToTravelMiles);
 
             return Ok();
         }
@@ -286,14 +307,49 @@ namespace DoddleNow.API.Controllers
             }
             else
             {
+                prefs.Address = homeAddress;
                 await UpdateAddress(homeAddress.ID, new Address { AddressTypeId = 1, Address_1 = prefs.Address.Address_1, Address_2 = prefs.Address.Address_2, City = prefs.Address.City, State = prefs.Address.State, UserId = userId, ZIP = prefs.Address.ZIP });
+            }
+
+            HPPreferences orig = Profiles.GetPreferences(userId);
+
+            if(orig != null)
+            {
+                prefs.Address = prefs.Address == null ? orig.Address : prefs.Address;
+                prefs.AvailabilityInDays = prefs.AvailabilityInDays == null ? orig.AvailabilityInDays : prefs.AvailabilityInDays;
+
+                if (prefs.Notifications == null)
+                    prefs.Notifications = orig.Notifications;
+                else
+                {
+                    //may be partial on notifications
+                    prefs.Notifications.ContactViaEmail = prefs.Notifications.ContactViaEmail == null ? orig.Notifications.ContactViaEmail : prefs.Notifications.ContactViaEmail;
+                    prefs.Notifications.ContactViaPhone = prefs.Notifications.ContactViaPhone == null ? orig.Notifications.ContactViaPhone : prefs.Notifications.ContactViaPhone;
+                    prefs.Notifications.ContactViaSMS = prefs.Notifications.ContactViaSMS == null ? orig.Notifications.ContactViaSMS : prefs.Notifications.ContactViaSMS;
+                   
+                    prefs.ShiftPreference = prefs.ShiftPreference == null ? orig.ShiftPreference : prefs.ShiftPreference;
+                    prefs.AvailableOn = prefs.AvailableOn == null ? orig.AvailableOn : prefs.AvailableOn;
+                    prefs.WillingToTravelMiles = prefs.WillingToTravelMiles == null ? orig.WillingToTravelMiles : prefs.WillingToTravelMiles;
+                }
+
+                if(prefs.Experience == null)
+                {
+                    prefs.Experience = orig.Experience;
+                }
+                else
+                {
+                    prefs.Experience.YearsOfExperience = prefs.Experience.YearsOfExperience == null ? orig.Experience.YearsOfExperience : prefs.Experience.YearsOfExperience;
+                    prefs.Experience.MaxEducation = prefs.Experience.MaxEducation == null ? orig.Experience.MaxEducation : prefs.Experience.MaxEducation;
+                }
+                      
             }
 
 
             //add additional user info to database
             DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, prefs.AvailabilityInDays, prefs.Notifications.OnNewMatches,
-                prefs.Notifications.ContactViaPhone, prefs.Notifications.ContactViaEmail, prefs.Notifications.ContactViaSMS, prefs.Experience.YearsOfExperience, prefs.Experience.MaxEducation, prefs.ShiftPreference, prefs.AvailableOn, prefs.WillingToTravelMiles);
+            da.UpdateUserDetails(user.UserId, user.SecondaryEmail, user.CellPhone, user.PersonalSummary, user.PersonalInterests, false, user.ImageUrl, user.VideoUrl, prefs.AvailabilityInDays.HasValue ? prefs.AvailabilityInDays.Value : 0, prefs.Notifications.OnNewMatches,
+                prefs.Notifications.ContactViaPhone.HasValue ? prefs.Notifications.ContactViaPhone.Value : false, prefs.Notifications.ContactViaEmail.HasValue ? prefs.Notifications.ContactViaEmail.Value : false, prefs.Notifications.ContactViaSMS.HasValue ? prefs.Notifications.ContactViaSMS.Value : false, 
+                prefs.Experience.YearsOfExperience.HasValue ? prefs.Experience.YearsOfExperience.Value : 0, prefs.Experience.MaxEducation, prefs.ShiftPreference, prefs.AvailableOn, prefs.WillingToTravelMiles);
 
             return Ok();
         }
@@ -307,31 +363,12 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult GetPreferences()
         {
             var userId = Guid.Parse(((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value);
-            DataAccessLayer.DataAccess da = new DataAccessLayer.DataAccess();
-            //have to get preferences if they exist for the update
-            List<Address> addresses = Profiles.GetAddresses(userId);
-            usp_GetUserResult profile = da.GetUser(userId);
+            
 
-            Address add = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
-
-            HPPreferences preferences = new HPPreferences();
-            preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
-            preferences.AvailableOn = profile.AvailableOn;
-            preferences.WillingToTravelMiles = profile.WillingToTravelMiles;
-            preferences.Address = add == null ? new Address() : add;
-            preferences.Experience = new HPExperience();
-            preferences.Experience.MaxEducation = profile.MaxEducation;
-            preferences.Experience.YearsOfExperience = profile.YearsOfExperience.HasValue ? profile.YearsOfExperience.Value : 0;
-            preferences.Notifications = new HPNotification();
-            preferences.Notifications.OnNewMatches = profile.OnNewMatches;
-            preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
-            preferences.Notifications.ContactViaPhone = profile.ContactViaPhone.HasValue ? profile.ContactViaPhone.Value : false;
-            preferences.Notifications.ContactViaSMS = profile.ContactViaSMS.HasValue ? profile.ContactViaSMS.Value : false;
-
-            preferences.ShiftPreference = profile.ShiftPreference;
-
-            return Ok(preferences);
+            return Ok(Profiles.GetPreferences(userId));
         }
+
+        
 
 
         #region Image
@@ -443,8 +480,20 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             address.ID = addressId;
+            Address orig = Profiles.GetAddresses(Guid.Parse(userId)).Where(v => v.ID == addressId).FirstOrDefault();
+
+            if(orig != null)
+            {
+                address.AddressTypeId = address.AddressTypeId == 0 ? orig.AddressTypeId : address.AddressTypeId;
+                address.Address_1 = address.Address_1 == null ? orig.Address_1 : address.Address_1;
+                address.Address_2 = address.Address_2 == null ? orig.Address_2 : address.Address_2;
+                address.City = address.City == null ? orig.City : address.City;
+                address.State = address.State == null ? orig.State : address.State;
+                address.ZIP = address.ZIP == null ? orig.ZIP : address.ZIP;
+            }
+
             //add additional user info to database
             DataAccess da = new DataAccess();
             da.UpdateLocation(address.ID, address.AddressTypeId, address.Address_1, address.Address_2, address.City, address.State, address.ZIP);
@@ -597,6 +646,20 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            Education orig = Profiles.GetEducations(Guid.Parse(userId)).Where(v => v.ID == educationId).FirstOrDefault();
+
+            if(orig != null)
+            {
+                education.InstitutionName = education.InstitutionName == null ? orig.InstitutionName : education.InstitutionName;
+                education.Major = education.Major == null ? orig.Major : education.Major;
+                education.StartDate = education.StartDate == null ? orig.StartDate : education.StartDate;
+                education.EndDate = education.EndDate == null ? orig.EndDate : education.EndDate;
+                education.HighestDegreeEarnedID = education.HighestDegreeEarnedID == 0 ? orig.HighestDegreeEarnedID : education.HighestDegreeEarnedID;
+                education.OtherDegree = education.OtherDegree == null ? orig.OtherDegree : education.OtherDegree;
+                education.Graduated = education.Graduated == null ? orig.Graduated : education.Graduated;
+                education.GraduationDate = education.GraduationDate == null ? orig.GraduationDate : education.GraduationDate;
+            }
 
             education.ID = educationId;
             //add additional user info to database
@@ -682,8 +745,19 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            Certification orig = Profiles.GetCertifications(Guid.Parse(userId)).Where(v => v.ID == certificationId).FirstOrDefault();
 
             cert.ID = certificationId;
+
+            if(orig != null )
+            {
+                cert.Name = cert.Name == null ? orig.Name : cert.Name;
+                cert.IssuanceDate = cert.IssuanceDate == null ? orig.IssuanceDate : cert.IssuanceDate;
+                cert.IssuingBody = cert.IssuingBody == null ? orig.IssuingBody : cert.IssuingBody;
+                cert.ExpirationDate = cert.ExpirationDate == null ? orig.ExpirationDate : cert.ExpirationDate;
+            }
+
             //add additional user info to database
             DataAccess da = new DataAccess();
             da.UpdateCertification(cert.ID, cert.Name, cert.IssuingBody, cert.IssuanceDate, cert.ExpirationDate);
@@ -748,7 +822,7 @@ namespace DoddleNow.API.Controllers
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.AddReference(Guid.Parse(userId), reference.Name, reference.Title, reference.DirectSupervisor, reference.ContactPhone);
+            da.AddReference(Guid.Parse(userId), reference.Name, reference.Title, reference.DirectSupervisor.HasValue ? reference.DirectSupervisor.Value : false, reference.ContactPhone);
 
             return Ok();
         }
@@ -765,11 +839,21 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            Reference orig = Profiles.GetReferences(Guid.Parse(userId)).Where(v => v.ID == referenceId).FirstOrDefault();
             reference.ID = referenceId;
+
+            if(orig != null)
+            {
+                reference.Name = reference.Name == null ? orig.Name : reference.Name;
+                reference.Title = reference.Title == null ? orig.Title : reference.Title;
+                reference.DirectSupervisor = reference.DirectSupervisor == null ? orig.DirectSupervisor : reference.DirectSupervisor;
+                reference.ContactPhone = reference.ContactPhone == null ? orig.ContactPhone : reference.ContactPhone;
+            }
+
             //add additional user info to database
             DataAccess da = new DataAccess();
-            da.UpdateReference(reference.ID, reference.Name, reference.Title, reference.DirectSupervisor, reference.ContactPhone);
+            da.UpdateReference(reference.ID, reference.Name, reference.Title, reference.DirectSupervisor.HasValue ? reference.DirectSupervisor.Value : false, reference.ContactPhone);
 
             return Ok();
         }
@@ -858,8 +942,25 @@ namespace DoddleNow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            WorkHistory orig = Profiles.GetWorkHistories(Guid.Parse(userId)).Where(v => v.ID == workHistoryId).FirstOrDefault();
 
             wh.ID = workHistoryId;
+
+
+            if(orig != null)
+            {
+                wh.CompanyName = wh.CompanyName == null ? orig.CompanyName : wh.CompanyName;
+                wh.CompanyCity = wh.CompanyCity == null ? orig.CompanyCity : wh.CompanyCity;
+                wh.CompanyState = wh.CompanyState == null ? orig.CompanyState : wh.CompanyState;
+                wh.JobTitle = wh.JobTitle == null ? orig.JobTitle : wh.JobTitle;
+                wh.StartDate = wh.StartDate == null || wh.StartDate == DateTime.MinValue ? orig.StartDate : wh.StartDate;
+                wh.EndDate = wh.EndDate == null || wh.EndDate == DateTime.MinValue ? orig.EndDate : wh.EndDate;
+                if (wh.JobResponsibilities == null)
+                    wh.JobResponsibilities = orig.JobResponsibilities;
+            }
+
+
             //add additional user info to database
             DataAccess da = new DataAccess();
             da.UpdateWorkHistory(wh.ID, wh.CompanyName, wh.CompanyCity, wh.CompanyState, wh.JobTitle, wh.StartDate, wh.EndDate);
@@ -1042,6 +1143,36 @@ namespace DoddleNow.API.Controllers
             };
 
             return p;
+        }
+
+        /// <summary>
+        /// Get preferences
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>HPPreferences</returns>
+        public static HPPreferences GetPreferences(Guid userId)
+        {
+            DataAccess da = new DataAccess();
+            usp_GetUserResult profile = da.GetUser(userId);
+            List<Address> addresses = Profiles.GetAddresses(userId);
+            Address add = addresses.Where(v => v.AddressTypeId == 1).FirstOrDefault();
+
+            HPPreferences preferences = new HPPreferences();
+            preferences.AvailabilityInDays = profile.AvailabilityInDays.HasValue ? profile.AvailabilityInDays.Value : 0;
+            preferences.AvailableOn = profile.AvailableOn;
+            preferences.WillingToTravelMiles = profile.WillingToTravelMiles;
+            preferences.Address = add == null ? new Address() : add;
+            preferences.Experience = new HPExperience();
+            preferences.Experience.MaxEducation = profile.MaxEducation;
+            preferences.Experience.YearsOfExperience = profile.YearsOfExperience.HasValue ? profile.YearsOfExperience.Value : 0;
+            preferences.Notifications = new HPNotification();
+            preferences.Notifications.OnNewMatches = profile.OnNewMatches;
+            preferences.Notifications.ContactViaEmail = profile.ContactViaEmail.HasValue ? profile.ContactViaEmail.Value : false;
+            preferences.Notifications.ContactViaPhone = profile.ContactViaPhone.HasValue ? profile.ContactViaPhone.Value : false;
+            preferences.Notifications.ContactViaSMS = profile.ContactViaSMS.HasValue ? profile.ContactViaSMS.Value : false;
+
+            preferences.ShiftPreference = profile.ShiftPreference;
+            return preferences;
         }
 
         /// <summary>
