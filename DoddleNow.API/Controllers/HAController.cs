@@ -553,22 +553,17 @@ namespace DoddleNow.API.Controllers
                 var totalStarred = candidates.Where(v => v.ClientStarred == true).Count();
                 var totalCoffeeConnected = candidates.Where(v => v.CoffeeConnect == true).Count();
 
-                //TODO: Filters if necessary
-                //if (filter.Length > 0)
-                //{
-                //    if (filter.ToLower() == "applied")
-                //    {
-                //        items = items.Where(v => v.Applied == true).ToList();
-                //    }
-                //    else if (filter.ToLower() == "starred")
-                //    {
-                //        items = items.Where(v => v.Starred == true).ToList();
-                //    }
-                //    else if (filter.ToLower() == "clientinterested")
-                //    {
-                //        items = items.Where(v => v.ClientInterested == true).ToList();
-                //    }
-                //}
+                if (filter.Length > 0)
+                {
+                    if (filter.ToLower() == "favorited")
+                    {
+                        candidates = candidates.Where(v => v.ClientStarred == true).ToList();
+                    }
+                    else if (filter.ToLower() == "coffeeconnected")
+                    {
+                        candidates = candidates.Where(v => v.CoffeeConnect == true).ToList();
+                    }
+                }
 
                 //count of items returned after filter and total pages
                 var totalCount = candidates.Count();
