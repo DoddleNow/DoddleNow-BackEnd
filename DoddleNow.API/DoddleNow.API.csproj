@@ -245,11 +245,11 @@
     <Compile Include="AuthContext.cs" />
     <Compile Include="AuthRepository.cs" />
     <Compile Include="ChallengeResult.cs" />
+    <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\MyJobsController.cs" />
     <Compile Include="Controllers\HAController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\ClientController.cs" />

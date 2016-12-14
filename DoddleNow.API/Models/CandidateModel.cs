@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace DoddleNow.API.Models
         /// <summary>
         /// Automatically assigned candidate guid.  Used to create alias
         /// </summary>
-        [Display(Name = "CandidateGuid")]
+        [JsonIgnore]
 
         public Guid CandidateGuid { get; set; }
 
