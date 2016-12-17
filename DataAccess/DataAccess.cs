@@ -38,9 +38,9 @@ namespace DataAccessLayer
             return context.usp_GetMarketSpecialtyInsights(clientId, specialtyId, availability, experience, sclMatch, education, shift).FirstOrDefault();
         }
 
-        public List<usp_GetSpecialtyUserMatchesResult> GetSpecialtyUserMatches(int specialtyId)
+        public List<usp_GetSpecialtyUserMatchesResult> GetSpecialtyUserMatches(Guid clientId, int specialtyId, int availability, int experience, int sclMatch, int education, int shift)
         {
-            return context.usp_GetSpecialtyUserMatches(specialtyId).ToList();
+            return context.usp_GetSpecialtyUserMatches(clientId, specialtyId, availability, experience, sclMatch, education, shift).ToList();
         }
 
         public void UpdateClientGlobalSettings(Guid clientId, int availability, int experience, int sclMatch, int education, int shift)

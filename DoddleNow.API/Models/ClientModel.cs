@@ -92,19 +92,40 @@ namespace DoddleNow.API.Models
         ///# of Active Jobs
         ///</summary>
         [Display(Name = "Number of Active Jobs")]
-        public int NumOfActiveJobs { get; set; }
+        public int TotalActiveJobs { get; set; }
 
         ///<summary>
         ///# of Active Jobs
         ///</summary>
         [Display(Name = "Number of Applicants in Active Jobs")]
-        public int NumOfApplicants { get; set; }
+        public int TotalApplicants { get; set; }
 
         ///<summary>
         ///# of Past Jobs
         ///</summary>
         [Display(Name = "Number of Past Jobs")]
-        public int NumOfPastJobs { get; set; }
+        public int TotalPastJobs { get; set; }
+
+
+        ///<summary>
+        ///# of Staff
+        ///</summary>
+        [Display(Name = "Number of Staff")]
+        public int TotalStaff { get; set; }
+
+        ///<summary>
+        ///# of favorited applicants
+        ///</summary>
+        [Display(Name = "Number of favorited applicants")]
+        public int TotalFavoritedApplicants { get; set; }
+
+        ///<summary>
+        ///# of Coffee Connected applicants
+        ///</summary>
+        [Display(Name = "Number of Coffee Connected Applicants")]
+        public int TotalCoffeeConnectedApplicants { get; set; }
+
+
 
 
 

@@ -633,25 +633,7 @@ namespace DoddleNow.API.Controllers
 
         }
 
-        ///<summary>
-        ///Get client's candidate by ID
-        ///</summary>
-        [Authorize(Roles = "3")]
-        [Route("{clientId}/candidates/{candidateId}")]
-        [HttpGet]
-        public IHttpActionResult GetClientCandidate(Guid clientId, Guid candidateId)
-        {
-            if (IsValidClientNetwork(clientId))
-            {
-                var candidate = Jobs.GetClientCandidates(clientId).Where(v=>v.UserId == candidateId).FirstOrDefault();
-                
-                return Ok(candidate);
-            }
-            else
-                return Ok("Not a valid client");
-
-        }
-
+        
         ///<summary>
         ///Get all job candidates for client with id = id
         ///</summary>
@@ -674,6 +656,7 @@ namespace DoddleNow.API.Controllers
 
         }
 
+      
         ///<summary>
         ///Update properties about candidate (interest)
         ///</summary>

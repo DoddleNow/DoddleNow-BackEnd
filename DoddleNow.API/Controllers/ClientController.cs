@@ -761,9 +761,12 @@ namespace DoddleNow.API.Controllers
                 State = c.STATE,
                 ZIP = c.ZIP,
                 MarketingBullets = GetMarketingBullets(c.ID),
-                NumOfActiveJobs = c.NumOfActiveJobs.HasValue ? c.NumOfActiveJobs.Value : 0,
-                NumOfApplicants = c.NumOfApplicants.HasValue ? c.NumOfApplicants.Value : 0,
-                NumOfPastJobs = c.NumOfPastJobs.HasValue ? c.NumOfPastJobs.Value : 0
+                TotalActiveJobs = c.NumOfActiveJobs.HasValue ? c.NumOfActiveJobs.Value : 0,
+                TotalApplicants = c.NumOfApplicants.HasValue ? c.NumOfApplicants.Value : 0,
+                TotalPastJobs = c.NumOfPastJobs.HasValue ? c.NumOfPastJobs.Value : 0,
+                TotalCoffeeConnectedApplicants = c.NumOfCoffeeConnect.HasValue ? c.NumOfCoffeeConnect.Value : 0,
+                TotalFavoritedApplicants = c.NumOfStarred.HasValue ? c.NumOfStarred.Value : 0,
+                TotalStaff = c.NumOfStaff.HasValue ? c.NumOfStaff.Value : 0
             };
 
             return client;

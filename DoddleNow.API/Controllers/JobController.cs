@@ -645,6 +645,7 @@ namespace DoddleNow.API.Controllers
             {
                 candidates.Add(new Candidate
                 {
+                    JobName = p[i].JobName,
                     ApplicantApplied = p[i].applicantApplied,
                     ClientInterest = p[i].clientInterest,
                     ClientStarred = p[i].clientStarred,
@@ -656,6 +657,7 @@ namespace DoddleNow.API.Controllers
                     Location = p[i].location,
                     LocationDistance = p[i].locationDistance,
                     UserId = Guid.Parse(p[i].UserId),
+                    JobId = jobId,
                     CandidateGuid = p[i].CANDIDATE_ALIAS_GUID,
                     SCLMatch = p[i].SCLMatch.HasValue ? p[i].SCLMatch.Value : 0,
                     YearsOfExperienceStr = p[i].YearsOfExperienceStr
@@ -677,6 +679,8 @@ namespace DoddleNow.API.Controllers
                 candidates.Add(new Candidate
                 {
                     ApplicantApplied = p[i].applicantApplied,
+                    JobId = p[i].JobId,
+                    JobName = p[i].jobName,
                     ClientInterest = p[i].clientInterest,
                     ClientStarred = p[i].clientStarred,
                     CoffeeConnect = p[i].coffeeConnect,
@@ -707,6 +711,8 @@ namespace DoddleNow.API.Controllers
 
             candidate = new Candidate
             {
+                JobId = jobId,
+                JobName = p.JobName,
                 ApplicantApplied = p.applicantApplied,
                 ClientInterest = p.clientInterest,
                 ClientStarred = p.clientStarred,

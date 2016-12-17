@@ -18,6 +18,18 @@ namespace DoddleNow.API.Models
         public Guid UserId { get; set; }
 
         ///<summary>
+        ///JobId
+        ///</summary>
+        [Display(Name = "JobID")]
+        public Guid JobId { get; set; }
+
+        ///<summary>
+        ///Job name
+        ///</summary>
+        [Display(Name = "Job Name")]
+        public string JobName { get; set; }
+
+        ///<summary>
         ///User first name
         ///</summary>
         [Display(Name = "First Name")]

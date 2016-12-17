@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DoddleNow.API.Infrastructure;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -95,6 +97,7 @@ namespace DoddleNow.API.Models
         ///Availabile On Date
         ///</summary>
         [Display(Name = "Availabile On")]
+        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime AvailableOn { get; set; }
 
 
@@ -102,7 +105,7 @@ namespace DoddleNow.API.Models
         ///Experience
         ///</summary>
         [Display(Name = "Experience")]
-        public int Experience { get; set; }
+        public string Experience { get; set; }
 
         ///<summary>
         ///SCL Match
@@ -114,7 +117,7 @@ namespace DoddleNow.API.Models
         ///Education
         ///</summary>
         [Display(Name = "Education")]
-        public int Education { get; set; }
+        public string Education { get; set; }
 
         ///<summary>
         ///Shift

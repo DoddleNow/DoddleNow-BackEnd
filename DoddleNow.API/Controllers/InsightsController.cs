@@ -101,6 +101,7 @@ namespace DoddleNow.API.Controllers
                 name = item.Name,
                 shortName = item.ShortName,
                 matches = item.Matches,
+                totalCandidates = item.Total,
                 candidates = item.PotentialCandidates
             };
 
@@ -215,7 +216,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             usp_GetMarketSpecialtyInsightsResult insight = da.GetMarketSpecialtyInsights(clientId, specialtyId, availability, experience, scl, education, shift);
-            List<usp_GetSpecialtyUserMatchesResult> users = da.GetSpecialtyUserMatches(specialtyId);
+            List<usp_GetSpecialtyUserMatchesResult> users = da.GetSpecialtyUserMatches(clientId, specialtyId, availability, experience, scl, education, shift);
 
             List<PotentialCandidate> matches = new List<Models.PotentialCandidate>();
 
@@ -223,12 +224,12 @@ namespace DoddleNow.API.Controllers
             {
                 for(int i=0; i<users.Count;++i)
                 {
-                    matches.Add(new PotentialCandidate { AvailableOn = users[i].AvailableOn, Education = users[i].Education.HasValue ? users[i].Education.Value : 0, Experience = users[i].Education.HasValue ? users[i].Education.Value : 0, Location = users[i].Location, SCLMatch = users[i].SCLMatch.HasValue ? users[i].SCLMatch.Value : 0, Shift = users[i].Shift.HasValue ? users[i].Shift.Value : 3, UserID = users[i].userId });
+                    matches.Add(new PotentialCandidate { AvailableOn = users[i].AvailableOn, Education = users[i].Education, Experience = users[i].YearsOfExperience, Location = users[i].Location, SCLMatch = users[i].SCLMatch.HasValue ? users[i].SCLMatch.Value : 0, Shift = users[i].Shift.HasValue ? users[i].Shift.Value : 3, UserID = users[i].userId });
                 }
             }
             
 
-            Insight item = new Insight { SpecialtyID=insight.SpecialtyID, Name = insight.NAME, Matches = insight.matches.HasValue ? insight.matches.Value : 0, ShortName = insight.ShortName, PotentialCandidates=matches};
+            Insight item = new Insight { Total= insight.potentialCandidates.HasValue ? insight.potentialCandidates.Value : 0, SpecialtyID=insight.SpecialtyID, Name = insight.NAME, Matches = insight.matches.HasValue ? insight.matches.Value : 0, ShortName = insight.ShortName, PotentialCandidates=matches};
            
 
             return item;
