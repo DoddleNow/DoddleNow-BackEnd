@@ -273,6 +273,7 @@
     <Compile Include="Models\HPJobModel.cs" />
     <Compile Include="Models\HAModel.cs" />
     <Compile Include="Models\PhotoViewModel.cs" />
+    <Compile Include="Models\QuestionAnswerModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\MarketingBulletModel.cs" />
     <Compile Include="Models\AddressModel.cs" />

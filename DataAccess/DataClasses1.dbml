@@ -185,18 +185,6 @@
       <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
-    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionsResult">
-      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetSubClients" Method="usp_GetSubClients">
     <Parameter Name="SUBCLIENT_GUID" Parameter="sUBCLIENT_GUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <ElementType Name="usp_GetSubClientsResult">
@@ -823,6 +811,41 @@
       <Column Name="NumOfStaff" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NumOfStarred" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NumOfCoffeeConnect" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddAnswer" Method="usp_AddAnswer">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyQuestionGUID" Parameter="surveyQuestionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteAnswers" Method="usp_DeleteAnswers">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetQuestionsWithAnswers" Method="usp_GetQuestionsWithAnswers">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetQuestionsWithAnswersResult">
+      <Column Name="SkillsChecklistQuestionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionText" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AnswerValue" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

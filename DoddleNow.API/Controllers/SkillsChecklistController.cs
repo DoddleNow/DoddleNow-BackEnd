@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace DoddleNow.API.Controllers
 {
@@ -119,6 +120,18 @@ namespace DoddleNow.API.Controllers
             return Ok(SkillsChecklists.GetSkillsChecklistQuestions(sclId));
         }
 
+
+        ///<summary>
+        ///Get all questions with answers for Skill check list with id = id
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
+        [Route("{sclId}/questions/{userId}/answers")]
+        [HttpGet]
+        public IHttpActionResult GetSkillsChecklistQuestionsWithAnswers(Guid sclId, string userId)
+        {
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId));
+        }
+
         ///<summary>
         ///Get question for Skill check list with id = id, question id
         ///</summary>
@@ -193,6 +206,30 @@ namespace DoddleNow.API.Controllers
             return Ok();
         }
 
+
+        ///<summary>
+        ///Add answers to question
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("{sclId}/answers")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSkillsChecklistQuestionAnswer(Guid sclId, List<QuestionAnswer> answers)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            
+            SkillsChecklists.AddAnswers(sclId, userId, answers);
+
+            return Ok();
+        }
+
+
+        
+
+
         #endregion
 
     }
@@ -204,6 +241,20 @@ namespace DoddleNow.API.Controllers
     ///</summary>
     public class SkillsChecklists
     {
+
+        public static void AddAnswers(Guid skillsChecklistId, string userId, List<QuestionAnswer> answers)
+        {
+            DataAccess da = new DataAccess();
+
+            da.DeleteSkillsChecklistAnswers(skillsChecklistId);
+
+            for(int i=0;i<answers.Count;++i)
+            {
+                da.AddAnswer(skillsChecklistId, answers[i].SkillsChecklistQuestionId, userId, answers[i].AnswerValue);
+            }
+        }
+
+
         /// <summary>
         /// Get skillschecklist questions
         /// </summary>
@@ -213,6 +264,17 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             return da.GetSkillsChecklistQuestions(skillsChecklistId);
+        }
+
+        /// <summary>
+        /// Get skillschecklist questions with answers
+        /// </summary>
+        /// <param name="skillsChecklistId"></param>
+        /// <returns></returns>
+        public static List<usp_GetQuestionsWithAnswersResult> GetSkillsChecklistQuestionsAnswers(Guid skillsChecklistId, string userId)
+        {
+            DataAccess da = new DataAccess();
+            return da.GetSkillsChecklistQuestionsWithAnswers(skillsChecklistId, userId);
         }
 
         /// <summary>

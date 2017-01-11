@@ -237,13 +237,6 @@ namespace DataAccessLayer
 			return ((ISingleResult<usp_GetUsersResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestions")]
-		public ISingleResult<usp_GetQuestionsResult> usp_GetQuestions([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> questionGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, questionGUID);
-			return ((ISingleResult<usp_GetQuestionsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetSubClients")]
 		public ISingleResult<usp_GetSubClientsResult> usp_GetSubClients([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SUBCLIENT_GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sUBCLIENT_GUID)
 		{
@@ -666,6 +659,34 @@ namespace DataAccessLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cLIENT_GUID);
 			return ((ISingleResult<usp_GetClientsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddAnswer")]
+		public int usp_AddAnswer([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SurveyQuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> surveyQuestionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, surveyQuestionGUID, userID, value);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteAnswers")]
+		public int usp_DeleteAnswers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithAnswers")]
+		public ISingleResult<usp_GetQuestionsWithAnswersResult> usp_GetQuestionsWithAnswers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, userID);
+			return ((ISingleResult<usp_GetQuestionsWithAnswersResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestions")]
+		public ISingleResult<usp_GetQuestionsResult> usp_GetQuestions([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> questionGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, questionGUID);
+			return ((ISingleResult<usp_GetQuestionsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1498,122 +1519,6 @@ namespace DataAccessLayer
 				if ((this._Email != value))
 				{
 					this._Email = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_GetQuestionsResult
-	{
-		
-		private System.Guid _Id;
-		
-		private int _QuestionTypeID;
-		
-		private string _QuestionType;
-		
-		private string _Text;
-		
-		private int _POSITION;
-		
-		private System.Nullable<bool> _REQUIRED;
-		
-		public usp_GetQuestionsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionTypeID", DbType="Int NOT NULL")]
-		public int QuestionTypeID
-		{
-			get
-			{
-				return this._QuestionTypeID;
-			}
-			set
-			{
-				if ((this._QuestionTypeID != value))
-				{
-					this._QuestionTypeID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionType", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string QuestionType
-		{
-			get
-			{
-				return this._QuestionType;
-			}
-			set
-			{
-				if ((this._QuestionType != value))
-				{
-					this._QuestionType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this._Text = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
-		public int POSITION
-		{
-			get
-			{
-				return this._POSITION;
-			}
-			set
-			{
-				if ((this._POSITION != value))
-				{
-					this._POSITION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REQUIRED", DbType="Bit")]
-		public System.Nullable<bool> REQUIRED
-		{
-			get
-			{
-				return this._REQUIRED;
-			}
-			set
-			{
-				if ((this._REQUIRED != value))
-				{
-					this._REQUIRED = value;
 				}
 			}
 		}
@@ -5746,6 +5651,238 @@ namespace DataAccessLayer
 				if ((this._NumOfCoffeeConnect != value))
 				{
 					this._NumOfCoffeeConnect = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetQuestionsWithAnswersResult
+	{
+		
+		private System.Guid _SkillsChecklistQuestionId;
+		
+		private int _QuestionTypeID;
+		
+		private string _QuestionText;
+		
+		private int _POSITION;
+		
+		private System.Nullable<bool> _REQUIRED;
+		
+		private string _AnswerValue;
+		
+		public usp_GetQuestionsWithAnswersResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SkillsChecklistQuestionId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SkillsChecklistQuestionId
+		{
+			get
+			{
+				return this._SkillsChecklistQuestionId;
+			}
+			set
+			{
+				if ((this._SkillsChecklistQuestionId != value))
+				{
+					this._SkillsChecklistQuestionId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionTypeID", DbType="Int NOT NULL")]
+		public int QuestionTypeID
+		{
+			get
+			{
+				return this._QuestionTypeID;
+			}
+			set
+			{
+				if ((this._QuestionTypeID != value))
+				{
+					this._QuestionTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionText", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string QuestionText
+		{
+			get
+			{
+				return this._QuestionText;
+			}
+			set
+			{
+				if ((this._QuestionText != value))
+				{
+					this._QuestionText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
+		public int POSITION
+		{
+			get
+			{
+				return this._POSITION;
+			}
+			set
+			{
+				if ((this._POSITION != value))
+				{
+					this._POSITION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REQUIRED", DbType="Bit")]
+		public System.Nullable<bool> REQUIRED
+		{
+			get
+			{
+				return this._REQUIRED;
+			}
+			set
+			{
+				if ((this._REQUIRED != value))
+				{
+					this._REQUIRED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerValue", DbType="VarChar(255)")]
+		public string AnswerValue
+		{
+			get
+			{
+				return this._AnswerValue;
+			}
+			set
+			{
+				if ((this._AnswerValue != value))
+				{
+					this._AnswerValue = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetQuestionsResult
+	{
+		
+		private System.Guid _Id;
+		
+		private int _QuestionTypeID;
+		
+		private string _QuestionType;
+		
+		private string _Text;
+		
+		private int _POSITION;
+		
+		private System.Nullable<bool> _REQUIRED;
+		
+		public usp_GetQuestionsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionTypeID", DbType="Int NOT NULL")]
+		public int QuestionTypeID
+		{
+			get
+			{
+				return this._QuestionTypeID;
+			}
+			set
+			{
+				if ((this._QuestionTypeID != value))
+				{
+					this._QuestionTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionType", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string QuestionType
+		{
+			get
+			{
+				return this._QuestionType;
+			}
+			set
+			{
+				if ((this._QuestionType != value))
+				{
+					this._QuestionType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this._Text = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
+		public int POSITION
+		{
+			get
+			{
+				return this._POSITION;
+			}
+			set
+			{
+				if ((this._POSITION != value))
+				{
+					this._POSITION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REQUIRED", DbType="Bit")]
+		public System.Nullable<bool> REQUIRED
+		{
+			get
+			{
+				return this._REQUIRED;
+			}
+			set
+			{
+				if ((this._REQUIRED != value))
+				{
+					this._REQUIRED = value;
 				}
 			}
 		}
