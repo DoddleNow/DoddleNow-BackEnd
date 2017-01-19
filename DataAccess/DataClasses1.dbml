@@ -824,6 +824,18 @@
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.usp_GetQuestionsWithAnswers" Method="usp_GetQuestionsWithAnswers">
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
@@ -836,16 +848,28 @@
       <Column Name="AnswerValue" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+  <Function Name="dbo.usp_AddRanking" Method="usp_AddRanking">
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionsResult">
-      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SurveyQuestionGUID" Parameter="surveyQuestionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Ranking" Parameter="ranking" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteClientRankings" Method="usp_DeleteClientRankings">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetQuestionsWithRankings" Method="usp_GetQuestionsWithRankings">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsWithRankingsResult">
+      <Column Name="SkillsChecklistQuestionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionText" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Rank" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

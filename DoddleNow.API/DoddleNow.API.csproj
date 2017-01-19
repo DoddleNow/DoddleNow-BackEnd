@@ -233,9 +233,6 @@
     <EmbeddedResource Include="CustomContent\images\Doddle_logo.png" />
     <Content Include="Global.asax" />
     <Content Include="UserImages\DoNotRemove.txt.txt" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AssignOAuth2SecurityRequirements.cs" />
@@ -273,6 +270,7 @@
     <Compile Include="Models\HPJobModel.cs" />
     <Compile Include="Models\HAModel.cs" />
     <Compile Include="Models\PhotoViewModel.cs" />
+    <Compile Include="Models\QuestionRankModel.cs" />
     <Compile Include="Models\QuestionAnswerModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\MarketingBulletModel.cs" />
@@ -304,11 +302,12 @@
     <Content Include="packages.config" />
     <Content Include=".ebextensions\DoddleNowAPI-test.config" />
     <None Include="Properties\PublishProfiles\John Local.pubxml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -349,6 +349,21 @@ namespace DataAccessLayer
             return context.usp_GetQuestionsWithAnswers(surveyGUID, userId).ToList();
         }
 
+        public List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsWithRankings(Guid surveyGUID, Guid clientId)
+        {
+            return context.usp_GetQuestionsWithRankings(surveyGUID, clientId).ToList();
+        }
+
+        public void DeleteSkillsChecklistClientRankings(Guid surveyGuid, Guid clientId)
+        {
+            context.usp_DeleteClientRankings(surveyGuid, clientId);
+        }
+
+        public void AddRanking(Guid surveyGuid, Guid skillsChecklistQuestionId, Guid clientId, int ranking)
+        {
+            context.usp_AddRanking(surveyGuid, clientId, skillsChecklistQuestionId, ranking);
+        }
+
         public void DeleteSkillsChecklistAnswers(Guid surveyGuid)
         {
             context.usp_DeleteAnswers(surveyGuid);

@@ -81,5 +81,16 @@ namespace DataAccessLayer.Properties {
                 return ((string)(this["DoddleConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com;Initial Catalog=Do" +
+            "ddle;User ID=doddlemaster;Password=bebadt6p")]
+        public string DoddleConnectionString1 {
+            get {
+                return ((string)(this["DoddleConnectionString1"]));
+            }
+        }
     }
 }
