@@ -684,6 +684,37 @@ namespace DoddleNow.API.Controllers
         }
 
 
+        ///<summary>
+        ///Get all questions with rankings for Skill check list with specialtyid = id and by client
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
+        [HttpGet]
+        public IHttpActionResult GetSkillsChecklistQuestionsWithRankings(Guid clientId, Guid jobId, Guid sclId)
+        {
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, jobId));
+        }
+
+
+        ///<summary>
+        ///Add rankings to scl by client ID
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSkillsChecklistQuestionRankings(Guid clientId, Guid jobId, Guid sclId, List<QuestionRank> rankings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            SkillsChecklists.AddRankings(sclId, clientId, rankings, jobId);
+
+            return Ok();
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

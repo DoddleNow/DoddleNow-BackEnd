@@ -119,6 +119,43 @@ namespace DoddleNow.API.Controllers
             return Ok(Insights.GetClientGlobalSettings(clientId));
         }
 
+
+        ///<summary>
+        ///Get all questions with rankings for Skill check list with specialtyid = id and by client
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{clientId}/specialty/{specialtyId}/scl")]
+        [HttpGet]
+        public IHttpActionResult GetSkillsChecklistQuestionsWithRankings(Guid clientId, int specialtyId)
+        {
+            DataAccess da = new DataAccess();
+            Guid sclId = da.GetSkillsChecklistIDBySpecialty(specialtyId);
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, null));
+        }
+
+
+        ///<summary>
+        ///Add rankings to scl by client ID
+        ///</summary>
+        [Authorize(Roles = "1,2,3,4,5")]
+        [Route("{clientId}/specialty/{specialtyId}/scl")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSkillsChecklistQuestionRankings(Guid clientId, int specialtyId, List<QuestionRank> rankings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            DataAccess da = new DataAccess();
+            Guid sclId = da.GetSkillsChecklistIDBySpecialty(specialtyId);
+
+            SkillsChecklists.AddRankings(sclId, clientId, rankings, null);
+
+            return Ok();
+        }
+
+
+
         ///<summary>
         ///Update global settings for market insights
         ///</summary>

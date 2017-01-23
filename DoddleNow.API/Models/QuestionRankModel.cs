@@ -47,6 +47,5 @@ namespace DoddleNow.API.Models
         [Display(Name = "Rank")]
         public int? Rank { get; set; }
 
-        
     }
 }

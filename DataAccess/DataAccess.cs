@@ -33,6 +33,11 @@ namespace DataAccessLayer
             return context.usp_GetMarketInsights(clientId, availability, experience, sclMatch, education, shift).ToList();
         }
 
+        public Guid GetSkillsChecklistIDBySpecialty(int specialtyId)
+        {
+            return context.usp_GetSkillsChecklistIDBySpecialty(specialtyId).FirstOrDefault().SCLID;
+        }
+
         public usp_GetMarketSpecialtyInsightsResult GetMarketSpecialtyInsights(Guid clientId, int specialtyId, int availability, int experience, int sclMatch, int education, int shift)
         {
             return context.usp_GetMarketSpecialtyInsights(clientId, specialtyId, availability, experience, sclMatch, education, shift).FirstOrDefault();
@@ -349,19 +354,19 @@ namespace DataAccessLayer
             return context.usp_GetQuestionsWithAnswers(surveyGUID, userId).ToList();
         }
 
-        public List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsWithRankings(Guid surveyGUID, Guid clientId)
+        public List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsWithRankings(Guid surveyGUID, Guid clientId, Guid? jobId = null)
         {
-            return context.usp_GetQuestionsWithRankings(surveyGUID, clientId).ToList();
+            return context.usp_GetQuestionsWithRankings(surveyGUID, clientId, jobId).ToList();
         }
 
-        public void DeleteSkillsChecklistClientRankings(Guid surveyGuid, Guid clientId)
+        public void DeleteSkillsChecklistClientRankings(Guid surveyGuid, Guid clientId, Guid? jobId)
         {
-            context.usp_DeleteClientRankings(surveyGuid, clientId);
+            context.usp_DeleteClientRankings(surveyGuid, clientId, jobId);
         }
 
-        public void AddRanking(Guid surveyGuid, Guid skillsChecklistQuestionId, Guid clientId, int ranking)
+        public void AddRanking(Guid surveyGuid, Guid skillsChecklistQuestionId, Guid clientId, int ranking, Guid? jobId = null)
         {
-            context.usp_AddRanking(surveyGuid, clientId, skillsChecklistQuestionId, ranking);
+            context.usp_AddRanking(surveyGuid, clientId, skillsChecklistQuestionId, ranking, jobId);
         }
 
         public void DeleteSkillsChecklistAnswers(Guid surveyGuid)

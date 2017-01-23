@@ -689,25 +689,32 @@ namespace DataAccessLayer
 			return ((ISingleResult<usp_GetQuestionsWithAnswersResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddRanking")]
-		public int usp_AddRanking([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SurveyQuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> surveyQuestionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Ranking", DbType="Int")] System.Nullable<int> ranking)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetSkillsChecklistIDBySpecialty")]
+		public ISingleResult<usp_GetSkillsChecklistIDBySpecialtyResult> usp_GetSkillsChecklistIDBySpecialty([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SpecialtyID", DbType="Int")] System.Nullable<int> specialtyID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, surveyQuestionGUID, ranking);
-			return ((int)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), specialtyID);
+			return ((ISingleResult<usp_GetSkillsChecklistIDBySpecialtyResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteClientRankings")]
-		public int usp_DeleteClientRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddRanking")]
+		public int usp_AddRanking([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SurveyQuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> surveyQuestionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Ranking", DbType="Int")] System.Nullable<int> ranking, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, surveyQuestionGUID, ranking, jobID);
 			return ((int)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithRankings")]
-		public ISingleResult<usp_GetQuestionsWithRankingsResult> usp_GetQuestionsWithRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		public ISingleResult<usp_GetQuestionsWithRankingsResult> usp_GetQuestionsWithRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, jobID);
 			return ((ISingleResult<usp_GetQuestionsWithRankingsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteClientRankings")]
+		public int usp_DeleteClientRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, jobID);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -5904,6 +5911,32 @@ namespace DataAccessLayer
 				if ((this._AnswerValue != value))
 				{
 					this._AnswerValue = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetSkillsChecklistIDBySpecialtyResult
+	{
+		
+		private System.Guid _SCLID;
+		
+		public usp_GetSkillsChecklistIDBySpecialtyResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SCLID
+		{
+			get
+			{
+				return this._SCLID;
+			}
+			set
+			{
+				if ((this._SCLID != value))
+				{
+					this._SCLID = value;
 				}
 			}
 		}

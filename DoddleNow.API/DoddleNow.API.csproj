@@ -302,12 +302,8 @@
     <Content Include="packages.config" />
     <Content Include=".ebextensions\DoddleNowAPI-test.config" />
     <None Include="Properties\PublishProfiles\John Local.pubxml" />
-    <None Include="web.config" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
+    <None Include="web.config">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

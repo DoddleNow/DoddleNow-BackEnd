@@ -226,36 +226,7 @@ namespace DoddleNow.API.Controllers
             return Ok();
         }
 
-        ///<summary>
-        ///Add rankings to scl by client ID
-        ///</summary>
-        [Authorize(Roles = "1,2,3,4,5")]
-        [Route("{sclId}/client/{clientId}")]
-        [HttpPost]
-        public async Task<IHttpActionResult> AddSkillsChecklistQuestionRankings(Guid sclId, Guid clientId, List<QuestionRank> rankings)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            SkillsChecklists.AddRankings(sclId, clientId, rankings);
-
-            return Ok();
-        }
-
-        ///<summary>
-        ///Get all questions with rankings for Skill check list with id = id and by client
-        ///</summary>
-        [Authorize(Roles = "1,2,3,4,5")]
-        [Route("{sclId}/client/{clientId}")]
-        [HttpGet]
-        public IHttpActionResult GetSkillsChecklistQuestionsWithRankings(Guid sclId, Guid clientId)
-        {
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId));
-        }
-
-
+        
 
 
 
@@ -294,15 +265,15 @@ namespace DoddleNow.API.Controllers
         /// <param name="skillsChecklistId"></param>
         /// <param name="clientId"></param>
         /// <param name="rankings"></param>
-        public static void AddRankings(Guid skillsChecklistId, Guid clientId, List<QuestionRank> rankings)
+        public static void AddRankings(Guid skillsChecklistId, Guid clientId, List<QuestionRank> rankings, Guid? jobId)
         {
             DataAccess da = new DataAccess();
 
-            da.DeleteSkillsChecklistClientRankings(skillsChecklistId, clientId);
+            da.DeleteSkillsChecklistClientRankings(skillsChecklistId, clientId, jobId);
 
             for (int i = 0; i < rankings.Count; ++i)
             {
-                da.AddRanking(skillsChecklistId, rankings[i].SkillsChecklistQuestionId, clientId, rankings[i].Rank.HasValue ? rankings[i].Rank.Value : 0);
+                da.AddRanking(skillsChecklistId, rankings[i].SkillsChecklistQuestionId, clientId, rankings[i].Rank.HasValue ? rankings[i].Rank.Value : 0, jobId);
             }
         }
 
@@ -312,10 +283,10 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="skillsChecklistId"></param>
         /// <returns></returns>
-        public static List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsRankings(Guid skillsChecklistId, Guid clientId)
+        public static List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsRankings(Guid skillsChecklistId, Guid clientId, Guid? jobId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklistQuestionsWithRankings(skillsChecklistId, clientId).ToList();
+            return da.GetSkillsChecklistQuestionsWithRankings(skillsChecklistId, clientId, jobId).ToList();
         }
 
         /// <summary>
