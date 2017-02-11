@@ -119,7 +119,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new specialty for job with id = id
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3")]
         [Route("{jobId}/specialties")]
         [HttpPost]
         public IHttpActionResult AddSpecialty(Guid jobId, Specialty specialty)
@@ -131,7 +131,7 @@ namespace DoddleNow.API.Controllers
         }
 
         ///<summary>
-        ///Get job specialties for job id 
+        ///Get job shifts for job id 
         ///</summary>
         [Route("{jobId}/shifts")]
         [HttpGet]
@@ -142,7 +142,7 @@ namespace DoddleNow.API.Controllers
 
 
         ///<summary>
-        ///Create new specialty for job with id = id
+        ///Create new shift for job with id = id
         ///</summary>
         [Authorize(Roles = "1,2,3,4,5")]
         [Route("{jobId}/shifts/{shiftId}")]
@@ -235,7 +235,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete Job Specialties
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3")]
         [Route("{jobId}/specialties/{specialtyId}")]
         [HttpDelete]
         public IHttpActionResult DeleteSpecialty(Guid jobId, int specialtyId)
@@ -265,7 +265,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new SkillsChecklists for job with id = id
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3")]
         [Route("{jobId}/scl")]
         [HttpPost]
         public IHttpActionResult AddSkillsChecklists(Guid jobId, SkillsChecklist scl)
@@ -315,7 +315,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete Job SkillsChecklists
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3")]
         [Route("{jobId}/scl/{sclId}")]
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklist(Guid jobId, Guid sclId)
