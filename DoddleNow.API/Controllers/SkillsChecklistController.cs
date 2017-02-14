@@ -129,6 +129,12 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetSkillsChecklistQuestionsWithAnswers(Guid sclId, string userId)
         {
+            SkillsChecklist s = SkillsChecklists.GetSkillsChecklist(sclId);
+            SCLWithQuestions scl = new Models.SCLWithQuestions();
+            scl.Id = s.Id;
+            scl.Title = s.Title;
+            List<usp_GetQuestionsWithAnswersResult> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
+            scl.Questions = questions;
             return Ok(SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId));
         }
 

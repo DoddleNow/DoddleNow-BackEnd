@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccessLayer;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -95,6 +97,29 @@ namespace DoddleNow.API.Models
         public List<Reference> References { get; set; }
 
         
+    }
+
+    public class SCLWithQuestions
+    {
+        ///<summary>
+        ///Id
+        ///</summary>
+        [JsonProperty(Order = -2)]
+        [Display(Name = "Id")]
+        public Guid Id { get; set; }
+
+        ///<summary>
+        ///Skills Checklist Name
+        ///</summary>
+        [JsonProperty(Order = -2)]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Questions
+        /// </summary>
+        [Display(Name = "Questions")]
+        public List<usp_GetQuestionsWithAnswersResult> Questions;
     }
     
 }

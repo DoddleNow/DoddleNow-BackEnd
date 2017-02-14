@@ -202,7 +202,15 @@ namespace DoddleNow.API.Controllers
         public IHttpActionResult GetSCLWithAnswers(Guid sclId)
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId));
+            SCLWithQuestions scl = new Models.SCLWithQuestions();
+            SkillsChecklist s = SkillsChecklists.GetSkillsChecklist(sclId);
+            scl.Id = s.Id;
+            scl.Title = s.Title;
+
+            List<usp_GetQuestionsWithAnswersResult> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
+            scl.Questions = questions;
+
+            return Ok(scl);
         }
 
         ///<summary>
