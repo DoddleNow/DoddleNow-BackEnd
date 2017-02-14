@@ -194,6 +194,37 @@ namespace DoddleNow.API.Controllers
         }
 
         ///<summary>
+        ///Get SCL Answers
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("scl/{sclId}")]
+        [HttpGet]
+        public IHttpActionResult GetSCLWithAnswers(Guid sclId)
+        {
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId));
+        }
+
+        ///<summary>
+        ///Add answers to question
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("scl/{sclId}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSCLQuestionAnswer(Guid sclId, List<QuestionAnswer> answers)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
+            SkillsChecklists.AddAnswers(sclId, userId, answers);
+
+            return Ok();
+        }
+
+        ///<summary>
         ///Get Profile based on userId passed in.  this is for a connected client or admin
         ///</summary>
         [Authorize(Roles = "1,2,3,4,5")]
