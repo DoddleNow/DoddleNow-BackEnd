@@ -692,7 +692,13 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetSkillsChecklistQuestionsWithRankings(Guid clientId, Guid jobId, Guid sclId)
         {
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, jobId));
+            SCLWithRankings scl = new SCLWithRankings();
+            SkillsChecklist s = SkillsChecklists.GetSkillsChecklist(sclId);
+            scl.Id = s.Id;
+            scl.Title = s.Title;
+            scl.Questions = SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, jobId);
+            
+            return Ok(scl);
         }
 
 

@@ -121,5 +121,29 @@ namespace DoddleNow.API.Models
         [Display(Name = "Questions")]
         public List<usp_GetQuestionsWithAnswersResult> Questions;
     }
-    
+
+
+    public class SCLWithRankings
+    {
+        ///<summary>
+        ///Id
+        ///</summary>
+        [JsonProperty(Order = -2)]
+        [Display(Name = "Id")]
+        public Guid Id { get; set; }
+
+        ///<summary>
+        ///Skills Checklist Name
+        ///</summary>
+        [JsonProperty(Order = -2)]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Questions
+        /// </summary>
+        [Display(Name = "Questions")]
+        public List<usp_GetQuestionsWithRankingsResult> Questions;
+    }
+
 }

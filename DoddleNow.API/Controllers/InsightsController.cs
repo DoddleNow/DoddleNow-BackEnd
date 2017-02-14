@@ -130,7 +130,14 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
             Guid sclId = da.GetSkillsChecklistIDBySpecialty(specialtyId);
-            return Ok(SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, null));
+
+            SCLWithRankings scl = new SCLWithRankings();
+            SkillsChecklist s = SkillsChecklists.GetSkillsChecklist(sclId);
+            scl.Id = s.Id;
+            scl.Title = s.Title;
+            scl.Questions = SkillsChecklists.GetSkillsChecklistQuestionsRankings(sclId, clientId, null);
+
+            return Ok(scl);
         }
 
 
