@@ -687,7 +687,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all questions with rankings for Skill check list with specialtyid = id and by client
         ///</summary>
-        [Authorize(Roles = "1,2,3,4,5")]
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpGet]
         public IHttpActionResult GetSkillsChecklistQuestionsWithRankings(Guid clientId, Guid jobId, Guid sclId)
@@ -699,7 +699,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Add rankings to scl by client ID
         ///</summary>
-        [Authorize(Roles = "1,2,3,4,5")]
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpPost]
         public async Task<IHttpActionResult> AddSkillsChecklistQuestionRankings(Guid clientId, Guid jobId, Guid sclId, List<QuestionRank> rankings)

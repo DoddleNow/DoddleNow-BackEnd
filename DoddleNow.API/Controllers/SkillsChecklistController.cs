@@ -251,8 +251,6 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
 
-            da.DeleteSkillsChecklistAnswers(skillsChecklistId);
-
             for(int i=0;i<answers.Count;++i)
             {
                 da.AddAnswer(skillsChecklistId, answers[i].SkillsChecklistQuestionId, userId, answers[i].AnswerValue);
@@ -269,7 +267,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
 
-            da.DeleteSkillsChecklistClientRankings(skillsChecklistId, clientId, jobId);
+            //da.DeleteSkillsChecklistClientRankings(skillsChecklistId, clientId, jobId);
 
             for (int i = 0; i < rankings.Count; ++i)
             {
