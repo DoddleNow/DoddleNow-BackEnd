@@ -33,7 +33,7 @@ namespace DataAccessLayer
     #endregion
 		
 		public DataClasses1DataContext() : 
-				base(global::DataAccessLayer.Properties.Settings.Default.DoddleConnectionString, mappingSource)
+				base(global::DataAccessLayer.Properties.Settings.Default.DoddleConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -715,6 +715,27 @@ namespace DataAccessLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, jobID);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddSurveyAssignment")]
+		public int usp_AddSurveyAssignment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SurveyGuid", DbType="UniqueIdentifier")] System.Nullable<System.Guid> surveyGuid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, surveyGuid);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteSurveyAssignment")]
+		public int usp_DeleteSurveyAssignment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SurveyGuid", DbType="UniqueIdentifier")] System.Nullable<System.Guid> surveyGuid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, surveyGuid);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetSurveyAssignments")]
+		public ISingleResult<usp_GetSurveyAssignmentsResult> usp_GetSurveyAssignments([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
+			return ((ISingleResult<usp_GetSurveyAssignmentsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -6053,6 +6074,50 @@ namespace DataAccessLayer
 				if ((this._Rank != value))
 				{
 					this._Rank = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetSurveyAssignmentsResult
+	{
+		
+		private System.Guid _ID;
+		
+		private string _Title;
+		
+		public usp_GetSurveyAssignmentsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this._Title = value;
 				}
 			}
 		}

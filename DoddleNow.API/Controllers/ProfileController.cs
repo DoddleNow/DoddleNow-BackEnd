@@ -194,6 +194,54 @@ namespace DoddleNow.API.Controllers
         }
 
         ///<summary>
+        ///Get SCLs associated to Profile
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("scl")]
+        [HttpGet]
+        public IHttpActionResult GetSkillsChecklists()
+        {
+            
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            return Ok(Profiles.GetSurveyAssignments(userId));
+        }
+
+
+        ///<summary>
+        ///Add SCL assignment to userId.  Post SCL model of id or id and title
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("scl")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSurveyAssignment(SkillsChecklist scl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
+            Profiles.AddSurveyAssignment(userId, scl.Id);
+
+            return Ok();
+        }
+
+        ///<summary>
+        ///Delete image
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("scl")]
+        [HttpDelete]
+        public IHttpActionResult DeleteSurveyAssignment(SkillsChecklist scl)
+        {
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+
+            Profiles.DeleteSurveyAssignment(userId, scl.Id);
+
+            return Ok();
+        }
+
+        ///<summary>
         ///Get SCL Answers
         ///</summary>
         [Authorize(Roles = "6")]
@@ -1405,6 +1453,26 @@ namespace DoddleNow.API.Controllers
 
             return scls;
         }
+
+        public static List<usp_GetSurveyAssignmentsResult> GetSurveyAssignments(string userId)
+        {
+            DataAccess da = new DataAccess();
+            return da.GetSurveyAssignments(userId);
+        }
+
+        public static void AddSurveyAssignment(string userId, Guid surveyGuid)
+        {
+            DataAccess da = new DataAccess();
+            da.AddSurveyAssignment(userId, surveyGuid);
+        }
+
+        public static void DeleteSurveyAssignment(string userId, Guid surveyGuid)
+        {
+            DataAccess da = new DataAccess();
+            da.DeleteSurveyAssignment(userId, surveyGuid);
+        }
+
+
 
 
         ///<summary>

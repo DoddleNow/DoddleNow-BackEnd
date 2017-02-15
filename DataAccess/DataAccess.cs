@@ -354,6 +354,21 @@ namespace DataAccessLayer
             return context.usp_GetQuestionsWithAnswers(surveyGUID, userId).ToList();
         }
 
+        public void AddSurveyAssignment(string userId, Guid surveyGuid)
+        {
+            context.usp_AddSurveyAssignment(userId, surveyGuid);
+        }
+
+        public void DeleteSurveyAssignment(string userId, Guid surveyGuid)
+        {
+            context.usp_DeleteSurveyAssignment(userId, surveyGuid);
+        }
+
+        public List<usp_GetSurveyAssignmentsResult> GetSurveyAssignments(string userId)
+        {
+            return context.usp_GetSurveyAssignments(userId).ToList();
+        }
+
         public List<usp_GetQuestionsWithRankingsResult> GetSkillsChecklistQuestionsWithRankings(Guid surveyGUID, Guid clientId, Guid? jobId = null)
         {
             return context.usp_GetQuestionsWithRankings(surveyGUID, clientId, jobId).ToList();

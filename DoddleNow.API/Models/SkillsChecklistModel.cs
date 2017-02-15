@@ -20,7 +20,7 @@ namespace DoddleNow.API.Models
         ///<summary>
         ///Skills Checklist Name
         ///</summary>
-        [Required]
+        
         [Display(Name = "Title")]
         public string Title { get; set; }
 
