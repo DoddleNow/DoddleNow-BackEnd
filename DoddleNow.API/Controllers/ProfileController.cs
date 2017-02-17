@@ -230,13 +230,13 @@ namespace DoddleNow.API.Controllers
         ///Delete image
         ///</summary>
         [Authorize(Roles = "6")]
-        [Route("scl")]
+        [Route("scl/{sclId}")]
         [HttpDelete]
-        public IHttpActionResult DeleteSurveyAssignment(SkillsChecklist scl)
+        public IHttpActionResult DeleteSurveyAssignment(Guid sclId)
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
 
-            Profiles.DeleteSurveyAssignment(userId, scl.Id);
+            Profiles.DeleteSurveyAssignment(userId, sclId);
 
             return Ok();
         }

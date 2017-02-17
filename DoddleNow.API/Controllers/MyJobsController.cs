@@ -172,7 +172,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all jobs
         ///</summary>
-        [Authorize(Roles = "6")]
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("search")]
         [Route("{perPage:int}/{page:int}/{orderBy:alpha?}/{filter:alpha?}")]
         [HttpPost]
