@@ -466,7 +466,7 @@ namespace DoddleNow.API.Controllers
                 var totalCount = candidates.Count();
                 var totalPages = Math.Ceiling((double)totalCount / perPage);
 
-                if (QueryHelper.PropertyExists<HPJob>(orderBy))
+                if (QueryHelper.PropertyExists<Candidate>(orderBy))
                 {
                     ///var orderByExpression = QueryHelper.GetPropertyExpression<DataAccessLayer.DL>(orderBy);
 
