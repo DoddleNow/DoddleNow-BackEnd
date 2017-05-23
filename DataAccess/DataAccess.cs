@@ -28,6 +28,16 @@ namespace DataAccessLayer
             context.usp_AddJobShift(jobId, shiftId);
         }
 
+        public List<usp_GetAssessmentsResult> GetAssessments(Guid? surveyGuid)
+        {
+            return context.usp_GetAssessments(surveyGuid).ToList();
+        }
+
+        public List<usp_GetUserAssessmentsResult> GetUserAssessments(string userId)
+        {
+            return context.usp_GetUserAssessments(userId).ToList();
+        }
+
         public List<usp_GetMarketInsightsResult> GetMarketInsights(Guid clientId, int availability, int experience, int sclMatch, int education, int shift)
         {
             return context.usp_GetMarketInsights(clientId, availability, experience, sclMatch, education, shift).ToList();

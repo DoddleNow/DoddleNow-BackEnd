@@ -92,5 +92,17 @@ namespace DataAccessLayer.Properties {
                 return ((string)(this["DoddleConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=doddleqaexp.clwwx0os0vu9.us-west-2.rds.amazonaws.com,1433;Initial Cat" +
+            "alog=doddle;Integrated Security=False;User ID=doddlemaster;Password=bebadt6p;Con" +
+            "nect Timeout=15;Encrypt=False;TrustServerCertificate=False")]
+        public string doddleConnectionString2 {
+            get {
+                return ((string)(this["doddleConnectionString2"]));
+            }
+        }
     }
 }

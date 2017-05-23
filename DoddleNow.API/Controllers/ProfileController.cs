@@ -206,6 +206,19 @@ namespace DoddleNow.API.Controllers
             return Ok(Profiles.GetSurveyAssignments(userId));
         }
 
+        ///<summary>
+        ///Get Assessments associated to Profile
+        ///</summary>
+        [Authorize(Roles = "6")]
+        [Route("assessments")]
+        [HttpGet]
+        public IHttpActionResult GetAssessments()
+        {
+
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            return Ok(Assessments.GetUserAssessments(userId));
+        }
+
 
         ///<summary>
         ///Add SCL assignment to userId.  Post SCL model of id or id and title

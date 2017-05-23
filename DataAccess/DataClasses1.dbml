@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Doddle" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com;Initial Catalog=Doddle;User ID=doddlemaster" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="DoddleConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="doddle" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=doddleqaexp.clwwx0os0vu9.us-west-2.rds.amazonaws.com,1433;Initial Catalog=doddle;Integrated Security=False;User ID=doddlemaster;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="doddleConnectionString2" Provider="System.Data.SqlClient" />
   <Function Name="dbo.usp_GetRoles" Method="usp_GetRoles">
     <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
     <ElementType Name="usp_GetRolesResult">
@@ -896,6 +896,26 @@
     <ElementType Name="usp_GetSurveyAssignmentsResult">
       <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetAssessments" Method="usp_GetAssessments">
+    <Parameter Name="SurveyGUID" Parameter="surveyGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetAssessmentsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUserAssessments" Method="usp_GetUserAssessments">
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserAssessmentsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

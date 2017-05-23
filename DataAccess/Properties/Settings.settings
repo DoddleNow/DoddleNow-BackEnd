@@ -50,5 +50,13 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=doddlenow.c4ayuzkbrgxi.us-east-1.rds.amazonaws.com;Initial Catalog=Doddle;User ID=doddlemaster;Password=bebadt6p</Value>
     </Setting>
+    <Setting Name="doddleConnectionString2" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=doddleqaexp.clwwx0os0vu9.us-west-2.rds.amazonaws.com,1433;Initial Catalog=doddle;Integrated Security=False;User ID=doddlemaster;Password=bebadt6p;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=doddleqaexp.clwwx0os0vu9.us-west-2.rds.amazonaws.com,1433;Initial Catalog=doddle;Integrated Security=False;User ID=doddlemaster;Password=bebadt6p;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
