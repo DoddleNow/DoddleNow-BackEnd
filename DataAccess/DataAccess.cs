@@ -364,6 +364,11 @@ namespace DataAccessLayer
             return context.usp_GetQuestionsWithAnswers(surveyGUID, userId).ToList();
         }
 
+        public List<usp_GetQuestionDetailsResult> GetQuestionDetails(Guid questionID)
+        {
+            return context.usp_GetQuestionDetails(questionID).ToList();
+        }
+
         public void AddSurveyAssignment(string userId, Guid surveyGuid)
         {
             context.usp_AddSurveyAssignment(userId, surveyGuid);

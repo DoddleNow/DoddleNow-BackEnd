@@ -119,7 +119,7 @@ namespace DoddleNow.API.Models
         /// Questions
         /// </summary>
         [Display(Name = "Questions")]
-        public List<usp_GetQuestionsWithAnswersResult> Questions;
+        public List<QuestionWithAnswer> Questions;
     }
 
 

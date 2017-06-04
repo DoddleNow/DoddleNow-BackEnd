@@ -268,7 +268,7 @@ namespace DoddleNow.API.Controllers
             scl.Id = s.Id;
             scl.Title = s.Title;
 
-            List<usp_GetQuestionsWithAnswersResult> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
+            List<QuestionWithAnswer> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
             scl.Questions = questions;
 
             return Ok(scl);

@@ -82,8 +82,8 @@ namespace DoddleNow.API.Controllers
             scl.Id = sclId;
 
             SkillsChecklist orig = SkillsChecklists.GetSkillsChecklist(sclId);
-            
-            if(orig != null)
+
+            if (orig != null)
             {
                 scl.Description = scl.Description == null ? orig.Description : scl.Description;
                 scl.Template = scl.Template == null ? orig.Template : scl.Template;
@@ -133,7 +133,7 @@ namespace DoddleNow.API.Controllers
             SCLWithQuestions scl = new Models.SCLWithQuestions();
             scl.Id = s.Id;
             scl.Title = s.Title;
-            List<usp_GetQuestionsWithAnswersResult> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
+            List<QuestionWithAnswer> questions = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
             scl.Questions = questions;
             return Ok(SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId));
         }
@@ -163,13 +163,13 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-           SkillsChecklists.AddQuestion(sclId, question);
-            
+            SkillsChecklists.AddQuestion(sclId, question);
+
 
             return Ok();
         }
 
-        
+
         ///<summary>
         ///Update SkillsChecklist with id = id
         ///</summary>
@@ -183,13 +183,13 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            usp_GetQuestionsResult orig = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);
+            Question orig = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);
 
-            if(orig != null)
+            if (orig != null)
             {
-                question.Position = question.Position == null ? orig.POSITION : question.Position;
+                question.Position = question.Position == null ? orig.Position : question.Position;
                 question.QuestionTypeID = question.QuestionTypeID == null ? orig.QuestionTypeID : question.QuestionTypeID;
-                question.Required = question.Required == null ? orig.REQUIRED : question.Required;
+                question.Required = question.Required == null ? orig.Required : question.Required;
                 question.Text = question.Text == null ? orig.Text : question.Text;
             }
 
@@ -226,13 +226,13 @@ namespace DoddleNow.API.Controllers
                 return BadRequest(ModelState);
             }
             string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
-            
+
             SkillsChecklists.AddAnswers(sclId, userId, answers);
 
             return Ok();
         }
 
-        
+
 
 
 
@@ -257,7 +257,7 @@ namespace DoddleNow.API.Controllers
         {
             DataAccess da = new DataAccess();
 
-            for(int i=0;i<answers.Count;++i)
+            for (int i = 0; i < answers.Count; ++i)
             {
                 da.AddAnswer(skillsChecklistId, answers[i].SkillsChecklistQuestionId, userId, answers[i].AnswerValue);
             }
@@ -298,10 +298,32 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="skillsChecklistId"></param>
         /// <returns></returns>
-        public static List<usp_GetQuestionsResult> GetSkillsChecklistQuestions(Guid skillsChecklistId)
+        public static List<Question> GetSkillsChecklistQuestions(Guid skillsChecklistId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklistQuestions(skillsChecklistId);
+            List<usp_GetQuestionsResult> data =  da.GetSkillsChecklistQuestions(skillsChecklistId);
+            List<Question> questions = new List<Question>();
+            foreach(usp_GetQuestionsResult res in data)
+            {
+                Question q = new Question();
+                if (res != null)
+                {
+                    q.Position = res.POSITION;
+                    q.QuestionTypeID = res.QuestionTypeID;
+                    q.Required = res.REQUIRED;
+                    q.Text = res.Text;
+                    q.Id = res.Id;
+                    if (q.QuestionTypeID == 15 || q.QuestionTypeID == 16)
+                    {
+                        string[] options = GetQuestionOptions(q.Id);
+                        if (options != null && options.Length > 0)
+                            q.Options = options;
+                    }
+
+                    questions.Add(q);
+                }
+            }
+            return questions;
         }
 
         /// <summary>
@@ -309,10 +331,33 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="skillsChecklistId"></param>
         /// <returns></returns>
-        public static List<usp_GetQuestionsWithAnswersResult> GetSkillsChecklistQuestionsAnswers(Guid skillsChecklistId, string userId)
+        public static List<QuestionWithAnswer> GetSkillsChecklistQuestionsAnswers(Guid skillsChecklistId, string userId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklistQuestionsWithAnswers(skillsChecklistId, userId);
+            List<usp_GetQuestionsWithAnswersResult> qas =  da.GetSkillsChecklistQuestionsWithAnswers(skillsChecklistId, userId);
+            List<QuestionWithAnswer> questions = new List<QuestionWithAnswer>();
+            foreach (usp_GetQuestionsWithAnswersResult res in qas)
+            {
+                QuestionWithAnswer q = new QuestionWithAnswer();
+                if (res != null)
+                {
+                    q.Position = res.POSITION;
+                    q.QuestionTypeID = res.QuestionTypeID;
+                    q.Required = res.REQUIRED;
+                    q.Text = res.QuestionText;
+                    q.SkillsChecklistQuestionId = res.SkillsChecklistQuestionId;
+                    q.Id = res.Id;
+                    if (q.QuestionTypeID == 15 || q.QuestionTypeID == 16)
+                    {
+                        string[] options = GetQuestionOptions(q.Id);
+                        if (options != null && options.Length > 0)
+                            q.Options = options;
+                    }
+
+                    questions.Add(q);
+                }
+            }
+            return questions;
         }
 
         /// <summary>
@@ -331,10 +376,42 @@ namespace DoddleNow.API.Controllers
         /// <param name="skillsChecklistId"></param>
         /// <param name="skillsChecklistQuestionId"></param>
         /// <returns></returns>
-        public static usp_GetQuestionsResult GetSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId)
+        public static Question GetSkillsChecklistQuestion(Guid skillsChecklistId, Guid skillsChecklistQuestionId)
         {
             DataAccess da = new DataAccess();
-            return da.GetSkillsChecklistQuestions(skillsChecklistId).Where(v=>v.Id == skillsChecklistQuestionId).FirstOrDefault();
+            usp_GetQuestionsResult res = da.GetSkillsChecklistQuestions(skillsChecklistId).Where(v => v.Id == skillsChecklistQuestionId).FirstOrDefault();
+            Question q = new Question();
+            if (res != null)
+            {
+                q.Position = res.POSITION;
+                q.QuestionTypeID = res.QuestionTypeID;
+                q.Required = res.REQUIRED;
+                q.Text = res.Text;
+                q.Id = res.Id;
+                if(q.QuestionTypeID == 15 || q.QuestionTypeID == 16)
+                {
+                    string[] options = GetQuestionOptions(q.Id);
+                    if (options != null && options.Length > 0)
+                        q.Options = options;
+                }
+            }
+
+            return q;
+        }
+
+        private static string[] GetQuestionOptions(Guid questionId)
+        {
+            DataAccess da = new DataAccess();
+            List<usp_GetQuestionDetailsResult> det = da.GetQuestionDetails(questionId).ToList();
+            List<QuestionOption> opt = new List<QuestionOption>();
+            if (det != null && det.Count > 0)
+            {
+                for (int i = 0; i < det.Count; ++i)
+                {
+                    opt.Add(new QuestionOption { OptionText = det[i].TEXT });
+                }
+            }
+            return opt.Select(v=>v.OptionText).ToArray();
         }
 
         ///<summary>
@@ -356,7 +433,7 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
             SkillsChecklist scl = null;
             usp_GetSkillsChecklistsResult item = da.GetSkillsChecklists(skillsChecklistId).FirstOrDefault();
-            if(item != null)
+            if (item != null)
             {
                 scl = new SkillsChecklist();
                 scl.Description = item.DESCRIPTION;

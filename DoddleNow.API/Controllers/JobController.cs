@@ -337,7 +337,7 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetJobSkillsChecklistQuestions(Guid jobId, Guid sclId)
         {
-            List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
+            List<Question> questions = new List<Question>();
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 questions = SkillsChecklists.GetSkillsChecklistQuestions(sclId);
@@ -390,7 +390,7 @@ namespace DoddleNow.API.Controllers
         {
             //exposing the SkillsChecklistQuestionId as a questionId to the front end.  They are not concerned with sclQID vs qid
 
-            usp_GetQuestionsResult spec = new usp_GetQuestionsResult();
+            Question spec = new Question();
             if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
             {
                 spec = SkillsChecklists.GetSkillsChecklistQuestion(sclId, questionId);

@@ -42,8 +42,30 @@ namespace DoddleNow.API.Models
         [Display(Name = "Required")]
         public bool? Required { get; set; }
 
+        /// <summary>
+        /// Options for multiple choice
+        /// </summary>
+        [Display(Name ="Options")]
+        public string[] Options { get; set; }
 
 
+    }
 
+    public class QuestionWithAnswer: Question 
+    {
+        [Display(Name = "SkillsChecklistQuestionId")]
+        public Guid SkillsChecklistQuestionId { get; set; }
+
+
+        [Display(Name ="Answer")]
+        public string Answer { get; set; }
+
+    }
+
+    public class QuestionOption
+    {
+        
+        [Display(Name ="OptionText")]
+        public string OptionText { get; set; }
     }
 }

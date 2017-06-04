@@ -557,7 +557,7 @@ namespace DoddleNow.API.Controllers
         [HttpGet]
         public IHttpActionResult GetJobSkillsChecklistQuestions(Guid clientId, Guid jobId, Guid sclId)
         {
-            List<usp_GetQuestionsResult> questions = new List<usp_GetQuestionsResult>();
+            List<Question> questions = new List<Question>();
             if (Clients.GetJobs(clientId, jobId).Count() > 0)
             {
                 if (Jobs.GetJobSkillsChecklists(jobId).Where(v => v.Id == sclId).Count() > 0)
