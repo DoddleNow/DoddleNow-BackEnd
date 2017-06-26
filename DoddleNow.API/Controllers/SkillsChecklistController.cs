@@ -344,7 +344,7 @@ namespace DoddleNow.API.Controllers
                     q.Position = res.POSITION;
                     q.QuestionTypeID = res.QuestionTypeID;
                     q.Required = res.REQUIRED;
-                    q.Text = res.QuestionText;
+                    q.Text = res.TEXT;
                     q.SkillsChecklistQuestionId = res.SkillsChecklistQuestionId;
                     q.Id = res.Id;
                     if (q.QuestionTypeID == 15 || q.QuestionTypeID == 16)

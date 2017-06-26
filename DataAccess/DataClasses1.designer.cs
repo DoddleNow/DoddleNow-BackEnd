@@ -696,13 +696,6 @@ namespace DataAccessLayer
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithRankings")]
-		public ISingleResult<usp_GetQuestionsWithRankingsResult> usp_GetQuestionsWithRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, jobID);
-			return ((ISingleResult<usp_GetQuestionsWithRankingsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeleteClientRankings")]
 		public int usp_DeleteClientRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
 		{
@@ -750,6 +743,13 @@ namespace DataAccessLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), questionGUID);
 			return ((ISingleResult<usp_GetQuestionDetailsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithRankings")]
+		public ISingleResult<usp_GetQuestionsWithRankingsResult> usp_GetQuestionsWithRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, clientID, jobID);
+			return ((ISingleResult<usp_GetQuestionsWithRankingsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithAnswers")]
@@ -5868,122 +5868,6 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetQuestionsWithRankingsResult
-	{
-		
-		private System.Guid _SkillsChecklistQuestionId;
-		
-		private int _QuestionTypeID;
-		
-		private string _QuestionText;
-		
-		private int _POSITION;
-		
-		private System.Nullable<bool> _REQUIRED;
-		
-		private System.Nullable<int> _Rank;
-		
-		public usp_GetQuestionsWithRankingsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SkillsChecklistQuestionId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SkillsChecklistQuestionId
-		{
-			get
-			{
-				return this._SkillsChecklistQuestionId;
-			}
-			set
-			{
-				if ((this._SkillsChecklistQuestionId != value))
-				{
-					this._SkillsChecklistQuestionId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionTypeID", DbType="Int NOT NULL")]
-		public int QuestionTypeID
-		{
-			get
-			{
-				return this._QuestionTypeID;
-			}
-			set
-			{
-				if ((this._QuestionTypeID != value))
-				{
-					this._QuestionTypeID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionText", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string QuestionText
-		{
-			get
-			{
-				return this._QuestionText;
-			}
-			set
-			{
-				if ((this._QuestionText != value))
-				{
-					this._QuestionText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
-		public int POSITION
-		{
-			get
-			{
-				return this._POSITION;
-			}
-			set
-			{
-				if ((this._POSITION != value))
-				{
-					this._POSITION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REQUIRED", DbType="Bit")]
-		public System.Nullable<bool> REQUIRED
-		{
-			get
-			{
-				return this._REQUIRED;
-			}
-			set
-			{
-				if ((this._REQUIRED != value))
-				{
-					this._REQUIRED = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rank", DbType="Int")]
-		public System.Nullable<int> Rank
-		{
-			get
-			{
-				return this._Rank;
-			}
-			set
-			{
-				if ((this._Rank != value))
-				{
-					this._Rank = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_GetSurveyAssignmentsResult
 	{
 		
@@ -6304,6 +6188,140 @@ namespace DataAccessLayer
 		}
 	}
 	
+	public partial class usp_GetQuestionsWithRankingsResult
+	{
+		
+		private System.Guid _SkillsChecklistQuestionId;
+		
+		private int _QuestionTypeID;
+		
+		private string _TEXT;
+		
+		private int _POSITION;
+		
+		private System.Nullable<bool> _REQUIRED;
+		
+		private System.Nullable<int> _Rank;
+		
+		private System.Nullable<System.Guid> _JobID;
+		
+		public usp_GetQuestionsWithRankingsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SkillsChecklistQuestionId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SkillsChecklistQuestionId
+		{
+			get
+			{
+				return this._SkillsChecklistQuestionId;
+			}
+			set
+			{
+				if ((this._SkillsChecklistQuestionId != value))
+				{
+					this._SkillsChecklistQuestionId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionTypeID", DbType="Int NOT NULL")]
+		public int QuestionTypeID
+		{
+			get
+			{
+				return this._QuestionTypeID;
+			}
+			set
+			{
+				if ((this._QuestionTypeID != value))
+				{
+					this._QuestionTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEXT", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string TEXT
+		{
+			get
+			{
+				return this._TEXT;
+			}
+			set
+			{
+				if ((this._TEXT != value))
+				{
+					this._TEXT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
+		public int POSITION
+		{
+			get
+			{
+				return this._POSITION;
+			}
+			set
+			{
+				if ((this._POSITION != value))
+				{
+					this._POSITION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REQUIRED", DbType="Bit")]
+		public System.Nullable<bool> REQUIRED
+		{
+			get
+			{
+				return this._REQUIRED;
+			}
+			set
+			{
+				if ((this._REQUIRED != value))
+				{
+					this._REQUIRED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rank", DbType="Int")]
+		public System.Nullable<int> Rank
+		{
+			get
+			{
+				return this._Rank;
+			}
+			set
+			{
+				if ((this._Rank != value))
+				{
+					this._Rank = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					this._JobID = value;
+				}
+			}
+		}
+	}
+	
 	public partial class usp_GetQuestionsWithAnswersResult
 	{
 		
@@ -6313,7 +6331,7 @@ namespace DataAccessLayer
 		
 		private int _QuestionTypeID;
 		
-		private string _QuestionText;
+		private string _TEXT;
 		
 		private int _POSITION;
 		
@@ -6373,18 +6391,18 @@ namespace DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionText", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string QuestionText
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEXT", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string TEXT
 		{
 			get
 			{
-				return this._QuestionText;
+				return this._TEXT;
 			}
 			set
 			{
-				if ((this._QuestionText != value))
+				if ((this._TEXT != value))
 				{
-					this._QuestionText = value;
+					this._TEXT = value;
 				}
 			}
 		}

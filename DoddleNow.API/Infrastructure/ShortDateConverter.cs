@@ -17,7 +17,10 @@ namespace DoddleNow.API.Infrastructure
 
         public override object ReadJson(Newtonsoft.Json.JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            return DateTime.Parse(reader.Value.ToString());
+            if (reader.Value != null)
+                return DateTime.Parse(reader.Value.ToString());
+            else
+                return null;
             //return DateTime.ParseExact(reader.Value.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 

@@ -24,10 +24,10 @@ namespace DoddleNow.API.Models
         public int QuestionTypeID { get; set; }
 
         ///<summary>
-        ///QuestionText
+        ///Text
         ///</summary>
-        [Display(Name = "QuestionText")]
-        public string QuestionText { get; set; }
+        [Display(Name = "Text")]
+        public string Text { get; set; }
 
         ///<summary>
         ///Position

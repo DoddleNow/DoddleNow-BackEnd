@@ -448,10 +448,34 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all jobs
         ///</summary>
-        public static List<usp_GetJobsResult> GetAllJobs()
+        public static List<Job> GetAllJobs()
         {
             DataAccess da = new DataAccess();
-            return da.GetJobs(null, null).ToList();
+            List<usp_GetJobsResult> items = da.GetJobs(null, null).ToList();
+            List<Job> jobs = new List<Models.Job>();
+            if(items != null)
+            {
+                for(int i=0;i<items.Count;++i)
+                {
+                    Job j = new Models.Job();
+                    if (items[i] != null)
+                    {
+                        List<string> shifts = new List<string>();
+                        if (items[i].Shifts != null)
+                            shifts = items[i].Shifts.Split(",".ToCharArray()).ToList();
+
+                        j.ClientId = items[i].ClientId;
+                        j.Description = items[i].DESCRIPTION;
+                        j.EndDate = items[i].EndDate;
+                        j.Id = items[i].ID;
+                        j.Name = items[i].NAME;
+                        j.Shifts = shifts;
+                        j.StartDate = items[i].StartDate;
+                        jobs.Add(j);
+                    }
+                }
+            }
+            return jobs;
         }
 
         /// <summary>
@@ -547,10 +571,26 @@ namespace DoddleNow.API.Controllers
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public static usp_GetJobsResult GetJob(Guid jobId)
+        public static Job GetJob(Guid jobId)
         {
             DataAccess da = new DataAccess();
-            return da.GetJobs(null, jobId).FirstOrDefault();
+            usp_GetJobsResult job = da.GetJobs(null, jobId).FirstOrDefault();
+            Job j = new Models.Job();
+            if(job != null)
+            {
+                List<string> shifts = new List<string>();
+                if (job.Shifts != null)
+                    shifts = job.Shifts.Split(",".ToCharArray()).ToList();
+
+                j.ClientId = job.ClientId;
+                j.Description = job.DESCRIPTION;
+                j.EndDate = job.EndDate;
+                j.Id = job.ID;
+                j.Name = job.NAME;
+                j.Shifts = shifts;
+                j.StartDate = job.StartDate;
+            }
+            return j;
         }
 
         /// <summary>
