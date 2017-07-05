@@ -120,15 +120,31 @@ namespace DoddleNow.API.Controllers
 
         #region Questions
 
+        /////<summary>
+        /////Get all questions for Skill check list with id = id
+        /////</summary>
+        //[Authorize(Roles = "1,2,3,4,5")]
+        //[Route("{sclId}/questions")]
+        //[HttpGet]
+        //public IHttpActionResult GetAssessmentQuestions(Guid sclId)
+        //{
+        //    List<usp_GetQuestionsResult> questions = Assessments.GetAssessmentQuestions(sclId);
+            
+        //    return Ok(questions);
+        //}
+
         ///<summary>
         ///Get all questions for Skill check list with id = id
         ///</summary>
-        [Authorize(Roles = "1,2,3,4,5,6")]
+        [Authorize(Roles = "6")]
         [Route("{sclId}/questions")]
         [HttpGet]
-        public IHttpActionResult GetAssessmentQuestions(Guid sclId)
+        public IHttpActionResult GetAssessmentQuestionsForHP(Guid sclId)
         {
-            return Ok(Assessments.GetAssessmentQuestions(sclId));
+            string userId = ((ClaimsIdentity)User.Identity).Claims.ToList()[3].Value;
+            List<usp_GetQuestionsResult> questions = Assessments.GetAssessmentQuestions(sclId);
+            List<QuestionWithAnswer> answers = SkillsChecklists.GetSkillsChecklistQuestionsAnswers(sclId, userId);
+            return Ok(questions.Where(a=> !answers.Where(v=>v.Answer != null && v.Answer.Length > 0).Select(v=>v.Id).Contains(a.Id)));
         }
 
 

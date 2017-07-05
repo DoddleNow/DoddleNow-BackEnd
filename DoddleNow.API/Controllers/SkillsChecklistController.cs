@@ -353,7 +353,7 @@ namespace DoddleNow.API.Controllers
                         if (options != null && options.Length > 0)
                             q.Options = options;
                     }
-
+                    q.Answer = res.AnswerValue;
                     questions.Add(q);
                 }
             }
