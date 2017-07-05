@@ -85,6 +85,12 @@ namespace DoddleNow.API.Models
         public string Location { get; set; }
 
         /// <summary>
+        /// Image URL
+        /// </summary>
+        [Display(Name = "ImageUrl")]
+        public string ImageUrl { get; set; }
+
+        /// <summary>
         /// Distance of candidate's home from client address
         /// </summary>
         [Display(Name = "LocationDistance")]

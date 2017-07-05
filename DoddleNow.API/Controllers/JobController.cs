@@ -733,7 +733,8 @@ namespace DoddleNow.API.Controllers
                     UserId = Guid.Parse(p[i].UserId),
                     CandidateGuid = p[i].CANDIDATE_ALIAS_GUID,
                     SCLMatch = p[i].SCLMatch.HasValue ? p[i].SCLMatch.Value : 0,
-                    YearsOfExperienceStr = p[i].YearsOfExperienceStr
+                    YearsOfExperienceStr = p[i].YearsOfExperienceStr,
+                    ImageUrl = p[i].ImageUrl
                 });
             }
             

@@ -286,10 +286,19 @@ namespace DoddleNow.API.Controllers
             return da.GetSkillsChecklistQuestions(skillsChecklistId);
         }
 
-        public static List<usp_GetUserAssessmentsResult> GetUserAssessments(string userId)
+        public static List<UserAssessment> GetUserAssessments(string userId)
         {
             DataAccess da = new DataAccess();
-            return da.GetUserAssessments(userId).ToList();
+            List<UserAssessment> ua = new List<Models.UserAssessment>();
+            List<usp_GetUserAssessmentsResult> assess = da.GetUserAssessments(userId).ToList();
+            for(int i=0;i<assess.Count;++i)
+            {
+                ua.Add(new UserAssessment { AnswerCount = assess[i].ANSWER_COUNT.HasValue ? assess[i].ANSWER_COUNT.Value : 0,
+                    Description = assess[i].DESCRIPTION, EFFDT = assess[i].EFFDT, Id = assess[i].ID, QuestionCount = assess[i].QUESTION_COUNT.HasValue ? assess[i].QUESTION_COUNT.Value : 0,
+                    Template = assess[i].TEMPLATE, Title = assess[i].TITLE });
+
+            }
+            return ua;
         }
 
         /// <summary>

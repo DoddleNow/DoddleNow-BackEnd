@@ -640,13 +640,6 @@ namespace DataAccessLayer
 			return ((ISingleResult<usp_GetMarketSpecialtyInsightsResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClientCandidates")]
-		public ISingleResult<usp_GetClientCandidatesResult> usp_GetClientCandidates([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
-			return ((ISingleResult<usp_GetClientCandidatesResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetJobCandidates")]
 		public ISingleResult<usp_GetJobCandidatesResult> usp_GetJobCandidates([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JOB_ID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jOB_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CandidateId", DbType="NVarChar(128)")] string candidateId)
 		{
@@ -731,20 +724,6 @@ namespace DataAccessLayer
 			return ((ISingleResult<usp_GetAssessmentsResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetUserAssessments")]
-		public ISingleResult<usp_GetUserAssessmentsResult> usp_GetUserAssessments([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
-			return ((ISingleResult<usp_GetUserAssessmentsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionDetails")]
-		public ISingleResult<usp_GetQuestionDetailsResult> usp_GetQuestionDetails([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> questionGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), questionGUID);
-			return ((ISingleResult<usp_GetQuestionDetailsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionsWithRankings")]
 		public ISingleResult<usp_GetQuestionsWithRankingsResult> usp_GetQuestionsWithRankings([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SkillsChecklistGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> skillsChecklistGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> jobID)
 		{
@@ -757,6 +736,27 @@ namespace DataAccessLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), skillsChecklistGUID, userID);
 			return ((ISingleResult<usp_GetQuestionsWithAnswersResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetClientCandidates")]
+		public ISingleResult<usp_GetClientCandidatesResult> usp_GetClientCandidates([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientID);
+			return ((ISingleResult<usp_GetClientCandidatesResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetQuestionDetails")]
+		public ISingleResult<usp_GetQuestionDetailsResult> usp_GetQuestionDetails([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QuestionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> questionGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), questionGUID);
+			return ((ISingleResult<usp_GetQuestionDetailsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetUserAssessments")]
+		public ISingleResult<usp_GetUserAssessmentsResult> usp_GetUserAssessments([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserId", DbType="NVarChar(128)")] string userId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
+			return ((ISingleResult<usp_GetUserAssessmentsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -4784,302 +4784,6 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetClientCandidatesResult
-	{
-		
-		private string _UserId;
-		
-		private System.Guid _JobId;
-		
-		private string _jobName;
-		
-		private string _FirstName;
-		
-		private string _LastName;
-		
-		private string _Email;
-		
-		private bool _clientInterest;
-		
-		private bool _clientStarred;
-		
-		private bool _coffeeConnect;
-		
-		private bool _applicantApplied;
-		
-		private bool _exclude;
-		
-		private string _location;
-		
-		private int _locationDistance;
-		
-		private System.Guid _CANDIDATE_ALIAS_GUID;
-		
-		private System.Nullable<int> _SCLMatch;
-		
-		private string _YearsOfExperienceStr;
-		
-		public usp_GetClientCandidatesResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
-		public string UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this._UserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid JobId
-		{
-			get
-			{
-				return this._JobId;
-			}
-			set
-			{
-				if ((this._JobId != value))
-				{
-					this._JobId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_jobName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string jobName
-		{
-			get
-			{
-				return this._jobName;
-			}
-			set
-			{
-				if ((this._jobName != value))
-				{
-					this._jobName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100)")]
-		public string FirstName
-		{
-			get
-			{
-				return this._FirstName;
-			}
-			set
-			{
-				if ((this._FirstName != value))
-				{
-					this._FirstName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100)")]
-		public string LastName
-		{
-			get
-			{
-				return this._LastName;
-			}
-			set
-			{
-				if ((this._LastName != value))
-				{
-					this._LastName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256)")]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this._Email = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientInterest", DbType="Bit NOT NULL")]
-		public bool clientInterest
-		{
-			get
-			{
-				return this._clientInterest;
-			}
-			set
-			{
-				if ((this._clientInterest != value))
-				{
-					this._clientInterest = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientStarred", DbType="Bit NOT NULL")]
-		public bool clientStarred
-		{
-			get
-			{
-				return this._clientStarred;
-			}
-			set
-			{
-				if ((this._clientStarred != value))
-				{
-					this._clientStarred = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_coffeeConnect", DbType="Bit NOT NULL")]
-		public bool coffeeConnect
-		{
-			get
-			{
-				return this._coffeeConnect;
-			}
-			set
-			{
-				if ((this._coffeeConnect != value))
-				{
-					this._coffeeConnect = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_applicantApplied", DbType="Bit NOT NULL")]
-		public bool applicantApplied
-		{
-			get
-			{
-				return this._applicantApplied;
-			}
-			set
-			{
-				if ((this._applicantApplied != value))
-				{
-					this._applicantApplied = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exclude", DbType="Bit NOT NULL")]
-		public bool exclude
-		{
-			get
-			{
-				return this._exclude;
-			}
-			set
-			{
-				if ((this._exclude != value))
-				{
-					this._exclude = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_location", DbType="NVarChar(202)")]
-		public string location
-		{
-			get
-			{
-				return this._location;
-			}
-			set
-			{
-				if ((this._location != value))
-				{
-					this._location = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_locationDistance", DbType="Int NOT NULL")]
-		public int locationDistance
-		{
-			get
-			{
-				return this._locationDistance;
-			}
-			set
-			{
-				if ((this._locationDistance != value))
-				{
-					this._locationDistance = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CANDIDATE_ALIAS_GUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CANDIDATE_ALIAS_GUID
-		{
-			get
-			{
-				return this._CANDIDATE_ALIAS_GUID;
-			}
-			set
-			{
-				if ((this._CANDIDATE_ALIAS_GUID != value))
-				{
-					this._CANDIDATE_ALIAS_GUID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int")]
-		public System.Nullable<int> SCLMatch
-		{
-			get
-			{
-				return this._SCLMatch;
-			}
-			set
-			{
-				if ((this._SCLMatch != value))
-				{
-					this._SCLMatch = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YearsOfExperienceStr", DbType="VarChar(23)")]
-		public string YearsOfExperienceStr
-		{
-			get
-			{
-				return this._YearsOfExperienceStr;
-			}
-			set
-			{
-				if ((this._YearsOfExperienceStr != value))
-				{
-					this._YearsOfExperienceStr = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_GetJobCandidatesResult
 	{
 		
@@ -6010,184 +5714,6 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetUserAssessmentsResult
-	{
-		
-		private System.Guid _ID;
-		
-		private string _TITLE;
-		
-		private string _DESCRIPTION;
-		
-		private System.DateTime _EFFDT;
-		
-		private bool _TEMPLATE;
-		
-		public usp_GetUserAssessmentsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TITLE", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string TITLE
-		{
-			get
-			{
-				return this._TITLE;
-			}
-			set
-			{
-				if ((this._TITLE != value))
-				{
-					this._TITLE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="VarChar(255)")]
-		public string DESCRIPTION
-		{
-			get
-			{
-				return this._DESCRIPTION;
-			}
-			set
-			{
-				if ((this._DESCRIPTION != value))
-				{
-					this._DESCRIPTION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EFFDT", DbType="DateTime NOT NULL")]
-		public System.DateTime EFFDT
-		{
-			get
-			{
-				return this._EFFDT;
-			}
-			set
-			{
-				if ((this._EFFDT != value))
-				{
-					this._EFFDT = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEMPLATE", DbType="Bit NOT NULL")]
-		public bool TEMPLATE
-		{
-			get
-			{
-				return this._TEMPLATE;
-			}
-			set
-			{
-				if ((this._TEMPLATE != value))
-				{
-					this._TEMPLATE = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_GetQuestionDetailsResult
-	{
-		
-		private int _ID;
-		
-		private int _QUESTION_ID;
-		
-		private string _TEXT;
-		
-		private int _POSITION;
-		
-		public usp_GetQuestionDetailsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QUESTION_ID", DbType="Int NOT NULL")]
-		public int QUESTION_ID
-		{
-			get
-			{
-				return this._QUESTION_ID;
-			}
-			set
-			{
-				if ((this._QUESTION_ID != value))
-				{
-					this._QUESTION_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEXT", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string TEXT
-		{
-			get
-			{
-				return this._TEXT;
-			}
-			set
-			{
-				if ((this._TEXT != value))
-				{
-					this._TEXT = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
-		public int POSITION
-		{
-			get
-			{
-				return this._POSITION;
-			}
-			set
-			{
-				if ((this._POSITION != value))
-				{
-					this._POSITION = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_GetQuestionsWithRankingsResult
 	{
 		
@@ -6451,6 +5977,552 @@ namespace DataAccessLayer
 				if ((this._AnswerValue != value))
 				{
 					this._AnswerValue = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetClientCandidatesResult
+	{
+		
+		private string _UserId;
+		
+		private System.Guid _JobId;
+		
+		private string _jobName;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private string _Email;
+		
+		private bool _clientInterest;
+		
+		private bool _clientStarred;
+		
+		private bool _coffeeConnect;
+		
+		private bool _applicantApplied;
+		
+		private bool _exclude;
+		
+		private string _location;
+		
+		private int _locationDistance;
+		
+		private System.Guid _CANDIDATE_ALIAS_GUID;
+		
+		private System.Nullable<int> _SCLMatch;
+		
+		private string _YearsOfExperienceStr;
+		
+		private string _ImageUrl;
+		
+		public usp_GetClientCandidatesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid JobId
+		{
+			get
+			{
+				return this._JobId;
+			}
+			set
+			{
+				if ((this._JobId != value))
+				{
+					this._JobId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_jobName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string jobName
+		{
+			get
+			{
+				return this._jobName;
+			}
+			set
+			{
+				if ((this._jobName != value))
+				{
+					this._jobName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100)")]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this._FirstName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100)")]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this._LastName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this._Email = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientInterest", DbType="Bit NOT NULL")]
+		public bool clientInterest
+		{
+			get
+			{
+				return this._clientInterest;
+			}
+			set
+			{
+				if ((this._clientInterest != value))
+				{
+					this._clientInterest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_clientStarred", DbType="Bit NOT NULL")]
+		public bool clientStarred
+		{
+			get
+			{
+				return this._clientStarred;
+			}
+			set
+			{
+				if ((this._clientStarred != value))
+				{
+					this._clientStarred = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_coffeeConnect", DbType="Bit NOT NULL")]
+		public bool coffeeConnect
+		{
+			get
+			{
+				return this._coffeeConnect;
+			}
+			set
+			{
+				if ((this._coffeeConnect != value))
+				{
+					this._coffeeConnect = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_applicantApplied", DbType="Bit NOT NULL")]
+		public bool applicantApplied
+		{
+			get
+			{
+				return this._applicantApplied;
+			}
+			set
+			{
+				if ((this._applicantApplied != value))
+				{
+					this._applicantApplied = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exclude", DbType="Bit NOT NULL")]
+		public bool exclude
+		{
+			get
+			{
+				return this._exclude;
+			}
+			set
+			{
+				if ((this._exclude != value))
+				{
+					this._exclude = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_location", DbType="NVarChar(202)")]
+		public string location
+		{
+			get
+			{
+				return this._location;
+			}
+			set
+			{
+				if ((this._location != value))
+				{
+					this._location = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_locationDistance", DbType="Int NOT NULL")]
+		public int locationDistance
+		{
+			get
+			{
+				return this._locationDistance;
+			}
+			set
+			{
+				if ((this._locationDistance != value))
+				{
+					this._locationDistance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CANDIDATE_ALIAS_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CANDIDATE_ALIAS_GUID
+		{
+			get
+			{
+				return this._CANDIDATE_ALIAS_GUID;
+			}
+			set
+			{
+				if ((this._CANDIDATE_ALIAS_GUID != value))
+				{
+					this._CANDIDATE_ALIAS_GUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCLMatch", DbType="Int")]
+		public System.Nullable<int> SCLMatch
+		{
+			get
+			{
+				return this._SCLMatch;
+			}
+			set
+			{
+				if ((this._SCLMatch != value))
+				{
+					this._SCLMatch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YearsOfExperienceStr", DbType="VarChar(23)")]
+		public string YearsOfExperienceStr
+		{
+			get
+			{
+				return this._YearsOfExperienceStr;
+			}
+			set
+			{
+				if ((this._YearsOfExperienceStr != value))
+				{
+					this._YearsOfExperienceStr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUrl", DbType="VarChar(250)")]
+		public string ImageUrl
+		{
+			get
+			{
+				return this._ImageUrl;
+			}
+			set
+			{
+				if ((this._ImageUrl != value))
+				{
+					this._ImageUrl = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetQuestionDetailsResult
+	{
+		
+		private int _ID;
+		
+		private int _QUESTION_ID;
+		
+		private string _TEXT;
+		
+		private int _POSITION;
+		
+		private System.Guid _SURVEY_QUESTION_ID;
+		
+		public usp_GetQuestionDetailsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QUESTION_ID", DbType="Int NOT NULL")]
+		public int QUESTION_ID
+		{
+			get
+			{
+				return this._QUESTION_ID;
+			}
+			set
+			{
+				if ((this._QUESTION_ID != value))
+				{
+					this._QUESTION_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEXT", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string TEXT
+		{
+			get
+			{
+				return this._TEXT;
+			}
+			set
+			{
+				if ((this._TEXT != value))
+				{
+					this._TEXT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POSITION", DbType="Int NOT NULL")]
+		public int POSITION
+		{
+			get
+			{
+				return this._POSITION;
+			}
+			set
+			{
+				if ((this._POSITION != value))
+				{
+					this._POSITION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SURVEY_QUESTION_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SURVEY_QUESTION_ID
+		{
+			get
+			{
+				return this._SURVEY_QUESTION_ID;
+			}
+			set
+			{
+				if ((this._SURVEY_QUESTION_ID != value))
+				{
+					this._SURVEY_QUESTION_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetUserAssessmentsResult
+	{
+		
+		private System.Guid _ID;
+		
+		private string _TITLE;
+		
+		private string _DESCRIPTION;
+		
+		private System.DateTime _EFFDT;
+		
+		private bool _TEMPLATE;
+		
+		private System.Nullable<int> _QUESTION_COUNT;
+		
+		private System.Nullable<int> _ANSWER_COUNT;
+		
+		public usp_GetUserAssessmentsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TITLE", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string TITLE
+		{
+			get
+			{
+				return this._TITLE;
+			}
+			set
+			{
+				if ((this._TITLE != value))
+				{
+					this._TITLE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="VarChar(255)")]
+		public string DESCRIPTION
+		{
+			get
+			{
+				return this._DESCRIPTION;
+			}
+			set
+			{
+				if ((this._DESCRIPTION != value))
+				{
+					this._DESCRIPTION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EFFDT", DbType="DateTime NOT NULL")]
+		public System.DateTime EFFDT
+		{
+			get
+			{
+				return this._EFFDT;
+			}
+			set
+			{
+				if ((this._EFFDT != value))
+				{
+					this._EFFDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TEMPLATE", DbType="Bit NOT NULL")]
+		public bool TEMPLATE
+		{
+			get
+			{
+				return this._TEMPLATE;
+			}
+			set
+			{
+				if ((this._TEMPLATE != value))
+				{
+					this._TEMPLATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QUESTION_COUNT", DbType="Int")]
+		public System.Nullable<int> QUESTION_COUNT
+		{
+			get
+			{
+				return this._QUESTION_COUNT;
+			}
+			set
+			{
+				if ((this._QUESTION_COUNT != value))
+				{
+					this._QUESTION_COUNT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ANSWER_COUNT", DbType="Int")]
+		public System.Nullable<int> ANSWER_COUNT
+		{
+			get
+			{
+				return this._ANSWER_COUNT;
+			}
+			set
+			{
+				if ((this._ANSWER_COUNT != value))
+				{
+					this._ANSWER_COUNT = value;
 				}
 			}
 		}

@@ -285,6 +285,7 @@
     <Compile Include="Models\JobModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
+    <Compile Include="Models\UserAssessment.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\HPJobSearchModel.cs" />
     <Compile Include="Models\WorkHistoryModel.cs" />

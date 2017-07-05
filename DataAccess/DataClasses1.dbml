@@ -746,27 +746,6 @@
       <Column Name="potentialCandidates" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetClientCandidates" Method="usp_GetClientCandidates">
-    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetClientCandidatesResult">
-      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="JobId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="jobName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="clientInterest" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="clientStarred" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="coffeeConnect" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="applicantApplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="exclude" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="location" Type="System.String" DbType="NVarChar(202)" CanBeNull="true" />
-      <Column Name="locationDistance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CANDIDATE_ALIAS_GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="SCLMatch" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="YearsOfExperienceStr" Type="System.String" DbType="VarChar(23)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetJobCandidates" Method="usp_GetJobCandidates">
     <Parameter Name="JOB_ID" Parameter="jOB_ID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="CandidateId" Parameter="candidateId" Type="System.String" DbType="NVarChar(128)" />
@@ -883,25 +862,6 @@
       <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetUserAssessments" Method="usp_GetUserAssessments">
-    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
-    <ElementType Name="usp_GetUserAssessmentsResult">
-      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetQuestionDetails" Method="usp_GetQuestionDetails">
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionDetailsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="QUESTION_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TEXT" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetQuestionsWithRankings" Method="usp_GetQuestionsWithRankings">
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -927,6 +887,50 @@
       <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="AnswerValue" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetClientCandidates" Method="usp_GetClientCandidates">
+    <Parameter Name="ClientID" Parameter="clientID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetClientCandidatesResult">
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="JobId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="jobName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="clientInterest" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="clientStarred" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="coffeeConnect" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="applicantApplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="exclude" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="location" Type="System.String" DbType="NVarChar(202)" CanBeNull="true" />
+      <Column Name="locationDistance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANDIDATE_ALIAS_GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SCLMatch" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearsOfExperienceStr" Type="System.String" DbType="VarChar(23)" CanBeNull="true" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestionDetails" Method="usp_GetQuestionDetails">
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionDetailsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QUESTION_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TEXT" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SURVEY_QUESTION_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetUserAssessments" Method="usp_GetUserAssessments">
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetUserAssessmentsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TITLE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TEMPLATE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="QUESTION_COUNT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ANSWER_COUNT" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
