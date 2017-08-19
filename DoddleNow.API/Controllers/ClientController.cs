@@ -364,7 +364,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new  specialty for job id , client id
         ///</summary>
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "1,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/specialties")]
         [HttpPost]
         public IHttpActionResult AddJobSpecialty(Guid clientId, Guid jobId, Specialty specialty)
@@ -408,7 +408,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new  specialty for job id , client id
         ///</summary>
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "1,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/specialties/{specialtyId}")]
         [HttpPost]
         public IHttpActionResult UpdateJobSpecialty(Guid clientId, Guid jobId, int specialtyId, Specialty specialty)
@@ -437,7 +437,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete Specialty by job, client, specialty
         ///</summary>
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "1,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/specialties/{specialtyId}")]
         [HttpDelete]
         public IHttpActionResult DeleteJobSpecialty(Guid clientId, Guid jobId, int specialtyId)
@@ -473,7 +473,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new  Skill check list for job id , client id
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/scl")]
         [HttpPost]
         public IHttpActionResult AddSkillsChecklists(Guid clientId, Guid jobId, SkillsChecklist scl)
@@ -512,7 +512,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Update Get Skill check list id for job id , client id
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpPost]
         public IHttpActionResult UpdateSkillsChecklist(Guid clientId, Guid jobId, Guid sclId, SkillsChecklist scl)
@@ -532,7 +532,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete Get Skill check list id for job id , client id
         ///</summary>
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2,3,4,5")]
         [Route("{clientId}/jobs/{jobId}/scl/{sclId}")]
         [HttpDelete]
         public IHttpActionResult DeleteSkillsChecklist(Guid clientId, Guid jobId, Guid sclId)

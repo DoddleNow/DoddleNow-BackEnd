@@ -48,15 +48,12 @@ namespace DoddleNow.API.Models
         [Display(Name ="Options")]
         public string[] Options { get; set; }
 
-
+        [Display(Name = "SkillsChecklistQuestionId")]
+        public Guid SkillsChecklistQuestionId { get; set; }
     }
 
     public class QuestionWithAnswer: Question 
     {
-        [Display(Name = "SkillsChecklistQuestionId")]
-        public Guid SkillsChecklistQuestionId { get; set; }
-
-
         [Display(Name ="Answer")]
         public string Answer { get; set; }
 

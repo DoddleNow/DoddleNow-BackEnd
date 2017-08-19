@@ -313,6 +313,7 @@ namespace DoddleNow.API.Controllers
                     q.Required = res.REQUIRED;
                     q.Text = res.Text;
                     q.Id = res.Id;
+                    q.SkillsChecklistQuestionId = res.SkillsChecklistQuestionId;
                     if (q.QuestionTypeID == 15 || q.QuestionTypeID == 16)
                     {
                         string[] options = GetQuestionOptions(q.Id);

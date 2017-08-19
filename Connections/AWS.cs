@@ -168,6 +168,27 @@ namespace Connections.Amazon
         }
 
 
+        public static byte[] GetS3Bytes(string bucketName, string key)
+        {
+            NameValueCollection appConfig = ConfigurationManager.AppSettings;
+            string region = appConfig["AWSRegion"];
+            string accessKey = appConfig["AWSAccessKey"];
+            string secretKey = appConfig["AWSSecretKey"];
+            var credentials = new BasicAWSCredentials(accessKey, secretKey);
+            var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
+
+            MemoryStream rs = null;
+            GetObjectRequest getObjectRequest = new GetObjectRequest();
+            getObjectRequest.BucketName = bucketName;
+            getObjectRequest.Key = key;
+            using (var getObjectResponse = s3Client.GetObject(getObjectRequest))
+            {
+                getObjectResponse.ResponseStream.CopyTo(rs);
+            }
+            return rs.ToArray();
+        }
+
+
 
         public static string GetS3Object(string bucketName, string key)
         {
@@ -193,7 +214,7 @@ namespace Connections.Amazon
                 var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
                 string url = s3Client.GetPreSignedURL(request);
-                
+               
                 return url;
             }
             catch (AmazonS3Exception amazonS3Exception)
@@ -253,7 +274,7 @@ namespace Connections.Amazon
             }
         }
 
-        public static void DeletingAnObject(string AWSProfileName, string bucketName, string key)
+        public static void DeletingAnObject(string bucketName, string key)
         {
             try
             {

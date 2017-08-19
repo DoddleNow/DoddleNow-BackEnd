@@ -803,18 +803,6 @@
     <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
-    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType Name="usp_GetQuestionsResult">
-      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetSkillsChecklistIDBySpecialty" Method="usp_GetSkillsChecklistIDBySpecialty">
     <Parameter Name="SpecialtyID" Parameter="specialtyID" Type="System.Int32" DbType="Int" />
     <ElementType Name="usp_GetSkillsChecklistIDBySpecialtyResult">
@@ -932,5 +920,115 @@
       <Column Name="QUESTION_COUNT" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ANSWER_COUNT" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetQuestions" Method="usp_GetQuestions">
+    <Parameter Name="SkillsChecklistGUID" Parameter="skillsChecklistGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="QuestionGUID" Parameter="questionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetQuestionsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SkillsChecklistQuestionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="POSITION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REQUIRED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CATEGORY" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetDocuments" Method="usp_GetDocuments">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetDocumentsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="BUCKET" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[KEY]" Member="KEY" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetDocumentById" Method="usp_GetDocumentById">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="DocumentID" Parameter="documentID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetDocumentByIdResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="BUCKET" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[KEY]" Member="KEY" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddDocument" Method="usp_AddDocument">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(1000)" />
+    <Parameter Name="Bucket" Parameter="bucket" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Key" Parameter="key" Type="System.String" DbType="VarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteDocument" Method="usp_DeleteDocument">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="DocumentID" Parameter="documentID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetBundles" Method="usp_GetBundles">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="BundleID" Parameter="bundleID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetBundlesResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetBundleDetails" Method="usp_GetBundleDetails">
+    <Parameter Name="BundleID" Parameter="bundleID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="usp_GetBundleDetailsResult">
+      <Column Name="BUNDLE_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DOCUMENT_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SORT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddBundle" Method="usp_AddBundle">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <ElementType Name="usp_AddBundleResult">
+      <Column Name="BUNDLE_ID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddBundleDetail" Method="usp_AddBundleDetail">
+    <Parameter Name="BundleID" Parameter="bundleID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="DocumentID" Parameter="documentID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Sort" Parameter="sort" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeleteBundle" Method="usp_DeleteBundle">
+    <Parameter Name="BundleID" Parameter="bundleID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetTransmissions" Method="usp_GetTransmissions">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <ElementType Name="usp_GetTransmissionsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="BUNDLE_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[TO]" Member="TO" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="SUBJECT" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="BODY" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="URL" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="EXPIRATION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CREATED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddTransmission" Method="usp_AddTransmission">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="BundleID" Parameter="bundleID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="To" Parameter="to" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="Subject" Parameter="subject" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Body" Parameter="body" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="URL" Parameter="uRL" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="Expiration" Parameter="expiration" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

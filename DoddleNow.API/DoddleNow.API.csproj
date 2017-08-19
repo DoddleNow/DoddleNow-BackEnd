@@ -146,6 +146,7 @@
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.1\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -248,6 +249,7 @@
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\AssessmentsController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -286,6 +288,7 @@
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
     <Compile Include="Models\UserAssessment.cs" />
+    <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\HPJobSearchModel.cs" />
     <Compile Include="Models\WorkHistoryModel.cs" />

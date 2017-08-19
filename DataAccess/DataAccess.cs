@@ -18,6 +18,66 @@ namespace DataAccessLayer
 
         DataClasses1DataContext context = new DataClasses1DataContext(ConfigurationManager.ConnectionStrings["AuthContext"].ToString());
 
+        public List<usp_GetDocumentsResult> GetDocuments(string userId)
+        {
+            return context.usp_GetDocuments(userId).ToList();
+        }
+
+        public usp_GetDocumentByIdResult GetDocumentById(string userid, Guid documentId)
+        {
+            return context.usp_GetDocumentById(userid, documentId).FirstOrDefault();
+        }
+
+        public void AddDocument(string userId, string name, string description, string bucket, string key)
+        {
+            context.usp_AddDocument(userId, name, description, bucket, key);
+        }
+
+        public void DeleteDocument(string userId, Guid documentId)
+        {
+            context.usp_DeleteDocument(userId, documentId);
+        }
+
+        public List<usp_GetBundlesResult> GetBundles(string userId)
+        {
+            return context.usp_GetBundles(userId, null).ToList();
+        }
+
+        public usp_GetBundlesResult GetBundleById(string userId, Guid bundleId)
+        {
+            return context.usp_GetBundles(userId, bundleId).FirstOrDefault();
+        }
+
+        public List<usp_GetBundleDetailsResult> GetBundleDetails(Guid bundleId)
+        {
+            return context.usp_GetBundleDetails(bundleId).ToList();
+        }
+
+        public Guid AddBundle(string userId, string name)
+        {
+            return context.usp_AddBundle(userId, name).FirstOrDefault().BUNDLE_ID.Value;
+        }
+
+        public void AddBundleDetail(Guid bundleId, Guid documentId, int? sort)
+        {
+            context.usp_AddBundleDetail(bundleId, documentId, sort);
+        }
+
+        public void DeleteBundle(Guid bundleId)
+        {
+            context.usp_DeleteBundle(bundleId);
+        }
+
+        public void AddTransmission(string userId, Guid bundleId, string to, string subject, string body, string Url, DateTime expiration)
+        {
+            context.usp_AddTransmission(userId, bundleId, to, subject, body, Url, expiration);
+        }
+
+        public List<usp_GetTransmissionsResult> GetTransmissions(string userId)
+        {
+            return context.usp_GetTransmissions(userId).ToList();
+        }
+
         public List<usp_GetJobShiftsResult> GetJobShifts(Guid jobId)
         {
             return context.usp_GetJobShifts(jobId).ToList();
