@@ -177,10 +177,15 @@ namespace Connections.Amazon
             var credentials = new BasicAWSCredentials(accessKey, secretKey);
             var s3Client = new AmazonS3Client(credentials, RegionEndpoint.USWest1);
 
-            MemoryStream rs = null;
+            MemoryStream rs = new MemoryStream();
             GetObjectRequest getObjectRequest = new GetObjectRequest();
             getObjectRequest.BucketName = bucketName;
             getObjectRequest.Key = key;
+
+            byte[] myBinary = new byte[rs.Length];
+            rs.Read(myBinary, 0, (int)rs.Length);
+
+
             using (var getObjectResponse = s3Client.GetObject(getObjectRequest))
             {
                 getObjectResponse.ResponseStream.CopyTo(rs);
@@ -190,7 +195,7 @@ namespace Connections.Amazon
 
 
 
-        public static string GetS3Object(string bucketName, string key)
+        public static string GetS3Url(string bucketName, string key)
         {
             try
             {
@@ -231,6 +236,8 @@ namespace Connections.Amazon
                 }
             }
         }
+
+
 
         public static string GetUnexpiringS3Object(string bucketName, string key)
         {

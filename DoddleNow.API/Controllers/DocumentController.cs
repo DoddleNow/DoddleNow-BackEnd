@@ -211,7 +211,7 @@ namespace DoddleNow.API.Controllers
 
             for (int i = 0; i < d.Count; ++i)
             {
-                docs.Add(new Document { Id = d[i].ID, URL = AWS.GetS3Object(d[i].BUCKET, d[i].KEY), Created = d[i].CREATED, Description = d[i].DESCRIPTION, Name = d[i].NAME, UserId = d[i].USER_ID });
+                docs.Add(new Document { Id = d[i].ID, URL = AWS.GetS3Url(d[i].BUCKET, d[i].KEY), Created = d[i].CREATED, Description = d[i].DESCRIPTION, Name = d[i].NAME, UserId = d[i].USER_ID, AWSFile = new S3File() { BucketName = d[i].BUCKET, Key = d[i].KEY } });
             }
 
             return docs;
@@ -228,10 +228,11 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
 
             List<usp_GetBundlesResult> b = da.GetBundles(userId);
-
+            
             for (int i = 0; i < b.Count; ++i)
             {
-                bundle.Add(new DocumentBundle { Created = b[i].CREATED, Id = b[i].ID, Name = b[i].NAME, Bundle = GetBundleDetails(userId, b[i].ID) });
+                string url = AWS.GetS3Url("doddle-prod", b[i].KEY);
+                bundle.Add(new DocumentBundle { URL=url, Created = b[i].CREATED, Id = b[i].ID, Name = b[i].NAME, Bundle = GetBundleDetails(userId, b[i].ID) });
             }
             return bundle;
         }
@@ -249,8 +250,8 @@ namespace DoddleNow.API.Controllers
             DataAccess da = new DataAccess();
 
             usp_GetBundlesResult b = da.GetBundles(userId).Where(v => v.ID == bundleId).FirstOrDefault();
-
-            DocumentBundle bundle = new DocumentBundle { Created = b.CREATED, Id = b.ID, Name = b.NAME, Bundle = GetBundleDetails(userId, b.ID) };
+            string url = AWS.GetS3Url("doddle-prod", b.KEY);
+            DocumentBundle bundle = new DocumentBundle { URL=url, Created = b.CREATED, Id = b.ID, Name = b.NAME, Bundle = GetBundleDetails(userId, b.ID) };
 
             return bundle;
         }
@@ -290,11 +291,11 @@ namespace DoddleNow.API.Controllers
             //get db info and add to object
             usp_GetDocumentByIdResult d = da.GetDocumentById(userId, documentId);
             //get aws info and add to object
-            string url = AWS.GetS3Object(d.BUCKET, d.KEY);
+            string url = AWS.GetS3Url(d.BUCKET, d.KEY);
 
             if (d != null)
             {
-                doc = new Document { Id = d.ID, URL = url, Created = d.CREATED, Description = d.DESCRIPTION, Name = d.NAME, UserId = d.USER_ID };
+                doc = new Document { Id = d.ID, URL = url, Created = d.CREATED, Description = d.DESCRIPTION, Name = d.NAME, UserId = d.USER_ID, AWSFile=new S3File() { BucketName = d.BUCKET, Key = d.KEY } };
             }
 
             return doc;
@@ -321,7 +322,7 @@ namespace DoddleNow.API.Controllers
             doc.AWSFile = new S3File { BucketName = "doddle-prod", Key = u.ClientId.ToString() + "/" + u.Id.ToString() + "/" + doc.FileName, ContentType = GetMimeType(doc.FileName) };
 
             AWS.AddS3Object(doc.AWSFile, decoded);
-            doc.URL = AWS.GetS3Object(doc.AWSFile.BucketName, doc.AWSFile.Key);
+            doc.URL = AWS.GetS3Url(doc.AWSFile.BucketName, doc.AWSFile.Key);
 
             //add userid, bucket, key, name, descr to db
             da.AddDocument(doc.UserId, doc.Name, doc.Description, doc.AWSFile.BucketName, doc.AWSFile.Key);
@@ -346,7 +347,7 @@ namespace DoddleNow.API.Controllers
             foreach (var i in items)
             {
                 //download file to byte[]
-                fileList.Add(i.FileName, AWS.GetS3Bytes(i.AWSFile.BucketName, i.AWSFile.Key));
+                fileList.Add(i.AWSFile.Key, AWS.GetS3Bytes(i.AWSFile.BucketName, i.AWSFile.Key));
             }
 
             using (var memoryStream = new MemoryStream())
@@ -355,37 +356,34 @@ namespace DoddleNow.API.Controllers
                 {
                     foreach (var file in fileList)
                     {
-                        var demoFile = archive.CreateEntry(file.Key);
+                        string filename = file.Key.Remove(0, file.Key.LastIndexOf("/") + 1);
+                        var zip = archive.CreateEntry(filename);
 
-                        using (var entryStream = demoFile.Open())
+                        using (var entryStream = zip.Open())
                         using (var b = new BinaryWriter(entryStream))
                         {
                             b.Write(file.Value);
                         }
                     }
-                    key = u.ClientId.ToString() + "/" + u.Id.ToString() + "/bundles/" + name.Replace(" ", "_") + ".zip";
-                    S3File zipFile = new S3File { BucketName = bucket, Key = key, ContentType = "application/zip" };
-
-                    AWS.AddS3Object(zipFile, memoryStream.ToArray());
                 }
 
-                //using (var fileStream = new FileStream(fileName, FileMode.Create))
-                //{
-                //    memoryStream.Seek(0, SeekOrigin.Begin);
-                //    memoryStream.CopyTo(fileStream);
-                //}
+                key = u.ClientId.ToString() + "/" + u.Id.ToString() + "/bundles/" + name.Replace(" ", "_") + ".zip";
+                S3File zipFile = new S3File { BucketName = bucket, Key = key, ContentType = "application/zip" };
+                AWS.AddS3Object(zipFile, memoryStream.ToArray());
+
+                
             }
 
 
 
-            Guid bundleId = da.AddBundle(userId, name);
+            Guid bundleId = da.AddBundle(userId, name, key);
 
             for (int i = 0; i < items.Count; ++i)
             {
                 da.AddBundleDetail(bundleId, items[i].Id, items[i].SortIdx);
             }
 
-            string url = AWS.GetS3Object(bucket, key);
+            string url = AWS.GetS3Url(bucket, key);
             return url;
         }
 

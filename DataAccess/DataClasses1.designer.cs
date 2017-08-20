@@ -787,25 +787,11 @@ namespace DataAccessLayer
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetBundles")]
-		public ISingleResult<usp_GetBundlesResult> usp_GetBundles([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BundleID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> bundleID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, bundleID);
-			return ((ISingleResult<usp_GetBundlesResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetBundleDetails")]
 		public ISingleResult<usp_GetBundleDetailsResult> usp_GetBundleDetails([global::System.Data.Linq.Mapping.ParameterAttribute(Name="BundleID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> bundleID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), bundleID);
 			return ((ISingleResult<usp_GetBundleDetailsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddBundle")]
-		public ISingleResult<usp_AddBundleResult> usp_AddBundle([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, name);
-			return ((ISingleResult<usp_AddBundleResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddBundleDetail")]
@@ -834,6 +820,20 @@ namespace DataAccessLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, bundleID, to, subject, body, uRL, expiration);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddBundle")]
+		public ISingleResult<usp_AddBundleResult> usp_AddBundle([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Key", DbType="VarChar(250)")] string key)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, name, key);
+			return ((ISingleResult<usp_AddBundleResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetBundles")]
+		public ISingleResult<usp_GetBundlesResult> usp_GetBundles([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="NVarChar(128)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BundleID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> bundleID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, bundleID);
+			return ((ISingleResult<usp_GetBundlesResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -6909,68 +6909,6 @@ namespace DataAccessLayer
 		}
 	}
 	
-	public partial class usp_GetBundlesResult
-	{
-		
-		private System.Guid _ID;
-		
-		private string _NAME;
-		
-		private System.DateTime _CREATED;
-		
-		public usp_GetBundlesResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string NAME
-		{
-			get
-			{
-				return this._NAME;
-			}
-			set
-			{
-				if ((this._NAME != value))
-				{
-					this._NAME = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CREATED", DbType="DateTime NOT NULL")]
-		public System.DateTime CREATED
-		{
-			get
-			{
-				return this._CREATED;
-			}
-			set
-			{
-				if ((this._CREATED != value))
-				{
-					this._CREATED = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_GetBundleDetailsResult
 	{
 		
@@ -7028,32 +6966,6 @@ namespace DataAccessLayer
 				if ((this._SORT != value))
 				{
 					this._SORT = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_AddBundleResult
-	{
-		
-		private System.Nullable<System.Guid> _BUNDLE_ID;
-		
-		public usp_AddBundleResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BUNDLE_ID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> BUNDLE_ID
-		{
-			get
-			{
-				return this._BUNDLE_ID;
-			}
-			set
-			{
-				if ((this._BUNDLE_ID != value))
-				{
-					this._BUNDLE_ID = value;
 				}
 			}
 		}
@@ -7224,6 +7136,112 @@ namespace DataAccessLayer
 				if ((this._CREATED != value))
 				{
 					this._CREATED = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_AddBundleResult
+	{
+		
+		private System.Nullable<System.Guid> _BUNDLE_ID;
+		
+		public usp_AddBundleResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BUNDLE_ID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> BUNDLE_ID
+		{
+			get
+			{
+				return this._BUNDLE_ID;
+			}
+			set
+			{
+				if ((this._BUNDLE_ID != value))
+				{
+					this._BUNDLE_ID = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetBundlesResult
+	{
+		
+		private System.Guid _ID;
+		
+		private string _NAME;
+		
+		private System.DateTime _CREATED;
+		
+		private string _KEY;
+		
+		public usp_GetBundlesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string NAME
+		{
+			get
+			{
+				return this._NAME;
+			}
+			set
+			{
+				if ((this._NAME != value))
+				{
+					this._NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CREATED", DbType="DateTime NOT NULL")]
+		public System.DateTime CREATED
+		{
+			get
+			{
+				return this._CREATED;
+			}
+			set
+			{
+				if ((this._CREATED != value))
+				{
+					this._CREATED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[KEY]", Storage="_KEY", DbType="VarChar(250)")]
+		public string KEY
+		{
+			get
+			{
+				return this._KEY;
+			}
+			set
+			{
+				if ((this._KEY != value))
+				{
+					this._KEY = value;
 				}
 			}
 		}

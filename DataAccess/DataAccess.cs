@@ -53,9 +53,9 @@ namespace DataAccessLayer
             return context.usp_GetBundleDetails(bundleId).ToList();
         }
 
-        public Guid AddBundle(string userId, string name)
+        public Guid AddBundle(string userId, string name, string key)
         {
-            return context.usp_AddBundle(userId, name).FirstOrDefault().BUNDLE_ID.Value;
+            return context.usp_AddBundle(userId, name, key).FirstOrDefault().BUNDLE_ID.Value;
         }
 
         public void AddBundleDetail(Guid bundleId, Guid documentId, int? sort)
