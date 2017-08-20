@@ -124,7 +124,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get all questions with answers for Skill check list with id = id
         ///</summary>
-        [Authorize(Roles = "1,2,3,4,5")]
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("{sclId}/questions/{userId}/answers")]
         [HttpGet]
         public IHttpActionResult GetSkillsChecklistQuestionsWithAnswers(Guid sclId, string userId)
