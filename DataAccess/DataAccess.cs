@@ -596,7 +596,7 @@ namespace DataAccessLayer
         {
             List<HPJobDL> list = new List<HPJobDL>();
             string connectionString = ConfigurationManager.ConnectionStrings["AuthContext"].ToString();
-            DataSet ds = ExecuteJobSearchProcedure(connectionString, ids, userId, globalSearchParam);
+            DataSet ds = ExecuteJobSearchProcedure(connectionString, ids, userId, distance.ToString(), globalSearchParam);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -652,7 +652,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="ids"></param>
-        private static DataSet ExecuteJobSearchProcedure(string connectionString, IEnumerable<long> ids, string userId, string globalParam)
+        private static DataSet ExecuteJobSearchProcedure(string connectionString, IEnumerable<long> ids, string userId, string distance, string globalParam)
         {
             DataSet ds = new DataSet();
             using (SqlCommand cmd = new SqlCommand("dbo.usp_GetJobsBySearchParam", new SqlConnection(connectionString)))
@@ -667,6 +667,7 @@ namespace DataAccessLayer
 
                 cmd.Parameters.AddWithValue("@USER_ID", userId);
                 cmd.Parameters.AddWithValue("@GLOBAL_PARAM", globalParam);
+                cmd.Parameters.AddWithValue("@DISTANCE", distance);
 
                 cmd.Connection.Open();
                 DataTable table = new DataTable();

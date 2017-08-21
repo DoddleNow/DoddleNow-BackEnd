@@ -189,7 +189,7 @@ namespace DoddleNow.API.Controllers
                 }
             }
             
-            List<DataAccessLayer.HPJobDL> items = MyJobs.GetHPJobsBySearchParam(userId, searchModel.SearchParam, ids);
+            List<DataAccessLayer.HPJobDL> items = MyJobs.GetHPJobsBySearchParam(userId, searchModel.SearchParam, searchModel.Distance, ids);
 
             
 
@@ -330,10 +330,10 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get HP jobs
         ///</summary>
-        public static List<DataAccessLayer.HPJobDL> GetHPJobsBySearchParam(string userId, string searchParam, IEnumerable<long> ids)
+        public static List<DataAccessLayer.HPJobDL> GetHPJobsBySearchParam(string userId, string searchParam, int distance,IEnumerable<long> ids)
         {
             DataAccess da = new DataAccess();
-            List<DataAccessLayer.HPJobDL> items = da.GetJobsBySearchParam(userId, searchParam, ids);
+            List<DataAccessLayer.HPJobDL> items = da.GetJobsBySearchParam(userId, searchParam, ids, distance);
 
             return items;
         }
