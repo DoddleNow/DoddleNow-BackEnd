@@ -636,7 +636,8 @@ namespace DataAccessLayer
                         Specialities = (item["Specialties"] ?? string.Empty).ToString(),
                         Applied = applied,
                         SCLMatch = int.Parse((item["SCLMatch"] ?? "0").ToString()),
-                        Shifts = (item["Shifts"] ?? string.Empty).ToString()
+                        Shifts = (item["Shifts"] ?? string.Empty).ToString(),
+                        DistanceInMiles = double.Parse((item["DistanceInMiles"] ?? "0").ToString())
                     }
                     );
                 }
@@ -740,6 +741,8 @@ namespace DataAccessLayer
         public int SCLMatch { get; set; }
 
         public string Shifts { get; set; }
+
+        public double DistanceInMiles { get; set; }
 
     }
 
