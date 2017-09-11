@@ -37,6 +37,7 @@ namespace DoddleNow.API.Controllers
         ///Documents
         ///</summary>
         /// <remarks>Gets all documents </remarks>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("")]
         [HttpGet]
         public IHttpActionResult GetUserDocuments()
@@ -50,6 +51,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new user
         ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> AddDocument(Document doc)
@@ -67,6 +69,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Get document with id = id 
         ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("{documentId}")]
         [HttpGet]
         public IHttpActionResult GetDocument(Guid documentId)
@@ -79,6 +82,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete document with id = id
         ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("{documentId}")]
         [HttpDelete]
         public IHttpActionResult DeleteDocument(Guid documentId)
@@ -93,6 +97,7 @@ namespace DoddleNow.API.Controllers
         ///Bundles
         ///</summary>
         /// <remarks>Gets all documents </remarks>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("bundles")]
         [HttpGet]
         public IHttpActionResult GetUserBundles()
@@ -107,6 +112,7 @@ namespace DoddleNow.API.Controllers
         ///Bundles
         ///</summary>
         /// <remarks>Gets all documents </remarks>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("bundles/{bundleId}")]
         [HttpGet]
         public IHttpActionResult GetBundles(Guid bundleId)
@@ -120,6 +126,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Delete document with id = id
         ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("bundles/{bundleId}")]
         [HttpDelete]
         public IHttpActionResult DeleteBundle(Guid bundleId)
@@ -131,6 +138,7 @@ namespace DoddleNow.API.Controllers
         ///<summary>
         ///Create new user
         ///</summary>
+        [Authorize(Roles = "1,2,3,4,5,6")]
         [Route("bundles")]
         [HttpPost]
         public async Task<IHttpActionResult> AddBundle(DocumentBundle bundle)

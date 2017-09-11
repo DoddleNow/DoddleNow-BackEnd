@@ -635,7 +635,7 @@ namespace DataAccessLayer
                         ClientInterested = clientInterest,
                         Specialities = (item["Specialties"] ?? string.Empty).ToString(),
                         Applied = applied,
-                        SCLMatch = int.Parse((item["SCLMatch"] ?? "0").ToString()),
+                        SCLMatch = int.Parse((item["SCLMatch"] == null || item["SCLMatch"].ToString() == "" ? "0" : item["SCLMatch"]).ToString()),
                         Shifts = (item["Shifts"] ?? string.Empty).ToString(),
                         DistanceInMiles = double.Parse((item["DistanceInMiles"] ?? "0").ToString())
                     }
@@ -702,8 +702,8 @@ namespace DataAccessLayer
         }
     }
 
-   
-    public class HPJobDL 
+
+    public class HPJobDL
     {
 
         public Guid JobId { get; set; }
@@ -738,7 +738,23 @@ namespace DataAccessLayer
 
         public bool Applied { get; set; }
 
-        public int SCLMatch { get; set; }
+
+        private int sclMatch;
+
+        public int SCLMatch
+        {
+            get
+            {
+                return sclMatch;
+            }
+            set
+            {
+                if (value > 100)
+                    sclMatch = 100;
+                else
+                    sclMatch = value;
+            }
+        }
 
         public string Shifts { get; set; }
 
