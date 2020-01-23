@@ -255,6 +255,9 @@ namespace DoddleNow.API.Controllers
                 {
                     orderBy = string.Empty;
                 }
+                //hard coding for now
+                orderBy = "APPLICANTCOUNT";
+                sort = "desc";
 
                 var totalJobs = jobs.Count();
                 var totalPastJobs = jobs.Where(v => (v.EndDate != null && v.EndDate.Value < DateTime.Now)).Count();
